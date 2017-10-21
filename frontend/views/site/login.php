@@ -1,31 +1,40 @@
+<?php
+
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+?>
 <!DOCTYPE HTML>
 <html>
-<head>
-<title>Home</title>
-<!-- Custom Theme files -->
-<link href="css/site/login/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <head>
+        <title>Home</title>
+        <!-- Custom Theme files -->
+        <link href="css/site/login/style.css" rel="stylesheet" type="text/css" media="all"/>
 
-<!--Google Fonts-->
-<!--Google Fonts-->
-</head>
-<body>
-<div class="login">
-	<h2>Acced Form</h2>
-	<div class="login-top">
-		<h1>LOGIN FORM</h1>
-		<form>
-			<input type="text" value="User Id" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'User Id';}">
-			<input type="password" value="password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'password';}">
-	    </form>
-	    <div class="forgot">
-	    	<a href="#">forgot Password</a>
-	    	<input type="submit" value="Login" >
-	    </div>
-	</div>
-	<div class="login-bottom">
-		<h3>New User &nbsp;<a href="#">Register</a>&nbsp Here</h3>
-	</div>
-</div>	
+        <!--Google Fonts-->
+        <!--Google Fonts-->
+    </head>
+    <body>
+        <div class="login">
+            <div class="login-top">
+                <h1>LOGIN</h1>
 
-</body>
+                <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+
+                <?= $form->field($model, 'username') ?>
+
+                <?= $form->field($model, 'password')->passwordInput() ?>
+
+                <?= $form->field($model, 'rememberMe')->checkbox() ?>
+
+                <div class="forgot">
+                    <?= Html::a(Yii::t("app", "忘记密码？"), ['site/request-password-reset']) ?>
+                    <?= Html::submitButton(Yii::t("app", '登录'), ['name' => 'login-button']) ?>
+                </div>
+
+
+                <?php ActiveForm::end(); ?>
+            </div>
+        </div>
+
+    </body>
 </html>
