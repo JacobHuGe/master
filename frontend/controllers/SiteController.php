@@ -11,7 +11,6 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use const YII_ENV_TEST;
 
 /**
  * Site controller
