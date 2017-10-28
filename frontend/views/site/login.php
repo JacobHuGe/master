@@ -24,17 +24,18 @@ use yii\widgets\ActiveForm;
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
                 <div class="forgot">
                     <?= Html::a(Yii::t("app", "忘记密码？"), ['site/request-password-reset']) ?>
                     <?= Html::submitButton(Yii::t("app", '登录'), ['name' => 'login-button']) ?>
                 </div>
-
-
                 <?php ActiveForm::end(); ?>
+
+
             </div>
-        </div>
+            <div class="login-bottom">
+                <h3><?= Yii::t("app", 'WELCOME LANDING'); ?></h3>
+            </div>
+        </div>	
 
     </body>
 </html>
