@@ -31,7 +31,7 @@
 
     </head>
 
-    <body>
+    <body style="background-image: url(../image/1.jpg)">
 
         <!-- Top content -->
         <div class="top-content">
@@ -44,11 +44,7 @@
                         <div class="col-sm-6 col-sm-offset-3 form-box">
                             <div class="form-top">
                                 <div class="form-top-left">
-                                    <h3>Login to our site</h3>
-                                    <p>Enter your username and password to log on:</p>
-                                </div>
-                                <div class="form-top-right">
-                                    <i class="fa fa-key"></i>
+                                    <h3>用户登录</h3>
                                 </div>
                             </div>
                             <div class="form-bottom">
@@ -61,14 +57,18 @@
                                         <label class="sr-only" for="form-password">Password</label>
                                         <input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
                                     </div>
-                                    <button type="submit" class="btn">Sign in!</button>
+                                    <button type="submit" class="btn">登录</button>
+                                    <div>
+                                        <div class="passwd">忘记密码?</div>
+                                        <div class="zhuce">注册...</div>
+                                    </div>
                                 </form>
+                                
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3 social-login">
-                            <h3>快捷登录</h3>
                             <div class="social-login-buttons">
                                 <a class="btn btn-link-1 btn-link-1-facebook" href="#">
                                     <i class="fa fa-facebook"></i> Facebook
@@ -86,7 +86,7 @@
             </div>
 
         </div>
-
+        
         <!--[if lt IE 10]>
             <script src="assets/js/placeholder.js"></script>
         <![endif]-->

@@ -82,7 +82,7 @@ img { max-width: 100%; }
 /***** Top content *****/
 
 .inner-bg {
-    padding: 50px 0 110px 0;
+    padding: 70px 0 110px 0;
 }
 
 .top-content .text {
@@ -109,7 +109,7 @@ img { max-width: 100%; }
 
 .form-top {
 	overflow: hidden;
-	padding: 0 25px 15px 25px;
+	padding: 0 25px 0px 25px;
 	background: #fff;
 	-moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0;
 	text-align: left;
@@ -118,7 +118,7 @@ img { max-width: 100%; }
 .form-top-left {
 	float: left;
 	width: 75%;
-	padding-top: 25px;
+	padding-top: 15px;
 }
 
 .form-top-left h3 { margin-top: 0; }
@@ -134,7 +134,7 @@ img { max-width: 100%; }
 }
 
 .form-bottom {
-	padding: 25px 25px 30px 25px;
+	padding: 25px 25px 45px 25px;
 	background: #eee;
 	-moz-border-radius: 0 0 4px 4px; -webkit-border-radius: 0 0 4px 4px; border-radius: 0 0 4px 4px;
 	text-align: left;
@@ -162,6 +162,17 @@ img { max-width: 100%; }
 
 .social-login-buttons {
 	margin-top: 25px;
+}
+.passwd {
+    padding: 5px;
+    float:left;
+    width:50% ;
+}
+.zhuce {
+    padding: 5px;
+    text-align:right;
+    float:right;  
+    width:50% ;
 }
 
 .copyrights{text-indent:-9999px;height:0;line-height:0;font-size:0;overflow:hidden;}
