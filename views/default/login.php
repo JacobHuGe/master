@@ -58,7 +58,7 @@
                                         <input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
                                     </div>
                                     <button type="submit" class="btn">登录</button>
-                                    <div>
+                                    <div class="register-passwd">
                                         <div class="passwd">忘记密码?</div>
                                         <div class="zhuce">注册...</div>
                                     </div>
