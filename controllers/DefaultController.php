@@ -3,6 +3,7 @@ namespace app\controllers;
 
 use app\models\ContactForm;
 use app\models\LoginForm;
+use app\models\RegisterForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -116,5 +117,31 @@ class DefaultController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+    
+    /**
+     * 修改密码
+     */
+    public function actionUpdatePasswd()
+    {
+        return $this->render("update-passwd");
+    }
+    
+    /**
+     * 
+     */
+    public function actionRegister()
+    {
+        
+        $model = new RegisterForm();
+        
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }
+        
+        $model->password = '';
+        return $this->render('register', [
+            'model' => $model,
+        ]);
     }
 }

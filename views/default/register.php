@@ -1,6 +1,8 @@
 <?php
 
+use yii\captcha\Captcha;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 ?>
 
@@ -50,7 +52,7 @@ use yii\widgets\ActiveForm;
                         <div class="col-sm-6 col-sm-offset-3 form-box">
                             <div class="form-top">
                                 <div class="form-top-left">
-                                    <h3>用户登录</h3>
+                                    <h3>注册用户</h3>
                                 </div>
                             </div>
                             <div class="form-bottom">
@@ -61,49 +63,16 @@ use yii\widgets\ActiveForm;
                                 ]); ?>
                                 
                                 <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
+                                <?= $form->field($model, 'mobile')->textInput(['autofocus' => true]) ?>
+                                <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
                                 <?= $form->field($model, 'password')->passwordInput() ?>
-
-                                <?= $form->field($model, 'rememberMe')->checkbox([
-                                    'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
+                                <?= $form->field($model, 'newPassword')->passwordInput() ?>
+                                <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
+                                    'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
                                 ]) ?>
-                                
-                                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                                <!--<form role="form" action="" method="post" class="login-form">
-                                    <div class="form-group">
-                                        <label class="sr-only" for="form-username">Username</label>
-                                        <input type="text" name="form-username" placeholder="Username..." class="form-username form-control" id="form-username">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="form-password">Password</label>
-                                        <input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
-                                    </div>
-                                    <button type="submit" class="btn">登录</button>
-                                    <div class="register-passwd">
-                                        <div class="passwd">忘记密码?</div>
-                                        <div class="zhuce">注册...</div>
-                                    </div>
-                                </form>-->
-                                <div class="register-passwd">
-                                    <div class="passwd"><a href="<?= \yii\helpers\Url::to(["default/update-passwd"])?>">忘记密码?</a></div>
-                                    <div class="zhuce"><a href="<?= \yii\helpers\Url::to(["default/register"])?>">注册...</a></div>
-                                    </div>
+                                <?= Html::submitButton('Register', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+
                                 <?php ActiveForm::end(); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3 social-login">
-                            <div class="social-login-buttons">
-                                <a class="btn btn-link-1 btn-link-1-facebook" href="#">
-                                    <i class="fa fa-facebook"></i> Facebook
-                                </a>
-                                <a class="btn btn-link-1 btn-link-1-twitter" href="#">
-                                    <i class="fa fa-twitter"></i> Twitter
-                                </a>
-                                <a class="btn btn-link-1 btn-link-1-google-plus" href="#">
-                                    <i class="fa fa-google-plus"></i> Google Plus
-                                </a>
                             </div>
                         </div>
                     </div>
