@@ -53,16 +53,16 @@ use yii\widgets\ActiveForm;
                                     <h3>用户登录</h3>
                                 </div>
                             </div>
-                            <div class="form-bottom">
+                            <div class="form-bottom"> 
                                 <?php $form = ActiveForm::begin([
                                     'id' => 'login-form',
                                     "class" => 'login-form',
 
                                 ]); ?>
                                 
-                                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                                <?= $form->field($model, 'username',['inputOptions' => ['placeholder'=>'请输入用户名','class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?>
 
-                                <?= $form->field($model, 'password')->passwordInput() ?>
+                                <?= $form->field($model, 'password',['inputOptions' => ['placeholder'=>'请输入密码','class' => 'form-password form-control']])->passwordInput()->label(false) ?>
 
                                 <?= $form->field($model, 'rememberMe')->checkbox([
                                     'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",

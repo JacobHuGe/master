@@ -29,7 +29,7 @@ class DefaultController extends Controller
                 'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout','capecha', 'register'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -44,6 +44,25 @@ class DefaultController extends Controller
         ];
     }
     
+    /**
+     * {@inheritdoc}
+     */
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+                'maxLength' => 4,
+		'minLength' => 4,
+            ],
+            
+        ];
+    }    
     /**
      * Displays homepage.
      *
@@ -134,9 +153,10 @@ class DefaultController extends Controller
     {
         
         $model = new RegisterForm();
+        $model->load($_REQUEST, "");
         
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        if ($model->load(Yii::$app->request->post()) && $model->create()) {
+            return $this->goHome();
         }
         
         $model->password = '';

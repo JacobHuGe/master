@@ -62,14 +62,15 @@ use yii\widgets\ActiveForm;
 
                                 ]); ?>
                                 
-                                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-                                <?= $form->field($model, 'mobile')->textInput(['autofocus' => true]) ?>
-                                <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
-                                <?= $form->field($model, 'password')->passwordInput() ?>
-                                <?= $form->field($model, 'newPassword')->passwordInput() ?>
+                                <?= $form->field($model, 'username',['inputOptions' => ['placeholder'=>'请输入用户名','class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?>
+                                <?= $form->field($model, 'mobile',['inputOptions' => ['placeholder'=>'请输入手机号','class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?>
+                                <?= $form->field($model, 'email',['inputOptions' => ['placeholder'=>'请输入邮箱','class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?>
+                                <?= $form->field($model, 'password',['inputOptions' => ['placeholder'=>'请设置密码','class' => 'form-password form-control']])->passwordInput()->label(false) ?>
+                                <?= $form->field($model, 'newPassword',['inputOptions' => ['placeholder'=>'请重新输入密码','class' => 'form-password form-control']])->passwordInput()->label(false) ?>
                                 <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
                                     'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
-                                ]) ?>
+                                    'imageOptions' => ['alt' => '验证码','id' => 'login_code', 'src' => '', 'data-api' =>  Url::toRoute(['site/captcha'],true)]
+                                ])->label(false) ?>
                                 <?= Html::submitButton('Register', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
 
                                 <?php ActiveForm::end(); ?>

@@ -2,38 +2,75 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+use app\behaviors\UniqueIdGenerator;
+use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
+
+class User extends ActiveRecord implements IdentityInterface
 {
+    //ActiveRecord   \yii\base\Object
     public $id;
     public $username;
     public $password;
     public $authKey;
     public $accessToken;
+    public $mobile;
+    public $email;
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
-
+    
+    const ROLE_ADMIN = "admin";
+    const ROLE_PARTICIPANT = "participant";
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return '{{%user}}';
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                "class" => UniqueIdGenerator::className()
+            ],
+            [
+                "class" => TimestampBehavior::className()
+            ]
+        ];
+    }
+    
+    public static function getRoles()
+    {
+        return [
+            self::ROLE_ADMIN => Yii::t("app", "管理员(ADMIN)"),
+            self::ROLE_PARTICIPANT => Yii::t("app","参与者"),
+        ];
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['name', 'passwd_hash','mobile', 'role'], 'required'],
+            [["email"], "safe"]
+        ];
+    }
+    
     /**
      * {@inheritdoc}
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return static::findOne(['id' => $id]);
+        #return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
     }
 
     /**
@@ -41,30 +78,22 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
+        $userToken = User::find()->andWhere(["uid" => $token])->one();
+        if (empty($userToken)) {
+            return null;
         }
-
-        return null;
-    }
-
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return new static($userToken);
+        //return $userToken->user;
+        
+        
+        
+//        foreach (self::$users as $user) {
+//            if ($user['accessToken'] === $token) {
+//                return new static($user);
+//            }
+//        }
+//
+//        return null;
     }
 
     /**
@@ -99,6 +128,17 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        
+        $r = Yii::$app->security->validatePassword($password, $this->passwd_hash);
+        
+        /**
+         * edit by LiangFuJian 2018-01-29
+         */
+        if (!$r && !empty($this->password_md5)) {
+            $r = (self::hashPassword($password) === $this->password_md5) ? true : false;
+        }
+        
+        return $r;
+        
     }
 }
