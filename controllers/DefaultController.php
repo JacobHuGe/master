@@ -136,7 +136,7 @@ class DefaultController extends Controller
         $model = new RegisterForm();
         
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            
         }
         
         $model->password = '';
