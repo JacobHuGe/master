@@ -8,7 +8,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
-class User extends ActiveRecord implements IdentityInterface
+class User extends \yii\base\Object implements IdentityInterface
 {
     //ActiveRecord   \yii\base\Object
     public $id;
@@ -19,16 +19,6 @@ class User extends ActiveRecord implements IdentityInterface
     public $mobile;
     public $email;
 
-    
-    const ROLE_ADMIN = "admin";
-    const ROLE_PARTICIPANT = "participant";
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return '{{%user}}';
-    }
     
     /**
      * @inheritdoc
@@ -69,7 +59,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id]);
+        return UserModel::findOne(['id' => $id]);
         #return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
     }
 
@@ -78,7 +68,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        $userToken = User::find()->andWhere(["uid" => $token])->one();
+        $userToken = UserModel::find()->andWhere(["uid" => $token])->one();
         if (empty($userToken)) {
             return null;
         }

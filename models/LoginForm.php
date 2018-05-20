@@ -84,11 +84,11 @@ class LoginForm extends Model
     
     static function findByMobile($username)
     {
-        return User::findOne(["mobile" => $username]);
+        return UserModel::findOne(["mobile" => $username]);
     }
     
     static function findByEmail($username)
     {
-        return User::findOne(["email" => $username]);
+        return UserModel::findOne(["email" => $username]);
     }
 }

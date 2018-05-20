@@ -38,7 +38,7 @@ class DefaultController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                   // 'logout' => ['post'],
                 ],
             ],
         ];
@@ -73,6 +73,7 @@ class DefaultController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect("default/login");
         }
+        
         return $this->render('index');
     }
     

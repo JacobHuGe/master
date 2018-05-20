@@ -55,7 +55,7 @@ class RegisterForm extends Model
     public function userEmail($attribute)
     {
         if (!$this->hasErrors()) {
-            $userEmail = User::findOne(["email" => $this->email]);
+            $userEmail = UserModel::findOne(["email" => $this->email]);
                 if($userEmail){
                     $this->addError($attribute, '邮箱已存在。');
                     //throw new BadRequestHttpException(Yii::t("app", "邮箱已存在"));
@@ -70,7 +70,7 @@ class RegisterForm extends Model
     public function userMobile($attribute)
     {
         if (!$this->hasErrors()) {
-            $userEmail = User::findOne(["mobile" => $this->mobile]);
+            $userEmail = UserModel::findOne(["mobile" => $this->mobile]);
                 if($userEmail){
                     $this->addError($attribute, '手机号已存在。');
                 }
@@ -84,12 +84,13 @@ class RegisterForm extends Model
             return false;
         }
         
-        $model = new User;
+        $model = new UserModel;
         $model->name = $this->username;
         $model->mobile = $this->mobile;
         $model->email = $this->email;
         $model->passwd_hash = Yii::$app->security->generatePasswordHash($this->password);
-        $model->role = User::ROLE_PARTICIPANT;
+        $model->role = UserModel::ROLE_PARTICIPANT;
+        $model->generateAuthKey();
         if($model->save() === false){
             throw new BadRequestHttpException(Yii::t("app", "创建角色失败"));
         }
