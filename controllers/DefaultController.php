@@ -18,6 +18,7 @@ use yii\web\Response;
 
 class DefaultController extends Controller
 {
+    //public $layout = "@app/views/app/layouts/main.php";
     /**
      * {@inheritdoc}
      */

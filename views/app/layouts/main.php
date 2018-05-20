@@ -1,16 +1,14 @@
 <?php
 
-/* @var $this View */
+/* @var $this \yii\web\View */
 /* @var $content string */
 
-use app\assets\AppAsset;
-use app\helpers\BrowserHelper;
 use app\widgets\Alert;
 use yii\helpers\Html;
-use yii\web\View;
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-
-$browser = new BrowserHelper;
+use app\assets\AppAsset;
 
 AppAsset::register($this);
 ?>
@@ -29,8 +27,6 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php  var_Dump($browser->isMobile());die; ?>
-    
     <?php
 //    NavBar::begin([
 //        'brandLabel' => Yii::$app->name,
@@ -61,11 +57,12 @@ AppAsset::register($this);
 //    ]);
 //    NavBar::end();
     ?>
-      
+    
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+        <?php echo 'ssss';?>
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
