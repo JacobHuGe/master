@@ -16,54 +16,8 @@ use yii\web\Response;
  * and open the template in the editor.
  */
 
-class DefaultController extends Controller
+class DefaultController extends \app\components\WebBaseController
 {
-    //public $layout = "@app/views/app/layouts/main.php";
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout','capecha', 'register'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                   // 'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-                'maxLength' => 4,
-		'minLength' => 4,
-            ],
-            
-        ];
-    }    
     /**
      * Displays homepage.
      *
@@ -71,6 +25,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
+        
         if (Yii::$app->user->isGuest) {
             return $this->redirect("default/login");
         }

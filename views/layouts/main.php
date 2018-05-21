@@ -29,7 +29,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php  var_Dump($browser->isMobile());die; ?>
+    <?php  //var_Dump($browser->isMobile());die; ?>
     
     <?php
 //    NavBar::begin([

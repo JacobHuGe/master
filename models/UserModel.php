@@ -68,7 +68,7 @@ class UserModel extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        $userToken = User::find()->andWhere(["uid" => $token])->one();
+        $userToken = UserModel::find()->andWhere(["uid" => $token])->one();
         if (empty($userToken)) {
             return null;
         }
