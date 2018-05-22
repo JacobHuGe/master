@@ -15,25 +15,28 @@ use const YII_ENV_TEST;
  * and open the template in the editor.
  */
 
-class WebBaseController extends Controller {
+class AppBaseController extends Controller {
 
     //public $layout = "@app/views/app/layouts/main.php";
     /**
      * {@inheritdoc}
      */
     public function behaviors() {
+       
 //        $browser = new BrowserHelper;
 //        if(!$browser->isMobile()){
-//            $url = Yii::$app->request->getHostInfo().'app/'.$this->action->id;
-//            return $this->redirect($url)->send();
+//            return $this->redirect("default/{$this->action->id}");
 //        }
+//        var_Dump();die;
+//        var_Dump(Yii::$app->controller->id,$this->action->id);
+//        die;
         return [
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout', 'register', 'index'],
+                        'actions' => ['logout', 'capecha', 'register', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

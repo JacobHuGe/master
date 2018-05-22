@@ -34,7 +34,7 @@
                 <span class="swiper-pagination-switch"></span>
             </div>
         </div>
-        <?php if(!Yii::$app->user->isGuest):?>
+
         <!-- 导航 -->
         <nav class="flex">
 
@@ -60,7 +60,6 @@
             </div>
 
         </nav>
-        <?php endif; ?>
         <!-- 内容 -->
         <!-- 1 -->
         <a href="special_all.html" class="single"> 
@@ -229,9 +228,7 @@
 
         <footer>
             <div><a href=""><img src="../image/default/index/home.png" alt=""><span class="now">首页</span></a></div>
-            <?php if(!Yii::$app->user->isGuest):?>
-            <div><a href="collect.html"><img src="../image/default/index/collection.png" alt=""> <span>创建</span></a></div>
-            <?php endif; ?>
+            <div><a href="collect.html"><img src="../image/default/index/collection.png" alt=""> <span>收藏</span></a></div>
             <div><a href="person.html"><img src="../image/default/index/personal.png" alt=""> <span>个人中心</span></a></div>
         </footer>
 

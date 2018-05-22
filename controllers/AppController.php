@@ -16,7 +16,7 @@ use yii\web\Response;
  * and open the template in the editor.
  */
 
-class DefaultController extends \app\components\WebBaseController
+class AppController extends \app\components\AppBaseController
 {
     /**
      * Displays homepage.
@@ -24,7 +24,12 @@ class DefaultController extends \app\components\WebBaseController
      * @return string
      */
     public function actionIndex()
-    { 
+    {
+        
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect("default/login");
+        }
+        
         return $this->render('index');
     }
     
