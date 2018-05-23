@@ -46,9 +46,9 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-
+            //var_Dump($user->validatePassword($this->password));die;
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, '用户名或密码不正确。');
             }
         }
     }
@@ -72,10 +72,23 @@ class LoginForm extends Model
      */
     public function getUser()
     {
-        if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+         if ($this->_user === false) {
+            $this->_user = $this->findByMobile($this->username);
+            if (empty($this->_user)) {
+                $this->_user = $this->findByEmail($this->username);
+            }
         }
 
         return $this->_user;
+    }
+    
+    static function findByMobile($username)
+    {
+        return UserModel::findOne(["mobile" => $username]);
+    }
+    
+    static function findByEmail($username)
+    {
+        return UserModel::findOne(["email" => $username]);
     }
 }
