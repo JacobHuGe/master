@@ -57,13 +57,12 @@ html{-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;}
 
 
 /* 媒体查询 */
-/*@media only screen and (min-width:481px){
-    ipad/windows
+@media only screen and (min-width:481px){
     body{
-        width:480px;
+        //width:480px;
         margin:0 auto;	
     }
-}*/
+}
 @media (min-width: 415px) and (max-width: 480px){
     /*sony U*/
 }
@@ -159,15 +158,15 @@ img{ max-width:100%; height:auto;border:none; interpolation-mode: bicubic;}
 #wrap{ background:#F0F0F0; max-width:640px; position:relative;  border-bottom: 1px solid #e8e8e8;}
 
 
-
 body {
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
+    font-family: 'Microsoft YaHei', sans-serif;
+    font-size: 0.7rem;
     font-weight: 300;
-    color: #888;
+    color: #333;
     line-height: 30px;
-    text-align: center;
+    background: #fff;
 }
+
 @font-face {font-family: "iconfont";
             src: url('iconfont.eot?t=1470978649'); /* IE9*/
             src: url('iconfont.eot?t=1470978649#iefix') format('embedded-opentype'), /* IE6-IE8 */

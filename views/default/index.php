@@ -229,8 +229,6 @@
             </div>
         </a>
 
-
-
         <footer>
             <div><a href="<?= yii\helpers\Url::to(["default/index"])?>"><img src="../image/default/index/home.png" alt=""><span class="now">首页</span></a></div>
             <?php if(!Yii::$app->user->isGuest):?>
