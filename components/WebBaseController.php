@@ -25,7 +25,6 @@ class WebBaseController extends Controller {
     {
         
         if (Yii::$app->user->isGuest) {
-            die("xxx");
             // 没有登录,登录,登录后,返回
         
             Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());  // 设置返回的url,登录后原路返回
