@@ -45,21 +45,21 @@
             <div class="nav1">
                 <a href="">
                     <div class="nav1_img"><img src="../image/default/index/nav1.png" alt=""></div>
-                    <p>专场拍卖</p>
+                    <p>我参与的</p>
                 </a>
             </div>
 
             <div class="nav2">
                 <a href="news.html">
                     <div class="nav2_img"><img src="../image/default/index/nav2.png" alt=""></div>
-                    <p>资讯</p>
+                    <p>我发起的</p>
                 </a>
             </div>
 
             <div class="nav3">
                 <a href="activity.html">
                     <div class="nav3_img"><img src="../image/default/index/nav3.png" alt=""></div>
-                    <p>线下</p>
+                    <p>我邀请的</p>
                 </a>
             </div>
 
@@ -161,7 +161,7 @@
             <div class="left">
                 <img src="../image/default/index/7.jpg" alt="">
             </div>
-            <</a>
+        </a>
         <!-- 7 -->
         <a href="special_all.html" class="single">
             <div class="left">

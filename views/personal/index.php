@@ -57,11 +57,11 @@
         </div>
 
         <footer>
-            <div><a href="<?= yii\helpers\Url::to(["default/index"]) ?>"><img src="../image/default/index/home.png" alt=""><span class="now">首页</span></a></div>
+            <div><a href="<?= yii\helpers\Url::to(["default/index"]) ?>"><img src="../image/default/index/home.png" alt=""><span>首页</span></a></div>
                     <?php if (!Yii::$app->user->isGuest): ?>
                 <div><a href="collect.html"><img src="../image/default/index/collection.png" alt=""> <span>创建</span></a></div>
             <?php endif; ?>
-            <div><a href="<?= yii\helpers\Url::to(["personal/index"]) ?>"><img src="../image/default/index/personal.png" alt=""> <span>个人中心</span></a></div>
+            <div><a href="<?= yii\helpers\Url::to(["personal/index"]) ?>"><img src="../image/default/index/personal.png" alt=""> <span  class="now">个人中心</span></a></div>
         </footer>
     </body>
 </html>
