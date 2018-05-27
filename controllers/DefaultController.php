@@ -1,14 +1,15 @@
 <?php
 namespace app\controllers;
 
+use app\components\WebBaseController;
 use app\models\ContactForm;
 use app\models\LoginForm;
 use app\models\RegisterForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\Response;
+use const YII_ENV_TEST;
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -16,7 +17,7 @@ use yii\web\Response;
  * and open the template in the editor.
  */
 
-class DefaultController extends \app\components\WebBaseController
+class DefaultController extends WebBaseController
 {
     
     public function behaviors() 
@@ -41,8 +42,24 @@ class DefaultController extends \app\components\WebBaseController
             ],
         ];
     }
-    
-    
+   
+        /**
+     * {@inheritdoc}
+     */
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+                'maxLength' => 4,
+		'minLength' => 4,
+            ],
+        ];
+    }
     /**
      * Displays homepage.
      *

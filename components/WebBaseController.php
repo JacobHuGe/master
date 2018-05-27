@@ -54,11 +54,12 @@ class WebBaseController extends Controller {
             ],
         ];
     }
-
+    
     /**
      * {@inheritdoc}
      */
-    public function actions() {
+    public function actions()
+    {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -67,7 +68,7 @@ class WebBaseController extends Controller {
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
                 'maxLength' => 4,
-                'minLength' => 4,
+		'minLength' => 4,
             ],
         ];
     }
