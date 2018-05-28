@@ -1,0 +1,186 @@
+@charset "utf-8";
+
+/* CSS Reset*/
+html {
+    font-size:125%;
+
+    /* 20÷16=125% min-font-size:12px bug*/
+}
+* {
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+/*body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,code,form,fieldset,legend,button,input,textarea{padding:0px; margin:0px; border:none;}*/
+
+
+/* 禁止webkit横屏改变字体大小 */
+
+html{-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;}
+
+
+/* 媒体查询 */
+@media only screen and (min-width:481px){
+        ipad/windows
+body{
+        width:480px;
+        margin:0 auto;	
+}
+}
+@media (min-width: 415px) and (max-width: 480px){
+    sony U
+}
+@media (min-width: 376px) and (max-width: 414px){
+    iphone6P
+}
+@media (min-width: 341px) and (max-width: 375px){
+    iphone6
+}
+@media only screen and (max-width: 340px){
+    iphone4/4s/5
+}
+
+/* CSS Document */
+ul,li,dl,dt,dd,ol{ list-style-type:none; margin:0; padding:0;}
+h1,h2,h3,h4,h5,h6,form,input,textarea,label,table,tr,td,p,header,article,footer,nav,section,aside,menu{margin:0; padding:0;}
+header,article,footer,nav,section,aside,menu{ display:block;}
+table{ border-collapse:collapse; border-spacing:0;}
+img{ border:none;}
+a:link{color:#000;text-decoration:none;outline:none;}
+a:active,a:visited{color:#168dd9; text-decoration:none;}
+a:hover { color:#e05a63;}
+body{ margin:0;padding:0;font:14px/22px Microsoft Yahei;/* font-size:1em; line-height:1.571em;*/ min-width:320px;}
+.fl{ float:left;}
+.fr{ float:right;}
+.cl{ clear:both; font-size:0; line-height:0; height:0; width:100%; overflow:hidden;}
+.fix:after {display: block;font-size: 0;content:""; clear: both; height: 0;}
+.fix{*zoom:1;}
+.bg{ background:#F5F5F5;}
+/**============ Reset End ===========**/
+.navbar{background:#339ee2;}
+.navbar .ico-home,.navbar .ico-nav{float:left;width:20%;height:100px;overflow:hidden;text-indent:-9999em;background:url(../images/ico-home.png) center center no-repeat;}
+.navbar .ico-nav{float:right;background:url(../images/ico-nav.png) center center no-repeat;}
+.navbar #title{float:left;width:58%;height:100px;margin:0 1%;font-size:3.142em;font-weight:normal;color:#fff;line-height:100px;text-align:center;overflow:hidden;-webkit-transition:font-size 0.2s ease-out; -o-transition:font-size 0.2s ease-out; -moz-transition:font-size 0.2s ease-out;transition:font-size 0.2s ease-out;}
+
+/**============ 栏目幻灯 ==============**/
+.tab-size,.tab-xinqing,.tab-di{margin:26px 0 0 0;}
+.tab-hd-index{background:#339ee2;}
+.tab-hd-index ul{width:99.99%;margin:0 auto;}
+.tab-hd-index li{float:left;width:33.33%;height:90px;text-align:center;color:#fff;font-size:2.285em;line-height:90px}
+.tab-hd-index li.on {color:#fffc00;background:#168dd9;}
+.tab-news-con .list-index,.tab-size-con .list-index,.tab-xinqing-con .list-index,.tab-di-con .list-index{ display:none;}
+.tab-news-con .active,.tab-size-con .active,.tab-di-con .active,.tab-xinqing-con .active{ display:block;}
+.list-index li{overflow:hidden;clear:both;padding:0 2.46875% 0 4.6875%;border-bottom:1px solid #E9E9E9;}
+.list-index li:last-child{border:none;}
+.list-index li a{ float:left;width:99%;height:100px;overflow:hidden;font-size:2.142em;line-height:100px;background:url(../images/ico-tel.png) right center no-repeat;/*text-overflow:ellipsis; white-space:nowrap;*/}
+.tab-news-con .more,.tab-size-con .more,.tab-di-con .more,.tab-xinqing-con .more{ clear:both; display:block;height:35px;text-align:center;font-size:1.5em;line-height:35px;background:url(../images/line_more.gif) center center no-repeat; margin-bottom:20px;}
+
+
+/**================= 当手机浏览器时 ==================**/
+@media screen and (max-width: 639px){
+    .navbar .ico-home,.navbar .ico-nav{height:50px;background-size:29.5px 24.5px;}
+    .navbar .ico-nav{background-size:24.5px 21.5px;}
+    .navbar #title{height:50px;font-size:1.571em;line-height:50px;}	
+    .header .description{height:29px;font-size:0.9em;line-height:29px;}	
+    .header .description span{padding:2px 5px;color:#ffea00;border-radius:1em;}	
+    .copyright{font-size:0.8em;}
+   /**============ 栏目幻灯 =============**/
+    .tab-size,.tab-di,.tab-xinqing{margin:10px 0 0 0;}
+    .tab-hd-index li{height:45px;font-size:1.425em;line-height:45px}
+    .tab-hd-index li a{height:45px;font-size:1.425em;line-height:45px}
+    .list-index li a{ float:left;width:99%;background:url(../images/ico-tel20.png) right center no-repeat; height:45px;overflow:hidden;font-size:1.071em;line-height:45px;}
+ }
+ 
+ .form-box {
+	margin-top: 35px;
+}
+
+.form-top {
+	overflow: hidden;
+	padding: 0 25px 0px 25px;
+	background: #fff;
+	-moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0;
+	text-align: left;
+}
+
+.form-top-left {
+	float: left;
+	width: 75%;
+	padding-top: 15px;
+}
+
+.form-top-left h3 { margin-top: 0; }
+
+.form-top-right {
+	float: left;
+	width: 25%;
+	padding-top: 5px;
+	font-size: 66px;
+	color: #ddd;
+	line-height: 100px;
+	text-align: right;
+}
+form {
+    display: block;
+    margin-top: 0em;
+}
+
+.form-bottom {
+	padding: 25px 25px 45px 25px;
+	background: #eee;
+	-moz-border-radius: 0 0 4px 4px; -webkit-border-radius: 0 0 4px 4px; border-radius: 0 0 4px 4px;
+	text-align: left;
+}
+
+.form-bottom form textarea {
+	height: 100px;
+}
+
+.form-bottom form button.btn {
+	width: 100%;
+}
+
+.form-bottom form .input-error {
+	border-color: #4aaf51;
+}
+
+.social-login {
+	margin-top: 35px;
+}
+
+.social-login h3 {
+	color: #fff;
+}
+
+.social-login-buttons {
+	margin-top: 25px;
+}
+
+.register-passwd {
+    width:100% ;
+}
+
+.passwd {
+    padding: 5px;
+    float:left;
+    width:50% ;
+}
+.zhuce {
+    padding: 5px;
+    text-align:right;
+    float:right;  
+    width:50% ;
+}
+.inner-bg {
+    padding: 0 0 110px 0;
+}

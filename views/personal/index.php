@@ -1,4 +1,6 @@
 <?php
+
+use yii\helpers\Url;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -23,7 +25,7 @@
         <div class="banner">
             <div class="banner-wrap">
                 <img src="../image/personal/person1.jpg" alt="">
-                <span>请叫我XXX</span>
+                <span><?= Yii::t("app", $user->name); ?></span>
             </div>
         </div>
         <div class="bg"></div>
@@ -56,11 +58,11 @@
         </div>
 
         <footer>
-            <div><a href="<?= yii\helpers\Url::to(["default/index"]) ?>"><img src="../image/personal/home2.png" alt=""><span>首页</span></a></div>
+            <div><a href="<?= Url::to(["default/index"]) ?>"><img src="../image/personal/home2.png" alt=""><span>首页</span></a></div>
             <?php if (!Yii::$app->user->isGuest): ?>
-                <div><a href="collect.html"><img src="../image/default/index/collection.png" alt=""> <span>创建</span></a></div>
+                <div><a href="<?= Url::to(["site/index"]) ?>"><img src="../image/default/index/collection.png" alt=""> <span>创建</span></a></div>
             <?php endif; ?>
-            <div><a href="<?= yii\helpers\Url::to(["personal/index"]) ?>"><img src="../image/personal/personal2.png" alt=""> <span class="now">个人中心</span></a></div>
+            <div><a href="<?= Url::to(["personal/index"]) ?>"><img src="../image/personal/personal2.png" alt=""> <span class="now">个人中心</span></a></div>
         </footer>
     </body>
 </html>

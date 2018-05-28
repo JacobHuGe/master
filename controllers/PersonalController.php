@@ -9,11 +9,14 @@
 namespace app\controllers;
 
 use app\components\WebBaseController;
+use app\models\UserModel;
+use Yii;
 
 class PersonalController extends WebBaseController
 {
     public function actionIndex()
     {
-        return $this->render("index");
+        $user = UserModel::findOne(["id" => Yii::$app->user->id]);
+        return $this->render("index", compact("user"));
     }
 }

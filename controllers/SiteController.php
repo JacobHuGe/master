@@ -2,15 +2,14 @@
 
 namespace app\controllers;
 
-use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\web\Response;
-use yii\filters\VerbFilter;
-use app\models\LoginForm;
+use app\components\WebBaseController;
 use app\models\ContactForm;
+use app\models\LoginForm;
+use Title;
+use Yii;
+use yii\web\Response;
 
-class SiteController extends \app\components\WebBaseController
+class SiteController extends WebBaseController
 {
 
     /**
@@ -20,7 +19,9 @@ class SiteController extends \app\components\WebBaseController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = new \app\models\site\CreateForm();
+        $model->load($_REQUEST);
+        return $this->render('index', compact('model'));
     }
 
     /**

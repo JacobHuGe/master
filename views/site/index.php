@@ -1,53 +1,50 @@
 <?php
 
-/* @var $this yii\web\View */
-
-$this->title = 'My Yii Application';
+use yii\captcha\Captcha;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 ?>
-<div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>日安</title>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+        <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
+        <link href="../css/site/style.css"  rel="stylesheet">
 
-    <div class="body-content">
+    </head>
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+    <body id="index">
+        <div class="tab-news" id="tab-news">
+            <div class="tab-news-hd tab-hd-index">
+                <ul class="fix">
+                    <li class="on">新创建</li>
+                    <li class="">我发起的</li>
+                    <li class="">我参与的</li>
+                </ul>
             </div>
         </div>
+        <div class="row">
+            <div class="form-bottom">
+                <?php
+                $form = ActiveForm::begin([
+                            'id' => 'login-form',
+                            "class" => 'login-form',
+                ]);
+                ?>
 
-    </div>
-</div>
+                <?= $form->field($model, 'name', ['inputOptions' => ['placeholder' => '请输入用户名', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?>
+                <?= $form->field($model, 'content', ['inputOptions' => ['placeholder' => '请输入手机号', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?>
+                <?= $form->field($model, 'currency', ['inputOptions' => ['placeholder' => '请输入邮箱', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?>
+                <?= $form->field($model, 'log', ['inputOptions' => ['placeholder' => '请设置密码', 'class' => 'form-password form-control']])->passwordInput()->label(false) ?>
+                
+                <?= Html::submitButton('Register', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+
+            </div>
+        </div>
+    </body>
+</html>
