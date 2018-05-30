@@ -1,8 +1,8 @@
 <?php
 
-use yii\captcha\Captcha;
+use app\helpers\FileHelper;
+use yii\bootstrap\Alert;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 ?>
 
@@ -30,21 +30,28 @@ use yii\widgets\ActiveForm;
         </div>
         <div class="row">
             <div class="form-bottom">
-                <?php
-                $form = ActiveForm::begin([
-                            'id' => 'login-form',
-                            "class" => 'login-form',
-                ]);
-                ?>
+                <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 
-                <?= $form->field($model, 'name', ['inputOptions' => ['placeholder' => '请输入用户名', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?>
-                <?= $form->field($model, 'content', ['inputOptions' => ['placeholder' => '请输入手机号', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?>
-                <?= $form->field($model, 'currency', ['inputOptions' => ['placeholder' => '请输入邮箱', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?>
-                <?= $form->field($model, 'log', ['inputOptions' => ['placeholder' => '请设置密码', 'class' => 'form-password form-control']])->passwordInput()->label(false) ?>
+                <div class="panel panel-flat">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                
+                                <?= $form->field($model, 'log')->fileInput() ?>
+
+                            </div>
+                            <hr class="hr"/>
+                        </div>
+                        <div class="row">
+                        </div>
+                    </div>        
+                </div>
                 
-                <?= Html::submitButton('Register', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-
-            </div>
+                 <input type="submit" class="btn btn-success" value="提交">
+                
+                <?php
+                ActiveForm::end();
+                ?>
         </div>
     </body>
 </html>
