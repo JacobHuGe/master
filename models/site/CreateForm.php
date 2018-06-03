@@ -19,35 +19,49 @@ class CreateForm extends Model {
     public $currency;
     public $apk_uid;
     public $log;
+    public $imageFile;
 
     /**
      * @inheritdoc
      */
     public function rules() {
         return [
+            [['imageFile'], 'file', 'skipOnEmpty' => false],
             //[['name'], 'required'],
             //[["content",'currency', 'log', 'apk_uid'], "safe"],
-            ['log', 'file', 'skipOnEmpty' => false],
+            //['log', 'file', 'skipOnEmpty' => false],
         ];
     }
+    
 
-    public function Save() {
+    public function save() {
         if (!$this->validate()) {
             return $this;
         }
         
-        $model = new Title();
-        $model->name = 'XXXX';
-        $model->content = 'XXXXX';
-        $model->currency = 'XXXXXX';
-        $model->log = $this->log;
-        if($model->save() === false){
-            die("xx");
-            return false;
-        }
+//        $model = new Title();
+//        $model->name = 'XXXX';
+//        $model->content = 'XXXXX';
+//        $model->currency = 'XXXXXX';
+//        $model->log = $this->log;
+//        if($model->save() === false){
+//            die("xx");
+//            return false;
+//        }
         
         
     }
+    
+    public function upload()
+    {
+        if ($this->validate()) {
+            $this->imageFile->saveAs(dirname(dirname(__DIR__)).'/runtime/uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 
     public function getAttachment() {
         return Attachment::findOne(["uid" => $this->apk_uid]);
