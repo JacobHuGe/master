@@ -1,67 +1,14 @@
 <?php
 
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
-$this->registerJs(" 
-//点击添加按钮 
-$('body').find('a.add-column').click(function(){ 
-//更新页面的元素 
-//1.按照原页面的结构添加一个新的字段 
-var html = \"<tr>\" + 
-\"<th scope='row'>\"+(index+1)+\"</th>\" + 
-\"<td><div class='form-group field-settings-\"+index+\"-name required'>\" + 
-\"<input type='text' id='settings-\"+index+\"-name' class='form-control' name='Settings[\"+index+\"][ name ]'>\" + 
-\"<div class='help-block'></div>\" + 
-\"</div></td>\" + 
-\"<td><div class='form-group field-settings-\"+index+\"-value required'>\" + 
-\"<input type='text' id='settings-\"+index+\"-value' class='form-control' name='Settings[\"+index+\"][ content ]'>\" + 
-\"<div class='help-block'></div>\" + 
-\"</div></td>\" + 
-\"<td><a class='add-column' href='javascript:;'>添加</a></td>\" + 
-\"</tr>\"; 
-//将拼接好的表单结构加入到tbody中 
-$('table.table-striped').find('tbody').append(html); 
-//2.然后加入新的字段的验证信息，这里可以参考表单自动生成的那部分JS然后copy下来改改就行了，这样子可以保证新添加的字段和之前的字段的验证规则是一模一样的(客户端验证) 
-$('#my-form').yiiActiveForm('add', { 
-\"id\": \"settings-\"+index+\"-name\", 
-\"name\": \"[\"+index+\"]name\", 
-\"container\": \".field-settings-\"+index+\"-name\", 
-\"input\": \"#settings-\"+index+\"-name\", 
-\"validate\": function (attribute, value, messages, deferred, \$form) { 
-yii.validation.required(value, messages, {\"message\": \"Name cannot be blank.\"}); 
-yii.validation.string(value, messages, { 
-\"message\": \"Name must be a string.\", 
-\"max\": 25, 
-\"tooLong\": \"Name should contain at most 25 characters.\", 
-\"skipOnEmpty\": 1 
-}); 
-} 
-}); 
-$('#my-form').yiiActiveForm('add',{ 
-\"id\": \"settings-\"+index+\"-value\", 
-\"name\": \"[\"+index+\"]content\", 
-\"container\": \".field-settings-\"+index+\"-value\", 
-\"input\": \"#settings-\"+index+\"-value\", 
-\"validate\": function (attribute, value, messages, deferred, \$form) { 
-yii.validation.required(value, messages, {\"message\": \"Value cannot be blank.\"}); 
-yii.validation.string(value, messages, { 
-\"message\": \"Value must be a string.\", 
-\"max\": 25, 
-\"tooLong\": \"Value should contain at most 25 characters.\", 
-\"skipOnEmpty\": 1 
-}); 
-} 
-}); 
-console.log(index); 
-index++; 
-});", \yii\web\View::POS_END, 'dysc');
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+
     <head>
         <meta charset="UTF-8">
         <title>日安</title>
@@ -94,50 +41,38 @@ index++;
 
                 <div>
                     <div class="form">
-                        <h3>报名设置</h3>
+                        <h4>报名设置</h4>
                     </div>
                     <div>
                         <span>配资金信息●/○:  <?= $form->field($model, 'currency')->dropDownList(['1' => '￥', '2' => '$', '3' => '€', '4' => '￡'])->label(false); ?></span>
                     </div>
                     <div>
-                        <p>点[+]创建一个或多个报名项 <span onclick="copyText()">[+]</span></p>
-                        <div id="addTable">
-<!--                            <table>
-                                <tr><td>项目名称：</td><td></td></tr>
-                                <tr><td>项目单价：</td><td></td></tr>
-                                <tr><td>数量限制：</td><td></td></tr>
-                            </table>-->
+                        <p>点[+]创建一个或多个报名项 <input type='button' class='btnAdd' value='[+]'/></p>
+                        <div id="father">
+                            <fieldset>
+                                <legend>报名项</legend><input type='button' class='btnDel' value='删除' onclick = "$(this).parent().remove();"/>
 
-                            <table class="table table-striped">
-                                <thead> 
-                                    <tr> 
-                                        <th>#</th> 
-                                        <th>Name</th> 
-                                        <th>Value</th> 
-                                        <th><?= Yii::t('yii', 'action') ?></th> 
-                                    </tr> 
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($model as $index => $setting): ?> 
-                                        <tr> 
-                                            <th scope="row"><?= ($index + 1) ?></th> 
-                                            <td><?= $form->field($model, "[$index]name")->label(false) ?></td> 
-                                            <td><?= $form->field($model, "[$index]content")->label(false) ?></td> 
-                                            <td><?= Html::a("添加", 'javascript:;', ['class' => 'add-column']) ?></td>
-                                        </tr> 
-                                    <?php endforeach; ?> 
-                                </tbody> 
-                            </table> 
+                                <p>项目名称： <?= $form->field($model, 'content', ['inputOptions' => ['placeholder' => '简要的文字描述', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?></p>
+                                <p>项目单价： <?= $form->field($model, 'content', ['inputOptions' => ['placeholder' => '简要的文字描述', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?></p>
+                                <p>数量限制： <?= $form->field($model, 'content', ['inputOptions' => ['placeholder' => '简要的文字描述', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?></p>
+
+                            </fieldset>
 
                         </div>
                     </div>
 
+                    <div>
+                        <span>报名信息的登记规则:  ✓</span>
+                    </div>
+
+                    <?= $form->field($model, 'rule')->checkboxList(['0' => '姓名昵称', '1' => '联系方式', '2' => '备注留言']) ?>
+
+                    <p>截止时间： <?= $form->field($model, 'content', ['inputOptions' => ['placeholder' => '不设则无自动截止', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?></p>
                 </div>
 
                 <div class="form-group">
                     <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
                 </div>
-
 
                 <?php ActiveForm::end() ?>
             </div>
@@ -145,10 +80,35 @@ index++;
 </html>
 
 <script>
-    function copyText()
-    {
-        document.getElementById("addTable").value = document.getElementById("field1").value;
-    }
+    var blockNum = 10;
+
+    $(document).ready(function () {
+        var parentDom = $('#father'), oriDom = parentDom.children(":first");
+        $('.btnAdd').click(function () {
+            var clLength = parentDom.children().length;
+            if (blockNum > clLength) {
+                var nowDom = oriDom.clone();
+                nowDom.children(":first").text('报名项');
+                parentDom.append(nowDom);
+            }
+            else
+                return false;
+        });
+        $('.btnSub').click(function () {
+
+            var nameUser = [];
+            $('.testName').each(function (index) {
+                nameUser[index] = $(this).val();
+            }); // 获取所有文本框
+
+            var nameUser1 = [];
+            $('.test').each(function (index) {
+                nameUser1[index] = $(this).val();
+            }); // 获取所有文本框
+
+            $('.conform').submit();
+        });
+    });
 
 </script>
 

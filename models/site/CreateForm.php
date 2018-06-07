@@ -20,6 +20,7 @@ class CreateForm extends Model {
     public $apk_uid;
     public $log;
     public $imageFile;
+    public $rule;
 
     /**
      * @inheritdoc
@@ -27,8 +28,8 @@ class CreateForm extends Model {
     public function rules() {
         return [
             [['imageFile'], 'file', 'skipOnEmpty' => false],
-            //[['name'], 'required'],
-            //[["content",'currency', 'log', 'apk_uid'], "safe"],
+            [['name'], 'required'],
+            [["content",'currency', 'log', 'apk_uid', 'rule'], "safe"],
             //['log', 'file', 'skipOnEmpty' => false],
         ];
     }
