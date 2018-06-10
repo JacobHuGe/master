@@ -3,7 +3,6 @@
 namespace app\models;
 
 use app\behaviors\UniqueIdGenerator;
-use app\helpers\FileHelper;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 /*
@@ -12,12 +11,15 @@ use yii\db\ActiveRecord;
  * and open the template in the editor.
  */
 
-class Title extends ActiveRecord {
+class Study extends ActiveRecord {
 
     public static function tableName() {
-        return '{{%title}}';
+        return '{{%study}}';
     }
 
+    public function beforeSave($insert) {
+        return parent::beforeSave($insert);
+    }
     /**
      * @inheritdoc
      */
@@ -31,26 +33,8 @@ class Title extends ActiveRecord {
             ]
         ];
     }
-
-    public function beforeSave($insert) {
-        return parent::beforeSave($insert);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules() {
-        return [
-            [['name'], 'required'],
-            [["content", 'currency', 'log'], "safe"]
-        ];
-    }
-    
-    public function getDownload()
-    {
-        return $this->hasOne(Attachment::className(), ["model_id" => "image_file"]);
-    }
-    
-    
-
 }
+    
+    
+    
+    
