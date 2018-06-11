@@ -23,8 +23,8 @@ use yii\widgets\ActiveForm;
             <div class="tab-news-hd tab-hd-index">
                 <ul class="fix">
                     <li class="on">新创建</li>
-                    <li class="ons"><a href="<?= yii\helpers\Url::to(["site/launch"])?>" >我发起的</a></li>
-                    <li class="ons"><a href="<?= yii\helpers\Url::to(["site/partake"])?>">我参与的</a></li>
+                    <li class="ons"><a href="<?= yii\helpers\Url::to(["site/launch"])?>" >发起的</a></li>
+                    <li class="ons"><a href="<?= yii\helpers\Url::to(["site/partake"])?>">参与的</a></li>
                 </ul>
             </div>
         </div>
