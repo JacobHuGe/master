@@ -20,6 +20,15 @@ html {
     box-sizing: border-box;
 }
 
+a,a:visited{ text-decoration:none; color: #333;}
+
+a:active,a:hover { text-decoration:none;}
+
+a:focus,input:hover,button:hover,input[type='button']:hover{ outline:none;}
+
+i, em, cite { font-style: normal; }
+
+li{ vertical-align:bottom;/*overflow:hidden; */ list-style-type:none;}
 
 /*body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,code,form,fieldset,legend,button,input,textarea{padding:0px; margin:0px; border:none;}*/
 
@@ -78,6 +87,7 @@ body{ margin:0;padding:0;font:14px/22px Microsoft Yahei;/* font-size:1em; line-h
 .tab-hd-index ul{width:99.99%;margin:0 auto;}
 .tab-hd-index li{float:left;width:33.33%;height:90px;text-align:center;color:#fff;font-size:2.285em;line-height:90px}
 .tab-hd-index li.on {color:#fffc00;background:#168dd9;}
+.tab-hd-index li.ons {height:40px;  font-size:1.100em;}
 .tab-news-con .list-index,.tab-size-con .list-index,.tab-xinqing-con .list-index,.tab-di-con .list-index{ display:none;}
 .tab-news-con .active,.tab-size-con .active,.tab-di-con .active,.tab-xinqing-con .active{ display:block;}
 .list-index li{overflow:hidden;clear:both;padding:0 2.46875% 0 4.6875%;border-bottom:1px solid #E9E9E9;}

@@ -45,14 +45,14 @@ use yii\helpers\Url;
         <nav class="flex">
 
             <div class="nav1">
-                <a href="">
+                <a href="<?= Url::to(["site/partake"])?>">
                     <div class="nav1_img"><img src="../image/default/index/nav1.png" alt=""></div>
                     <p>我参与的</p>
                 </a>
             </div>
 
             <div class="nav2">
-                <a href="news.html">
+                <a href="<?= Url::to(["site/launch"])?>">
                     <div class="nav2_img"><img src="../image/default/index/nav2.png" alt=""></div>
                     <p>我发起的</p>
                 </a>
@@ -217,7 +217,7 @@ use yii\helpers\Url;
         <!-- 10 -->
         <a href="special_all.html" class="single">
             <div class="right">
-                <h1>珠宝专场</h1>
+                <h1>珠宝鉴定教学</h1>
                 <p>开始时间:<span>2016/7/2 19:30</span></p>
                 <p>结束时间:<span>2016/7/14 22:00</span></p>
                 <div class="begin_wrap wrap">

@@ -37,8 +37,8 @@ use yii\helpers\Url;
                 </div>
             </div>-->
             <div class="mid-main">				
-                <div><a href="myorder.html"><img src="../image/personal/p_nav1.png" alt=""><span>我参与的</span></a></div>
-                <div><a href="myorder.html"><img src="../image/personal/p_nav2.png" alt=""><span>我发起的</span></a></div>
+                <div><a href="<?= yii\helpers\Url::to(["site/partake"])?>"><img src="../image/personal/p_nav1.png" alt=""><span>我参与的</span></a></div>
+                <div><a href="<?= yii\helpers\Url::to(["site/launch"])?>"><img src="../image/personal/p_nav2.png" alt=""><span>我发起的</span></a></div>
                 <div><a href="myorder.html"><img src="../image/personal/p_nav3.png" alt=""><span>我邀请的</span></a></div>
             </div>
         </div>
