@@ -74,26 +74,26 @@ use yii\helpers\Url;
                 <img src="../image/default/index/2.jpg" alt="">
             </div>
             <div class="right">
-                <h1>昌化石专场</h1>
-                <p>开拍时间:<span>2016/7/2 19:30</span></p>
+                <h1>刚参加的</h1>
+                <p>开始时间:<span>2016/7/2 19:30</span></p>
                 <p>结束时间:<span>2016/7/14 22:00</span></p>
                 <div class="end_wrap wrap">
-                    <div><p>竞拍结束</p></div>
-                    <div><p>围观 4045</p></div>
-                    <div><p>出价 98</p></div>
+                    <div><p>正在进行</p></div>
+                    <div><p>查看 4045</p></div>
+                    <div><p>参与 98</p></div>
                 </div>
             </div>
         </a>
         <!-- 2 -->
         <a href="special_all.html" class="single">
             <div class="right">
-                <h1>古今可用专场</h1>
-                <p>开拍时间:<span>2016/7/9 9:00</span></p>
-                <p>结束时间:<span>2016/7/30 19:30</span></p>
+                <h1>刚参加进行的</h1>
+                <p>开始时间:<span>2016/7/9 9:00</span></p>
+                <p>结束时间:<span>无限</span></p>
                 <div class="end_wrap wrap">
-                    <div><p>竞拍结束</p></div>
-                    <div><p>围观 13024</p></div>
-                    <div><p>出价 98</p></div>
+                    <div><p>已结束</p></div>
+                    <div><p>查看 13024</p></div>
+                    <div><p>参与 98</p></div>
                 </div>
             </div>
             <div class="left">
@@ -107,11 +107,11 @@ use yii\helpers\Url;
             </div>
             <div class="right">
                 <h1>书画专场</h1>
-                <p>开拍时间:<span>2016/7/28 19:30</span></p>
+                <p>开始时间:<span>2016/7/28 19:30</span></p>
                 <p>结束时间:<span>2016/8/14 22:00</span></p>
                 <div class="begin_wrap wrap">
-                    <div><p>竞拍开始</p></div>
-                    <div><p>围观 41</p></div>
+                    <div><p>正在进行</p></div>
+                    <div><p>查看 41</p></div>
                     <div><p>出价 98</p></div>
                 </div>
             </div>
@@ -119,12 +119,12 @@ use yii\helpers\Url;
         <!-- 4 -->
         <a href="special_all.html" class="single">
             <div class="right">
-                <h1>印石专场</h1>
-                <p>开拍时间:<span>2016/7/26 19:30</span></p>
+                <h1>琴棋专场</h1>
+                <p>开始时间:<span>2016/7/26 19:30</span></p>
                 <p>结束时间:<span>2016/8/14 22:00</span></p>
                 <div class="end_wrap wrap">
-                    <div><p>竞拍结束</p></div>
-                    <div><p>围观 4045</p></div>
+                    <div><p>已结束</p></div>
+                    <div><p>查看 4045</p></div>
                     <div><p>出价 98</p></div>
                 </div>
             </div>
@@ -139,11 +139,11 @@ use yii\helpers\Url;
             </div>
             <div class="right">
                 <h1>海外回流文玩品专场</h1>
-                <p>开拍时间:<span>2016/7/24 19:30</span></p>
+                <p>开始时间:<span>2016/7/24 19:30</span></p>
                 <p>结束时间:<span>2016/8/14 22:00</span></p>
                 <div class="begin_wrap wrap">
-                    <div><p>竞拍开始</p></div>
-                    <div><p>围观 41</p></div>
+                    <div><p>正在进行</p></div>
+                    <div><p>查看 41</p></div>
                     <div><p>出价 98</p></div>
                 </div>
             </div>
@@ -152,11 +152,11 @@ use yii\helpers\Url;
         <a href="special_all.html" class="single">
             <div class="right">
                 <h1>当代书画专场</h1>
-                <p>开拍时间:<span>2016/7/2 19:30</span></p>
+                <p>开始时间:<span>2016/7/2 19:30</span></p>
                 <p>结束时间:<span>2016/7/14 22:00</span></p>
                 <div class="end_wrap wrap">
-                    <div><p>竞拍结束</p></div>
-                    <div><p>围观 4045</p></div>
+                    <div><p>已结束</p></div>
+                    <div><p>查看 4045</p></div>
                     <div><p>出价 98</p></div>
                 </div>
             </div>
@@ -172,11 +172,11 @@ use yii\helpers\Url;
             <div class="right">
 
                 <h1>吴山在线玉雕专场</h1>
-                <p>开拍时间:<span>2016/7/24 19:30</span></p>
+                <p>开始时间:<span>2016/7/24 19:30</span></p>
                 <p>结束时间:<span>2016/8/14 22:00</span></p>
                 <div class="end_wrap wrap">
-                    <div><p>竞拍开始</p></div>
-                    <div><p>围观 41</p></div>
+                    <div><p>正在进行</p></div>
+                    <div><p>查看 41</p></div>
                     <div><p>出价 98</p></div>
                 </div>
 
@@ -186,11 +186,11 @@ use yii\helpers\Url;
         <a href="special_all.html" class="single">
             <div class="right">
                 <h1>当代寿山石雕刻大师精品专场</h1>
-                <p>开拍时间:<span>2016/7/2 19:30</span></p>
+                <p>开始时间:<span>2016/7/2 19:30</span></p>
                 <p>结束时间:<span>2016/7/14 22:00</span></p>
                 <div class="begin_wrap wrap">
-                    <div><p>竞拍结束</p></div>
-                    <div><p>围观 4045</p></div>
+                    <div><p>已结束</p></div>
+                    <div><p>查看 4045</p></div>
                     <div><p>出价 98</p></div>
                 </div>
             </div>
@@ -205,11 +205,11 @@ use yii\helpers\Url;
             </div>
             <div class="right">
                 <h1>中青年实力派艺师紫砂专场</h1>
-                <p>开拍时间:<span>2016/7/2 19:30</span></p>
+                <p>开始时间:<span>2016/7/2 19:30</span></p>
                 <p>结束时间:<span>2016/7/14 22:00</span></p>
                 <div class="begin_wrap wrap">
-                    <div><p>竞拍开始</p></div>
-                    <div><p>围观 6311</p></div>
+                    <div><p>正在进行</p></div>
+                    <div><p>查看 6311</p></div>
                     <div><p>出价 98</p></div>
                 </div>
             </div>
@@ -218,11 +218,11 @@ use yii\helpers\Url;
         <a href="special_all.html" class="single">
             <div class="right">
                 <h1>珠宝专场</h1>
-                <p>开拍时间:<span>2016/7/2 19:30</span></p>
+                <p>开始时间:<span>2016/7/2 19:30</span></p>
                 <p>结束时间:<span>2016/7/14 22:00</span></p>
                 <div class="begin_wrap wrap">
-                    <div><p>竞拍结束</p></div>
-                    <div><p>围观 4045</p></div>
+                    <div><p>已结束</p></div>
+                    <div><p>查看 4045</p></div>
                     <div><p>出价 98</p></div>
                 </div>
             </div>
