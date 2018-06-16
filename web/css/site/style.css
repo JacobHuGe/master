@@ -304,6 +304,7 @@ background: #f7bd68 none repeat scroll 0% 0%;}
 	color: #fff;
 }
 #index .single .right h4{
+        width: 150px;
 	font-size: 0.7rem;
 	text-align: center;
 	line-height: 1.2rem;
@@ -312,7 +313,7 @@ background: #f7bd68 none repeat scroll 0% 0%;}
 text-overflow: ellipsis;
 overflow: hidden;
 }
-#index .single .right h1:after{
+#index .single .right h4:after{
 	
 }
 #index .single .right>p{font-size: 0.55rem ;line-height: 1rem;	padding-left: 0.3rem;text-align: center;}
@@ -503,7 +504,7 @@ footer div a span.now{
 .activity .wrap1 .right{
 	width: 65%;
 }
-.activity .wrap1 .right h1{
+.activity .wrap1 .right h4{
 	font-size: 0.7rem;
 	padding-bottom: 0.3rem;
 }
