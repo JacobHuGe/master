@@ -16,9 +16,9 @@ user-select:none;
 
 /**============ 栏目幻灯 ==============**/
 .tab-size,.tab-xinqing,.tab-di{margin:26px 0 0 0;}
-.tab-hd-index{background:#339ee2;}
-.tab-hd-index ul{width:99.99%;margin:0 auto;}
-.tab-hd-index li{float:left;width:33.33%;height:90px;text-align:center;color:#fff;font-size:2.285em;line-height:90px}
+.tab-hd-index{background:#339ee2; margin:10px 0;}
+.tab-hd-index ul{width:99.99%;}
+.tab-hd-index li{float:left;width:33.33%;height:60px;text-align:center;color:#fff;font-size:1.285em;line-height:60px}
 .tab-hd-index li.on {color:#fffc00;background:#168dd9;}
 .tab-hd-index li.ons {color:#fffc00; background:#168dd9;}
 .tab-news-con .list-index,.tab-size-con .list-index,.tab-xinqing-con .list-index,.tab-di-con .list-index{ display:none;}

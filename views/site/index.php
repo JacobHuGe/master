@@ -24,13 +24,13 @@ use yii\widgets\ActiveForm;
             <div class="tab-news-hd tab-hd-index">
                 <ul class="fix">
                     <li class="on">新创建</li>
-                    <li class="ons"><a href="<?= Url::to(["site/launch"])?>">发起的</a></li>
-                    <li class="ons"><a href="<?= Url::to(["site/partake"])?>">参与的</a></li>
+                    <li class="ons"><a href="<?= Url::to(["site/launch"]) ?>">发起的</a></li>
+                    <li class="ons"><a href="<?= Url::to(["site/partake"]) ?>">参与的</a></li>
                 </ul>
             </div>
         </div>
-        
-        <div class="row">
+
+        <div class="wrap1">
             <div class="form-bottom">
                 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 
@@ -64,7 +64,7 @@ use yii\widgets\ActiveForm;
                     </div>
 
                     <?= $form->field($model, 'rule')->checkboxList(['is_show_name' => '姓名昵称', 'is_show_phone' => '联系方式', 'is_show_leave' => '备注留言']) ?>
-                    
+
                     <?php // $form->field($model, 'rule')->checkboxList($items, $is_show_data)->label(false) ?>
 
                     <p>截止时间： <?= $form->field($model, 'end_at', ['inputOptions' => ['placeholder' => '不设则无自动截止', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?></p>
