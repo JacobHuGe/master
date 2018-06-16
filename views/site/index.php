@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
             </div>
         </div>
 
-        <div class="wrap1">
+        <div class="wrap">
             <div class="form-bottom">
                 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 

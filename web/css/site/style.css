@@ -17,7 +17,7 @@ user-select:none;
 /**============ 栏目幻灯 ==============**/
 .tab-size,.tab-xinqing,.tab-di{margin:26px 0 0 0;}
 .tab-hd-index{background:#339ee2; margin:10px 0;}
-.tab-hd-index ul{width:99.99%;}
+.tab-hd-index ul{width:99.99%; height: 55px}
 .tab-hd-index li{float:left;width:33.33%;height:60px;text-align:center;color:#fff;font-size:1.285em;line-height:60px}
 .tab-hd-index li.on {color:#fffc00;background:#168dd9;}
 .tab-hd-index li.ons {color:#fffc00; background:#168dd9;}
@@ -303,7 +303,7 @@ background: #f7bd68 none repeat scroll 0% 0%;}
 	background: #252525; 
 	color: #fff;
 }
-#index .single .right h1{
+#index .single .right h4{
 	font-size: 0.7rem;
 	text-align: center;
 	line-height: 1.2rem;
