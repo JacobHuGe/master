@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Url;
-use yii\widgets\LinkPager;
 ?>
 
 <!DOCTYPE html>
@@ -36,12 +35,11 @@ use yii\widgets\LinkPager;
             <div class="wrap">
                 <a href="activity_details.html" class="wrap1">
                     <div class="right">
-                        <h4><?= $model->name ?></h4>
+                        <h4><?= \app\helpers\BrowserHelper::strCut($model->name, 0, 12, 'utf-8', "....") ?></h4>
                         <p style="width: 500px"><span class="span4">发起时间：<?= date("Y-m-d H:i:s", $model->created_at) ?></span> 累计：0</p>
                         <div>
-                            <span class="span1"><img src="images/time1.png" alt=""></span>
-                            <span class="span2"><img src="images/time2.png" alt="">浙江日安美术馆</span>
-                            <span class="span3"><i>29</i>报名</span>
+                            <span class="span1">[报名进行中]</span>
+                            <span class="span2">[+更多操作]</span>
                         </div>
                     </div>
                 </a>
