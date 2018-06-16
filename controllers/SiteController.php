@@ -33,7 +33,7 @@ class SiteController extends WebBaseController {
             }
             $transaction->commit();
             
-            return $this->render("launch");
+            return $this->redirect(["site/launch"]);
         }
 
         return $this->render('index', compact('model'));
@@ -41,10 +41,9 @@ class SiteController extends WebBaseController {
     
     public function actionLaunch()
     {
-        
         $query = Title::find()->andWhere(["created_by" => Yii::$app->user->id, "deleted_at" => 0]);
         $dataProvider = new ActiveDataProvider(["query" => $query]);
-        var_Dump($this->fileTransportPath);die;
+
         return $this->render('launch', compact("dataProvider", 'fileTransportPath'));
     }
     

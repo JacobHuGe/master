@@ -46,8 +46,9 @@ class CreateForm extends Model {
         }
         
         $imgMd5Name = md5(time());
-        $imgUrl = '/runtime/uploads/' . $imgMd5Name . '.' . $this->imageFile->extension;
-        $this->imageFile->saveAs(dirname(dirname(__DIR__)).$imgUrl); 
+        $imgUrl = '/uploads/' . $imgMd5Name . '.' . $this->imageFile->extension;
+
+        $this->imageFile->saveAs(dirname(dirname(__DIR__)).'/web'.$imgUrl); 
         
         $is_show_name = 0;
         $is_show_phone = 0;
@@ -74,6 +75,7 @@ class CreateForm extends Model {
         $model->is_show_phone = $is_show_phone;
         $model->is_show_leave = $is_show_leave;
         $model->image_file = $imgMd5Name;
+        $model->created_by = Yii::$app->user->id;
         if($model->save() === false){
             throw new BadRequestHttpException(Yii::t("app", $model));
         }

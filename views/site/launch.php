@@ -10,7 +10,7 @@ use yii\widgets\LinkPager;
     src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
 
     <head>
-        
+
         <meta charset="UTF-8">
 
         <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -19,35 +19,36 @@ use yii\widgets\LinkPager;
 
     </head>
 
-    <body id="index">
+    <body class="activity">
         <div class="tab-news" id="tab-news">
             <div class="tab-news-hd tab-hd-index">
                 <ul class="fix">
-                    <li class=""><a href="<?= Url::to(["site/index"])?>">新创建</a></li>
-                    <li class="on">我发起的</a></li>
-                    <li class=""><a href="<?= Url::to(["site/partake"])?>">我参与的</a></li>
+                    <li class="ons"><a href="<?= Url::to(["site/index"]) ?>">新创建</a></li>
+                    <li class="on">发起的</a></li>
+                    <li class="ons"><a href="<?= Url::to(["site/partake"]) ?>">参与的</a></li>
                 </ul>
             </div>
         </div>
-        <div class="row">
-                 <?php foreach($dataProvider->models as $model):?>
-               <a href="new_detail.html" class="wrap">
-		<div class="wrap1">
-			<h1><?= $model->name ?></h1>
-                        <?php  var_dump($fileTransportPath);die; // var_Dump(dirname(dirname(__DIR__)).$model->download->img_url);die; ?>
-                        <img src="<?= "@runtime".$model->download->img_url ?>" alt="">
-                            <p>关键词：清明上河图；疑点；任务复活；</p>
-                            <div class="read-more">
-                                <span>阅读全文</span>
-                                <img src="images/news_more.png" alt="">
-                            </div>
-                            <span class="time">今天11：00</span>
+        
+        <?php foreach ($dataProvider->models as $model): ?>
+            <!--$model->download->img_url-->
+
+            <div class="wrap">
+                <a href="activity_details.html" class="wrap1">
+                    <div class="right">
+                        <h1><?= $model->name ?></h1>
+                        <p style="width: 500px"><span class="span4">发起时间：<?= date("Y-m-d H:i:s", $model->created_at) ?></span> 累计：0</p>
+                        <div>
+                            <span class="span1"><img src="images/time1.png" alt=""></span>
+                            <span class="span2"><img src="images/time2.png" alt="">浙江日安美术馆</span>
+                            <span class="span3"><i>29</i>报名</span>
+                        </div>
                     </div>
-                   </a>
-           
-            <?php endforeach;?>
-            
-        </div>
+                </a>
+            </div>
+
+        <?php endforeach; ?>
+
     </body>
 </html>
 

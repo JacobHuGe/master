@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 ?>
 
@@ -18,16 +19,17 @@ use yii\widgets\ActiveForm;
 
     </head>
 
-    <body id="index">
+    <body id="activity">
         <div class="tab-news" id="tab-news">
             <div class="tab-news-hd tab-hd-index">
                 <ul class="fix">
                     <li class="on">新创建</li>
-                    <li class="ons"><a href="<?= yii\helpers\Url::to(["site/launch"])?>" >发起的</a></li>
-                    <li class="ons"><a href="<?= yii\helpers\Url::to(["site/partake"])?>">参与的</a></li>
+                    <li class="ons"><a href="<?= Url::to(["site/launch"])?>">发起的</a></li>
+                    <li class="ons"><a href="<?= Url::to(["site/partake"])?>">参与的</a></li>
                 </ul>
             </div>
         </div>
+        
         <div class="row">
             <div class="form-bottom">
                 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
