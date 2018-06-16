@@ -36,7 +36,7 @@ use yii\widgets\LinkPager;
             <div class="wrap">
                 <a href="activity_details.html" class="wrap1">
                     <div class="right">
-                        <h1><?= $model->name ?></h1>
+                        <h4><?= $model->name ?></h4>
                         <p style="width: 500px"><span class="span4">发起时间：<?= date("Y-m-d H:i:s", $model->created_at) ?></span> 累计：0</p>
                         <div>
                             <span class="span1"><img src="images/time1.png" alt=""></span>
