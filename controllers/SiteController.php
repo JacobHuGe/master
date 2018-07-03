@@ -28,11 +28,10 @@ class SiteController extends WebBaseController {
             
             $transaction = Yii::$app->db->beginTransaction();
             if ($model->save() === false) {
-                // 文件上传成功
                 throw new BadRequestHttpException(Yii::t("app", "添加失败"));
             }
             $transaction->commit();
-            
+            // 文件上传成功
             return $this->redirect(["site/launch"]);
         }
 

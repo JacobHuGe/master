@@ -34,7 +34,7 @@ class CreateForm extends Model {
         return [
             [['imageFile'], 'file', 'skipOnEmpty' => false],
             [['name', "study_name", 'price', "content", 'rule'], 'required'],
-            [['currency', 'end_at'], "safe"],
+            [['currency', 'end_at', 'number'], "safe"],
             //['log', 'file', 'skipOnEmpty' => false],
         ];
     }
@@ -79,18 +79,20 @@ class CreateForm extends Model {
         if($model->save() === false){
             throw new BadRequestHttpException(Yii::t("app", $model));
         }
-
-        $study = new Study();
         
-        $study->name = $this->study_name;
-        $study->price = $this->price;
-        $study->number = $this->number;
-        
-        $study->title_id = $model->id;
-        if($study->save() === false){
-            throw new BadRequestHttpException(Yii::t("app", $study));
+        $num = count($this->study_name);
+        for($i=0; $i<=$num-1; $i++){
+            $study = new Study();
+            
+            $study->name = $this->study_name[$i];
+            $study->price = $this->price[$i];
+            $study->number = $this->number[$i];
+            
+            $study->title_id = $model->id;
+            if($study->save() === false){
+                throw new BadRequestHttpException(Yii::t("app", $study));
+            }
         }
-        
         
         $attachment = new Attachment();
         $attachment->owner_id = $model->id;
@@ -99,9 +101,6 @@ class CreateForm extends Model {
         if($attachment->save() === false){
             throw new BadRequestHttpException(Yii::t("app", $attachment));
         }
-        
-        
-        
         
         return "ok";
         
