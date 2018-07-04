@@ -47,7 +47,26 @@
                         2018-04-21
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class='information'>
+            <div class='newinfo'>
+                报名动态：目前累计42
+            </div>
+            <div class='infocontent'>
+                <div class="signup">
+                    <img src="../image/default/index/1.jpg" class="headportrait" >
+                    <div class="enroll">
+                        2018-04-21 zzzz
+                    </div>
+                </div>
 
+                <div class="signup">
+                    <img src="../image/default/index/1.jpg" class="headportrait" >
+                    <div class="enroll">
+                        2018-04-21 zzzz
+                    </div>
+                </div>
             </div>
         </div>
     </body>
