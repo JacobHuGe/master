@@ -36,14 +36,14 @@
         <div class="weui-cell" style="align-items: flex-start;" >
             <div class="weui-cell__hd"><img src="/images/avatar.jpg" alt="" style="width:48px;margin-right:12px;display:block"></div>
             <div class="weui-cell__bd">
-                <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 20px;">&times;1</span><span style="margin-left: 8px">[ 标注 ]</span></p>
+                <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 20px;">&times;1</span><span style="margin-left: 7px">[ 标注 ]</span></p>
                 <p style='font-size: 13px;color: #666;margin: 4px 0;' >张三/…1234/——</p>
             </div>
         </div>
         <div class="weui-cell" style="align-items: flex-start;" >
             <div class="weui-cell__hd"><img src="/images/avatar.jpg" alt="" style="width:48px;margin-right:12px;display:block"></div>
             <div class="weui-cell__bd">
-                <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 20px;">&times;1</span><span style="margin-left: 8px">[ 标注 ]</span></p>
+                <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 20px;">&times;1</span><span style="margin-left: 7px">[ 标注 ]</span></p>
                 <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">嘉峪关-敦煌自驾</span> <span style="margin-left: 20px;">&times;2</span></p>
                 <p style='font-size: 13px;color: #666;margin: 4px 0;' >张三/…1234/——</p>
             </div>
@@ -61,7 +61,7 @@
         <div class="weui-cell" style="align-items: flex-start;" >
             <div class="weui-cell__hd"><img src="../images/avatar.jpg" alt="" style="width:48px;margin-right:12px;display:block"></div>
             <div class="weui-cell__bd">
-                <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 20px;">&times;1</span><span style="margin-left: 8px">[ 标注 ]</span></p>
+                <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 20px;">&times;1</span><span style="margin-left: 7px">[ 标注 ]</span></p>
                 <p style='font-size: 13px;color: #666;margin: 4px 0;' >张三/…1234/——</p>
             </div>
         </div>
@@ -75,7 +75,7 @@
         <div class="weui-cell" style="align-items: flex-start;" >
             <div class="weui-cell__hd"><img src="/images/avatar.jpg" alt="" style="width:48px;margin-right:12px;display:block"></div>
             <div class="weui-cell__bd">
-                <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 20px;">&times;1</span><span style="margin-left: 8px">[ 标注 ]</span></p>
+                <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 20px;">&times;1</span><span style="margin-left: 7px">[ 标注 ]</span></p>
                 <p style='font-size: 13px;color: #666;margin: 4px 0;' >张三/…1234/——</p>
             </div>
         </div>
