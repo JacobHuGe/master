@@ -71,6 +71,20 @@ class DefaultController extends WebBaseController
     }
     
     /**
+     * 统计
+     * @return type
+     */
+    public function actionCount()
+    {
+        return $this->render("count");
+    }
+    
+    public function actionApply()
+    {
+        return $this->render("apply");
+    }
+    
+    /**
      * Login action.
      *
      * @return Response|string

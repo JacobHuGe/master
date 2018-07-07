@@ -20,22 +20,22 @@ class SiteController extends WebBaseController {
      */
     public function actionIndex() {
         
-        $model = new CreateForm();
-        
-        if( Yii::$app->request->post()){
-            $model->load($_REQUEST);
-            $model->imageFile = UploadedFile::getInstance($model, "imageFile");
-            
-            $transaction = Yii::$app->db->beginTransaction();
-            if ($model->save() === false) {
-                throw new BadRequestHttpException(Yii::t("app", "添加失败"));
-            }
-            $transaction->commit();
-            // 文件上传成功
-            return $this->redirect(["site/launch"]);
-        }
+//        $model = new CreateForm();
+//        
+//        if( Yii::$app->request->post()){
+//            $model->load($_REQUEST);
+//            $model->imageFile = UploadedFile::getInstance($model, "imageFile");
+//            
+//            $transaction = Yii::$app->db->beginTransaction();
+//            if ($model->save() === false) {
+//                throw new BadRequestHttpException(Yii::t("app", "添加失败"));
+//            }
+//            $transaction->commit();
+//            // 文件上传成功
+//            return $this->redirect(["site/launch"]);
+//        }
 
-        return $this->render('index', compact('model'));
+        return $this->render('index');
     }
     
     public function actionLaunch()
@@ -45,6 +45,25 @@ class SiteController extends WebBaseController {
 
         return $this->render('launch', compact("dataProvider", 'fileTransportPath'));
     }
+    
+    /**
+     * 我创建的
+     * @return type
+     */
+    public function actionSponsor()
+    {
+        return $this->render('sponsor');
+    }
+    
+    /**
+     * 我参与的
+     * @return type
+     */
+    public function actionJoin()
+    {
+        return $this->render("join");
+    }
+    
     
     public function actionPartake()
     {

@@ -1,140 +1,213 @@
-<?php
-
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\widgets\ActiveForm;
-?>
-
 <!DOCTYPE html>
-<html lang="en">
-    <script
-    src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
-
+<html>
     <head>
-        <meta charset="UTF-8">
-
-        <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-        <link href="../css/site/style.css"  rel="stylesheet">
-
+        <meta charset="utf-8" />
+        <meta name="renderer" content="webkit">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.3/weui.min.css">
+        <link rel="stylesheet" href="/css/app.css">
+        <script type="text/javascript" src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js" ></script>
+        <script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.1.3/weui.min.js"></script>
+        <!-- <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+        <link rel="stylesheet" href="/css/app.css">
+        <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+        <script>
+            if ('addEventListener' in document) {
+                document.addEventListener('DOMContentLoaded', function() {
+                    FastClick.attach(document.body);
+                }, false);
+            }
+            if(!window.Promise) {
+                document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
+            }
+        </script> -->
+        <title>index</title>
     </head>
-
-    <body id="activity">
-        <div class="tab-news" id="tab-news">
-            <div class="tab-news-hd tab-hd-index">
-                <ul class="fix">
-                    <li class="on">新创建</li>
-                    <li class="ons"><a href="<?= Url::to(["site/launch"]) ?>">发起的</a></li>
-                    <li class="ons"><a href="<?= Url::to(["site/partake"]) ?>">参与的</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="wrap">
-            <div class="form-bottom">
-                <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
-
-                <?= $form->field($model, 'name', ['inputOptions' => ['placeholder' => '在此设一个标题', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?>
-                <?= $form->field($model, 'content', ['inputOptions' => ['placeholder' => '简要的文字描述', 'class' => 'form-username form-control']])->textarea(['autofocus' => true])->label(false) ?>
-                <div>
-                    主图片：<?= $form->field($model, 'imageFile')->fileInput()->label(false); ?>
+    <body>
+        <div class="weui-tab">
+            <div class="weui-navbar">
+                <div class="weui-navbar__item weui-bar__item_on">
+                    <a href='<?= yii\helpers\Url::to(["site/index"]) ?>' class='invite-nav-btn' >我新建</a>
                 </div>
-                
-                <div>
-                    <div class="form">
-                        <h4>报名设置</h4>
-                    </div>
-                    <div>
-                        <span>配资金信息●/○:  <?= $form->field($model, 'currency')->dropDownList(['1' => '￥', '2' => '$', '3' => '€', '4' => '￡'])->label(false); ?></span>
-                    </div>
-                    <div>
-                        <p>点[+]创建一个或多个报名项 <input type='button' class='btnAdd' value='[+]'/></p>
-                        <div id="father">
-                            <fieldset>
-                                <legend>报名项</legend><input type='button' class='btnDel' value='删除' onclick = "$(this).parent().remove();"/>
+                <div class="weui-navbar__item">
+                    <a href="<?= yii\helpers\Url::to(["site/sponsor"]) ?>" class='invite-nav-btn' >我发起</a>
+                </div>
+                <div class="weui-navbar__item">
+                    <a href="<?= yii\helpers\Url::to(["site/join"]) ?>" class='invite-nav-btn' >我参与</a>
+                </div>
+            </div>
 
-                                <p>项目名称： <?= $form->field($model, 'study_name[]', ['inputOptions' => ['placeholder' => '简要的文字描述', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?></p>
-                                <p>项目单价： <?= $form->field($model, 'price[]', ['inputOptions' => ['placeholder' => '简要的文字描述', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?></p>
-                                <p>数量限制： <?= $form->field($model, 'number[]', ['inputOptions' => ['placeholder' => '简要的文字描述', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?></p>
-
-                            </fieldset>
+            <div class="weui-tab__panel">
+                <form>
+                    <div class="weui-cells__title">基础设置</div>
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">主题</label></div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" placeholder="请输入主题"/>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <textarea class="weui-textarea" placeholder="简要描述" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-uploader">
+                                <div class="weui-uploader__hd">
+                                    <p class="weui-uploader__title">附加图片</p>
+                                </div>
+                                <div class="weui-uploader__bd">
+                                    <div class="weui-uploader__input-box">
+                                        <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div>
-                        <span>报名信息的登记规则:  ✓</span>
+                    <div class="weui-cells__title">报名设置</div>
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cell weui-cell_switch">
+                            <div class="weui-cell__bd">配资金信息</div>
+                            <div class="weui-cell__ft">
+                                <input class="weui-switch" data-pickfunding type="checkbox"/>
+                            </div>
+                        </div>
+                        <div class="weui-cell weui-cell_select weui-cell_select-after" data-type style='display: none;' >
+                            <div class="weui-cell__hd">
+                                <label for="" class="weui-label">币种</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <select class="weui-select" name="select1">
+                                    <option selected="" value="1">¥</option>
+                                    <option value="2">＄</option>
+                                    <option value="3">€</option>
+                                    <option value="4">￡</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-
-                    <?= $form->field($model, 'rule')->checkboxList(['is_show_name' => '姓名昵称', 'is_show_phone' => '联系方式', 'is_show_leave' => '备注留言']) ?>
-
-                    <?php // $form->field($model, 'rule')->checkboxList($items, $is_show_data)->label(false) ?>
-
-                    <p>截止时间： <?= $form->field($model, 'end_at', ['inputOptions' => ['placeholder' => '不设则无自动截止', 'class' => 'form-username form-control']])->textInput(['autofocus' => true])->label(false) ?></p>
-                </div>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
-                </div>
-
-                <?php ActiveForm::end() ?>
+                    <div data-fundings >
+                        <div data-fundingitem >
+                            <div class="weui-cells__title">
+                                报名项
+                                <a class='invite-fundings-btn' data-fundingaction='delete' style="color: #ff2500;" >[ 删除 ]</a> 
+                                <a class='invite-fundings-btn' data-fundingaction='add' >[ 添加 ]</a>
+                            </div>
+                            <div class="weui-cells weui-cells_form">
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd"><label class="weui-label">项目名称</label></div>
+                                    <div class="weui-cell__bd">
+                                        <input class="weui-input" placeholder="请输入项目名称"/>
+                                    </div>
+                                </div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd"><label class="weui-label">项目单价</label></div>
+                                    <div class="weui-cell__bd">
+                                        <input class="weui-input" placeholder="请输入项目单价"/>
+                                    </div>
+                                </div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__hd"><label class="weui-label">数量限制</label></div>
+                                    <div class="weui-cell__bd">
+                                        <input class="weui-input" placeholder="请输入数量限制"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-cells__title">报名信息的登记规则</div>
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cell weui-cell_switch">
+                            <div class="weui-cell__bd">姓名昵称全显</div>
+                            <div class="weui-cell__ft">
+                                <input class="weui-switch" data-pickfunding type="checkbox"/>
+                            </div>
+                        </div>
+                        <div class="weui-cell weui-cell_switch">
+                            <div class="weui-cell__bd">联系方式半显</div>
+                            <div class="weui-cell__ft">
+                                <input class="weui-switch" data-pickfunding type="checkbox"/>
+                            </div>
+                        </div>
+                        <div class="weui-cell weui-cell_switch">
+                            <div class="weui-cell__bd">备注留言半显</div>
+                            <div class="weui-cell__ft">
+                                <input class="weui-switch" data-pickfunding type="checkbox"/>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label for="" class="weui-label">截止时间</label></div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="date" value=""/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-btn-area">
+                        <button class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">提交发布</button>
+                    </div>
+                </form>
             </div>
         </div>
+        <script>
+            $(function () {
+                $('[data-pickfunding]').change(function (e) {
+                    $('[data-type]').css('display', e.target.checked ? 'flex' : 'none');
+                })
+
+                function _template() {
+                    var template = "<div data-fundingitem >" + "\n";
+                    template += '<div class="weui-cells__title">' + '\n';
+                    template += '报名项' + '\n';
+                    template += '<a class="invite-fundings-btn" data-fundingaction="delete" style="color: #ff2500;" >[ 删除 ]</a>' + '\n';
+                    template += '<a class="invite-fundings-btn" data-fundingaction="add" >[ 添加 ]</a>' + '\n';
+                    template += '</div>' + '\n';
+                    template += '<div class="weui-cells weui-cells_form">' + '\n';
+                    template += '<div class="weui-cell">' + '\n';
+                    template += '<div class="weui-cell__hd"><label class="weui-label">项目名称</label></div>' + '\n';
+                    template += '<div class="weui-cell__bd">' + '\n';
+                    template += '<input class="weui-input" placeholder="请输入项目名称"/>' + '\n';
+                    template += '</div> \n </div> \n';
+                    template += '<div class="weui-cell">' + '\n';
+                    template += '<div class="weui-cell__hd"><label class="weui-label">项目单价</label></div>' + '\n';
+                    template += '<div class="weui-cell__bd">' + '\n';
+                    template += '<input class="weui-input" placeholder="请输入项目单价"/>' + '\n';
+                    template += '</div> \n </div> \n';
+                    template += '<div class="weui-cell">' + '\n';
+                    template += '<div class="weui-cell__hd"><label class="weui-label">数量限制</label></div>' + '\n';
+                    template += '<div class="weui-cell__bd">' + '\n';
+                    template += '<input class="weui-input" placeholder="请输入数量限制"/>' + '\n';
+                    template += '</div> \n </div> \n </div> \n </div> \n';
+
+                    return $(template);
+                }
+
+                $(document).on('click', '[data-fundingaction]', function () {
+                    var action = $(this).data('fundingaction');
+                    var _index = $(this).parents('[data-fundingitem]').index();
+
+                    if (action === 'delete') {
+                        if ($('[data-fundings]').find('[data-fundingitem]').length < 2) {
+                            $(this).parents('[data-fundingitem]').replaceWith(_template())
+                        } else {
+                            $(this).parents('[data-fundingitem]').remove();
+                        }
+                    } else {
+                        var _chil = $('[data-fundings]').find('[data-fundingitem]');
+                        var _new = $('<div data-fundings></div>');
+                        for (var i = 0; i < _chil.length; i++) {
+                            _new.append(_chil[i]);
+                            if (i === _index) {
+                                _new.append(_template());
+                            }
+                        }
+
+                        $('[data-fundings]').replaceWith(_new);
+                    }
+                })
+            })
+        </script>
     </body>
 </html>
-
-<script>
-    var blockNum = 10;
-
-    $(document).ready(function () {
-        var parentDom = $('#father'), oriDom = parentDom.children(":first");
-        $('.btnAdd').click(function () {
-            var clLength = parentDom.children().length;
-            if (blockNum > clLength) {
-                var nowDom = oriDom.clone();
-                nowDom.children(":first").text('报名项');
-                parentDom.append(nowDom);
-            }
-            else
-                return false;
-        });
-        $('.btnSub').click(function () {
-
-            var nameUser = [];
-            $('.testName').each(function (index) {
-                nameUser[index] = $(this).val();
-            }); // 获取所有文本框
-
-            var nameUser1 = [];
-            $('.test').each(function (index) {
-                nameUser1[index] = $(this).val();
-            }); // 获取所有文本框
-
-            $('.conform').submit();
-        });
-    });
-
-</script>
-
-<!--<script type="text/javascript">
-    function getVal() {
-        var newAdd = document.getElementById('newAdd').value;
-        document.getElementById('txtVal').innerHTML += newAdd;
-    }
-</script>-->
-
-
-<!--<script>
-    window.onload = function () {
-        var oBtn = document.getElementById('btn');
-        oBtn.onclick = function () {
-            var oInp = document.createElement('input');
-            oInp.type = 'txet';
-            document.body.appendChild(oInp);
-        };
-    };
-</script>-->
-</head>
-<!--
-<body>
-    <input type="button" id="btn" value="click me" />
-</body>-->
