@@ -27,7 +27,7 @@
 </head>
 <body>
     <div class="invite-detail-title" style="font-size: 16px;border-bottom: 1px solid #e5e5e5;line-height: 40px;">额济纳/四姑娘山/嘉峪关户外活动召集令</div>
-    <form>
+    <form action="<?= yii\helpers\Url::to(["site/join"])?>">
         <div class="weui-cells__title">报名项列表</div>
         <div class="weui-cells weui-cells_form">
             <div class='weui-cell' style='display: block;'>
