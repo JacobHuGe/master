@@ -21,50 +21,52 @@ class CreateForm extends Model {
     public $content;
     public $currency;
     public $imageFile;
-    public $rule;
     public $study_name;
     public $end_at;
     public $price;
     public $number;
+    public $is_show_name;
+    public $is_show_phone;
+    public $is_show_leave;
+    
 
     /**
      * @inheritdoc
      */
     public function rules() {
         return [
-            [['imageFile'], 'file', 'skipOnEmpty' => false],
-            [['name', "study_name", 'price', "content", 'rule'], 'required'],
-            [['currency', 'end_at', 'number'], "safe"],
-            //['log', 'file', 'skipOnEmpty' => false],
+            //[['imageFile'], 'file', 'skipOnEmpty' => false],
+            [['name', "study_name", "content", 'price'], 'required'],
+            [['currency', 'end_at', 'number', 'is_show_name', 'is_show_phone', 'is_show_leave'], "safe"],
         ];
     }
     
 
     public function save() {
         if (!$this->validate()) {
-            return $this;
+            throw new BadRequestHttpException($this);
         }
         
-        $imgMd5Name = md5(time());
-        $imgUrl = '/uploads/' . $imgMd5Name . '.' . $this->imageFile->extension;
+        //$imgMd5Name = md5(time());
+        //$imgUrl = '/uploads/' . $imgMd5Name . '.' . $this->imageFile->extension;
 
-        $this->imageFile->saveAs(dirname(dirname(__DIR__)).'/web'.$imgUrl); 
+        //$this->imageFile->saveAs(dirname(dirname(__DIR__)).'/web'.$imgUrl); 
         
         $is_show_name = 0;
         $is_show_phone = 0;
         $is_show_leave = 0;
         
-        foreach($this->rule as $splitRole){
-            if($splitRole == 'is_show_name'){
-                $is_show_name = 1;
-            }
-            if($splitRole == 'is_show_phone'){
-                $is_show_phone = 1;
-            }
-            if($splitRole == 'is_show_leave'){
-                $is_show_leave = 1;
-            }
+
+        if($this->is_show_name == 'is_show_name'){
+            $is_show_name = 1;
         }
+        if($this->is_show_phone == 'is_show_phone'){
+            $is_show_phone = 1;
+        }
+        if($this->is_show_leave == 'is_show_leave'){
+            $is_show_leave = 1;
+        }
+        
         
         $model = new Title();
         $model->name = $this->name;
@@ -74,7 +76,7 @@ class CreateForm extends Model {
         $model->is_show_name = $is_show_name;
         $model->is_show_phone = $is_show_phone;
         $model->is_show_leave = $is_show_leave;
-        $model->image_file = $imgMd5Name;
+        //$model->image_file = $imgMd5Name;
         $model->created_by = Yii::$app->user->id;
         if($model->save() === false){
             throw new BadRequestHttpException(Yii::t("app", $model));
@@ -94,13 +96,13 @@ class CreateForm extends Model {
             }
         }
         
-        $attachment = new Attachment();
-        $attachment->owner_id = $model->id;
-        $attachment->model_id = $imgMd5Name;
-        $attachment->img_url = $imgUrl;
-        if($attachment->save() === false){
-            throw new BadRequestHttpException(Yii::t("app", $attachment));
-        }
+//        $attachment = new Attachment();
+//        $attachment->owner_id = $model->id;
+//        $attachment->model_id = $imgMd5Name;
+//        $attachment->img_url = $imgUrl;
+//        if($attachment->save() === false){
+//            throw new BadRequestHttpException(Yii::t("app", $attachment));
+//        }
         
         return "ok";
         

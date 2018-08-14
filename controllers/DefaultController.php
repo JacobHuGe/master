@@ -19,16 +19,14 @@ use const YII_ENV_TEST;
 
 class DefaultController extends WebBaseController
 {
-    
     public function behaviors() 
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout', 'count', 'apply'],
                 'rules' => [
                     [
-                        'actions' => ['logout', 'register', 'login'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -42,7 +40,7 @@ class DefaultController extends WebBaseController
             ],
         ];
     }
-   
+    
         /**
      * {@inheritdoc}
      */
@@ -104,6 +102,10 @@ class DefaultController extends WebBaseController
         return $this->render('login', [
             'model' => $model,
         ]);
+    }
+    
+    public function actionAaa(){
+        die("xxx");
     }
 
     /**

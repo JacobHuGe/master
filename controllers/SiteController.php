@@ -19,24 +19,30 @@ class SiteController extends WebBaseController {
      * @return string
      */
     public function actionIndex() {
-        
-//        $model = new CreateForm();
-//        
-//        if( Yii::$app->request->post()){
-//            $model->load($_REQUEST);
-//            $model->imageFile = UploadedFile::getInstance($model, "imageFile");
-//            
-//            $transaction = Yii::$app->db->beginTransaction();
-//            if ($model->save() === false) {
-//                throw new BadRequestHttpException(Yii::t("app", "添加失败"));
-//            }
-//            $transaction->commit();
-//            // 文件上传成功
-//            return $this->redirect(["site/launch"]);
-//        }
+        $model = new CreateForm();
+        if( Yii::$app->request->post()){
+            $model->load($_REQUEST);
+            $model->imageFile = UploadedFile::getInstance($model, "imageFile");
+            $transaction = Yii::$app->db->beginTransaction();
+            if ($model->save() === false) {
+                throw new BadRequestHttpException(Yii::t("app", "添加失败"));
+            }
+            $transaction->commit();
+            // 文件上传成功
+            return $this->redirect(["site/sponsor"]);
+        }
 
-        return $this->render('index');
+        return $this->render('index',["model" => $model]);
     }
+    
+    public function actionAaa(){
+        die("xx");
+    }
+    public function actionMyAction(){
+    if(Yii::$app->request->getIsPost()){
+        var_dump(Yii::$app->request->post());
+    }
+}
     
     public function actionLaunch()
     {

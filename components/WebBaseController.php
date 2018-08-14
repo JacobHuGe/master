@@ -23,24 +23,13 @@ class WebBaseController extends Controller {
      */
     public function behaviors() 
     {
-        
-        if (Yii::$app->user->isGuest) {
-            // 没有登录,登录,登录后,返回
-        
-            Yii::$app->user->setReturnUrl(Yii::$app->request->getUrl());  // 设置返回的url,登录后原路返回
-            
-            Yii::$app->user->loginRequired();
-            
-            Yii::$app->end();
-        }
-
         return [
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout', 'register', 'login'],
+                        'actions' => ['login'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
