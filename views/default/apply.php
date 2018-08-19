@@ -1,3 +1,6 @@
+<?php
+use yii\widgets\ActiveForm;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,77 +29,94 @@
     <title>index</title>
 </head>
 <body>
-    <div class="invite-detail-title" style="font-size: 16px;border-bottom: 1px solid #e5e5e5;line-height: 40px;">额济纳/四姑娘山/嘉峪关户外活动召集令</div>
-    <form action="<?= yii\helpers\Url::to(["site/join"])?>">
+    <div class="invite-detail-title" style="font-size: 16px;border-bottom: 1px solid #e5e5e5;line-height: 40px;"><?= $title->name ?> </div>
+    <!--<form action="<?php // yii\helpers\Url::to(["default/apply"])?>" method="post">-->
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
         <div class="weui-cells__title">报名项列表</div>
+        
         <div class="weui-cells weui-cells_form">
+            <?php foreach($dataProvider->models as $model): ?>
             <div class='weui-cell' style='display: block;'>
                 <p style="display: flex;justify-content: space-between;width: 100%;" >
-                    <span>额济纳旗自驾</span>
-                    <span style='color: #ff2500;' >￥480.00</span>
+                    <span><?= $model->name ?></span>
+                    <span style='color: #ff2500;' data-price="<?= $model->price ?>">￥<?= number_format($model->price,2) ?></span>
                 </p>
                 <div style="display: flex;justify-content: space-between;width: 100%;margin-top: 8px;align-items: center;"  >
-                    <div style='font-size: 14px;color: #1b99e8;' >已报16 / 剩余<span data-max="4">4</span></div>
+                    
+                    <div style='font-size: 14px;color: #1b99e8;' >已报 <?= $title->enrollNum($title->id, $model->id) ?> / 剩余<span data-max="<?= $title->surplusNum($title->id, $model->id) ?>"><?= $title->surplusNum($title->id, $model->id) ?></span></div>
                     <div data-actions>
                         <a data-action='delete' style='display: inline-block;font-size: 24px;width: 32px;color: #ff2500;text-align: center;' >-</a>
                         <span data-val>0</span>
                         <a data-action='add' style='display: inline-block;font-size: 24px;width: 32px;color: #1b99e8;text-align: center;' >+</a>
+                        <?= $form->field($apply, 'study_id[]')->hiddenInput(['value'=> $model->id,  "id" => "nn"])->label(false) ?>
+                        <?= $form->field($apply, 'num[]')->hiddenInput(['value'=> 0, "id" => "num"])->label(false) ?>
                         <input value='0' type='hidden' />
+                        <span data-id="<?= $model->id ?>"></span>
                     </div>
                 </div>
             </div>
-            <div class='weui-cell' style='display: block;'>
-                <p style="display: flex;justify-content: space-between;width: 100%;" >
-                    <span>四姑娘山远足</span>
-                    <span style='color: #ff2500;'>￥1,600.00</span>
-                </p>
-                <div style="display: flex;justify-content: space-between;width: 100%;margin-top: 8px;align-items: center;"  >
-                    <div style='font-size: 14px;color: #1b99e8;' >已报12 / 剩余<span data-max="8">8</span></div>
-                    <div data-actions>
-                        <a data-action='delete' style='display: inline-block;font-size: 24px;width: 32px;color: #ff2500;text-align: center;' >-</a>
-                        <span data-val>0</span>
-                        <a data-action='add' style='display: inline-block;font-size: 24px;width: 32px;color: #1b99e8;text-align: center;' >+</a>
-                        <input value='0' type='hidden' />
-                    </div>
-                </div>
-            </div>
+            
+            <?php endforeach; ?>
             <div class='weui-cell'>
                 <p style="display: flex;justify-content: space-between;width: 100%;" >
                     <span>个人金额总计：</span>
-                    <span style='color: #ff2500;'>￥2,600.00</span>
+                    <span style='color: #ff2500;'>￥ <span data-price-val>0</span></span>
                 </p>
             </div>
         </div>
         <div class="weui-cells__title">报名人信息</div>
         <div class="weui-cells weui-cells_form">
+            <?php if($title->is_show_name == 1): ?>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">姓名昵称</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" placeholder="请输入姓名昵称"/>
+                    <?= $form->field($apply, 'name', ['inputOptions' => ['placeholder' => '请输入姓名昵称', 'class' => 'weui-input']])->textInput(['autofocus' => true])->label(false) ?>
+                    <!--<input class="weui-input" placeholder="请输入姓名昵称"/>-->
                 </div>
             </div>
+            <?php endif; ?>
+            <?php if($title->is_show_phone == 1): ?>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">联系方式</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" placeholder="请输入联系方式"/>
+                    <?= $form->field($apply, 'mobile', ['inputOptions' => ['placeholder' => '请输入联系方式', 'class' => 'weui-input']])->textInput(['autofocus' => true])->label(false) ?>
+                    <!--<input class="weui-input" placeholder="请输入联系方式"/>-->
                 </div>
             </div>
+            <?php endif; ?>
+            <?php if($title->is_show_leave == 1): ?>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <textarea class="weui-textarea" placeholder="备注留言" rows="3"></textarea>
+                    <?= $form->field($apply, 'remarks', ['inputOptions' => ['placeholder' => '备注留言',"rows" => 3,  'class' => 'weui-textarea']])->textarea(['autofocus' => true])->label(false) ?>
+                    <!--<textarea class="weui-textarea" placeholder="备注留言" rows="3"></textarea>-->
                 </div>
             </div>
+            <?php endif; ?>
         </div>
         <div class="weui-btn-area">
             <button class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">提交</button>
         </div>
-    </form>
+    <?php ActiveForm::end() ?>
+    <!--</form>-->
     <script>
         $(function(){
             $('[data-actions]').on('click', '[data-action]', function(){
                 var action = $(this).data('action');
                 var max = $(this).parent().siblings().find('[data-max]').data('max');
+                var price = $(this).parent().parent().siblings().find('[data-price]').data('price'); 
+                //var id = $(this).siblings().find('[data-id]').data('id');
+                //var id = $('[data-id]').each(function(){ var id = $(this).data('id'); alert(id) });
+                var id = $('[data-id]').data("id");
+                //var id = $('#id').data("id");
+                //var id = document.getElementById("nn").value;
+                
+//                $('[data-id]').each(function(){
+//                    var id = $(this).data('id');
+//                    alert(id);
+//                })
+                var totalprice = $('[data-price-val]').text();
                 var val = $(this).siblings('input').val();
+                
                 if( action === 'delete' && val == 0 ){
                     return false;
                 }
@@ -104,8 +124,15 @@
                 if( action === 'add' && val >= max ) {
                     return false;
                 }
+                
                 val = action === 'add' ? parseInt(val) + 1 : parseInt(val) - 1;
+                totalprice = action === 'add' ? parseFloat(price) + parseFloat(totalprice) : parseFloat(totalprice) - parseFloat(price);
+
                 $(this).siblings('[data-val]').text(val);
+                $('[data-price-val]').text(totalprice);
+                //$(this).siblings('[data-price-val]').text(val);
+                
+                $("#num").val(val);
                 $(this).siblings('input').val(val);
             })
         })

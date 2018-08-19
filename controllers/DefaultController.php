@@ -5,9 +5,13 @@ use app\components\WebBaseController;
 use app\models\ContactForm;
 use app\models\LoginForm;
 use app\models\RegisterForm;
+use app\models\Study;
+use app\models\Title;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\BadRequestHttpException;
 use yii\web\Response;
 use const YII_ENV_TEST;
 
@@ -64,8 +68,20 @@ class DefaultController extends WebBaseController
      * @return string
      */
     public function actionIndex()
-    { 
-        return $this->render('index');
+    {
+        $title = @$_REQUEST["title"];
+//        if(empty($title)){
+//            return $this->render("index",["title" => "24"]);
+//        }
+        if(empty($title)){
+            //throw new BadRequestHttpException("参数错误");
+            $title = '24';
+        }
+        $titleData = Title::findOne(["id" => $title]);
+        if(empty($titleData) || $titleData->state == Title::STATE_FAIL){
+            throw new BadRequestHttpException("找不到次记录");
+        }
+        return $this->render('index', ["model" => $titleData]);
     }
     
     /**
@@ -79,7 +95,30 @@ class DefaultController extends WebBaseController
     
     public function actionApply()
     {
-        return $this->render("apply");
+        $id = @$_REQUEST["id"];
+        if(empty($id)){
+            throw new BadRequestHttpException("参数错误");
+        }
+
+        $titleData = Title::findOne(["id" => $id]);
+        if(empty($titleData) || $titleData->state == Title::STATE_FAIL){
+            throw new BadRequestHttpException("找不到次记录");
+        }
+        
+        $query = Study::find()->andWhere(["title_id" => $titleData->id]);
+        $dataProvider = new ActiveDataProvider(["query" => $query]);
+        $apply = new \app\models\ApplyForm();
+        if(Yii::$app->request->post()){
+            die("xxx");
+            $apply->load($_REQUEST);
+            $transaction = Yii::$app->db->beginTransaction();
+            if ($apply->save() === false) {
+                throw new BadRequestHtbeginTransactiontpException(Yii::t("app", "添加失败"));
+            }
+            $transaction->commit();
+        }
+        
+        return $this->render("apply", ["dataProvider" => $dataProvider, "title" => $titleData, "apply" => $apply]);
     }
     
     /**
@@ -102,10 +141,6 @@ class DefaultController extends WebBaseController
         return $this->render('login', [
             'model' => $model,
         ]);
-    }
-    
-    public function actionAaa(){
-        die("xxx");
     }
 
     /**

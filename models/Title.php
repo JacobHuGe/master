@@ -14,6 +14,24 @@ use yii\db\ActiveRecord;
 
 class Title extends ActiveRecord {
 
+    //通过
+    const STATE_ADOPT = "adopt";
+    //失败
+    const STATE_FAIL = "fail";
+    //审核中
+    const STATE_AUDIT= "audit";
+    
+    /**
+     * 报名状态
+     * @return string
+     */
+    //报名进行中
+    const ENROLL_STATE_COMDUCT = 'conduct';
+    //报名已终止
+    const ENROLL_STATE_STOP = 'stop';
+    //报名已删除
+    const ENROLL_STATE_DELETED = 'deleted';
+    
     public static function tableName() {
         return '{{%title}}';
     }
@@ -51,6 +69,33 @@ class Title extends ActiveRecord {
         return $this->hasOne(Attachment::className(), ["model_id" => "image_file"]);
     }
     
+    public function getStudys()
+    {
+        return $this->hasMany(Study::className(), ["title_id" => "id"]);
+    }
     
-
+    /**
+     * 报名数量
+     * @param type $titleId
+     * @param type $studyId
+     * @return type
+     */
+    public function enrollNum($titleId, $studyId){
+        $enrolls = StudyEnroll::find()->andWhere(["title_id" => $titleId, "study_id" => $studyId])->asArray()->all();
+        $num = 0;
+        foreach($enrolls as $enroll){
+            $num = $enroll["num"] + $num;
+        }
+        return $num;
+    }
+    
+    public function surplusNum($titleId, $studyId){
+        $enrollNum = $this->enrollNum($titleId, $studyId);
+        
+        $num = Study::findOne(["id" => $studyId]);
+        return $num->number - $enrollNum;
+    }
+    
+    
+    
 }

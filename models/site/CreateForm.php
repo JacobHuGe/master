@@ -77,6 +77,8 @@ class CreateForm extends Model {
         $model->is_show_phone = $is_show_phone;
         $model->is_show_leave = $is_show_leave;
         //$model->image_file = $imgMd5Name;
+        $model->enroll_state = Title::ENROLL_STATE_COMDUCT;
+        $model->state = Title::STATE_ADOPT;
         $model->created_by = Yii::$app->user->id;
         if($model->save() === false){
             throw new BadRequestHttpException(Yii::t("app", $model));

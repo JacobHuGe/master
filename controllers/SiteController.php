@@ -25,7 +25,7 @@ class SiteController extends WebBaseController {
             $model->imageFile = UploadedFile::getInstance($model, "imageFile");
             $transaction = Yii::$app->db->beginTransaction();
             if ($model->save() === false) {
-                throw new BadRequestHttpException(Yii::t("app", "添加失败"));
+                throw new BadRequestHtbeginTransactiontpException(Yii::t("app", "添加失败"));
             }
             $transaction->commit();
             // 文件上传成功
@@ -34,15 +34,6 @@ class SiteController extends WebBaseController {
 
         return $this->render('index',["model" => $model]);
     }
-    
-    public function actionAaa(){
-        die("xx");
-    }
-    public function actionMyAction(){
-    if(Yii::$app->request->getIsPost()){
-        var_dump(Yii::$app->request->post());
-    }
-}
     
     public function actionLaunch()
     {
@@ -58,7 +49,11 @@ class SiteController extends WebBaseController {
      */
     public function actionSponsor()
     {
-        return $this->render('sponsor');
+        
+        $query = Title::find()->andWhere(["created_by" => Yii::$app->user->id, "state" => Title::STATE_ADOPT, "deleted_at" => 0]);
+        $dataProvider = new ActiveDataProvider(["query" => $query]);
+        
+        return $this->render('sponsor',["dataProvider" => $dataProvider]);
     }
     
     /**

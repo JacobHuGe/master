@@ -27,12 +27,12 @@
 </head>
 <body>
     <div style="padding-bottom: 48px;" >
-        <div class="invite-detail-title">额济纳/四姑娘山/嘉峪关户外活动召集令</div>
+        <div class="invite-detail-title"> <?= $model->name?></div>
         <div class='invite-banner-content'>
             <img src='../images/pic_article.jpg' />
         </div>
         <div class="invite-detail-content">
-            <p>户外俱乐部下月起组织三项活动。5月4日额济纳旗…5月18日四姑娘山…；6月1日嘉峪关-敦煌…</p>
+            <p><?= $model->content?></p>
             <ul>
                 <li><img src='../images/ban2.jpg' /></li>
                 <li><img src='../images/ban2.jpg' /></li>
@@ -85,9 +85,9 @@
         </div>
     </div>
     <div class='invite-footer'>
-        <a style='flex: 1;' data-action >更多操作</a>
-        <a  href="<?= yii\helpers\Url::to(["default/apply"])?>" style="width: 94px;background-color: #269f42;color: #fff;" >我要报名</a>
-        <a style="width: 64px;background-color: #38b8ff;color: #fff;">分享</a>
+        <a  style="width: 150px;background-color: #269f42;color: #fff;" data-action >更多操作</a>
+        <a style='flex: 1;' href="<?= yii\helpers\Url::to(["default/apply"])."?id=".$model["id"] ?>" style="width: 94px;background-color: #269f42;color: #fff;" >我要报名</a>
+        <a style="width: 150px;background-color: #38b8ff;color: #fff;">分享</a>
     </div>
     <script>
         $(function(){
