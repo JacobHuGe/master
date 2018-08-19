@@ -85,9 +85,9 @@
         </div>
     </div>
     <div class='invite-footer'>
-        <a  style="width: 150px;background-color: #269f42;color: #fff;" data-action >更多操作</a>
+        <a  style="width: 80px;background-color: #269f42;color: #fff;" data-action >更多操作</a>
         <a style='flex: 1;' href="<?= yii\helpers\Url::to(["default/apply"])."?id=".$model["id"] ?>" style="width: 94px;background-color: #269f42;color: #fff;" >我要报名</a>
-        <a style="width: 150px;background-color: #38b8ff;color: #fff;">分享</a>
+        <a style="width: 80px;background-color: #38b8ff;color: #fff;">分享</a>
     </div>
     <script>
         $(function(){
