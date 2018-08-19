@@ -49,7 +49,6 @@ class SiteController extends WebBaseController {
      */
     public function actionSponsor()
     {
-        
         $query = Title::find()->andWhere(["created_by" => Yii::$app->user->id, "state" => Title::STATE_ADOPT, "deleted_at" => 0]);
         $dataProvider = new ActiveDataProvider(["query" => $query]);
         
@@ -62,7 +61,9 @@ class SiteController extends WebBaseController {
      */
     public function actionJoin()
     {
-        return $this->render("join");
+        $query = \app\models\StudyEnroll::find()->andWhere(["user_id" => Yii::$app->user->id]);
+        $dataProvider = new ActiveDataProvider(["query" => $query]);
+        return $this->render("join",["dataProvider" => $dataProvider]);
     }
     
     

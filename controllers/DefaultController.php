@@ -109,13 +109,13 @@ class DefaultController extends WebBaseController
         $dataProvider = new ActiveDataProvider(["query" => $query]);
         $apply = new \app\models\ApplyForm();
         if(Yii::$app->request->post()){
-            die("xxx");
             $apply->load($_REQUEST);
             $transaction = Yii::$app->db->beginTransaction();
             if ($apply->save() === false) {
                 throw new BadRequestHtbeginTransactiontpException(Yii::t("app", "添加失败"));
             }
             $transaction->commit();
+            return $this->redirect(["site/join"]);
         }
         
         return $this->render("apply", ["dataProvider" => $dataProvider, "title" => $titleData, "apply" => $apply]);

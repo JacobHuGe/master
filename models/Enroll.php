@@ -32,7 +32,7 @@ class Enroll extends ActiveRecord {
     public function beforeSave($insert) {
         return parent::beforeSave($insert);
     }
-
+    
     /**
      * @inheritdoc
      */

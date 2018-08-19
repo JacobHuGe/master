@@ -39,6 +39,7 @@ class ApplyForm extends Model{
         $model->name = $this->name;
         $model->mobile = $this->mobile;
         $model->remarks = $this->remarks;
+        $model->user_id = Yii::$app->user->id;
         if($model->save() === false){
             throw new \yii\web\BadRequestHttpException("报名失败");
         }
@@ -55,6 +56,7 @@ class ApplyForm extends Model{
             $studyEnroll->study_id = $val;
             $studyEnroll->enroll_id = $model->id;
             $studyEnroll->num = $nums[$key];
+            $studyEnroll->user_id = Yii::$app->user->id;
             if($studyEnroll->save() === false){
                 throw new \yii\web\BadRequestHttpException("添加报名失败");
             }

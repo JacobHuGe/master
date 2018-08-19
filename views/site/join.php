@@ -40,11 +40,12 @@
             </div>
 
             <div class="weui-tab__panel">
-                <div class="weui-cells__title">最近</div>
+                <!--<div class="weui-cells__title">最近</div>-->
+                <?php foreach($dataProvider->models as $model):?>
                 <div class="weui-cells">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
-                            <p><a href='/html/detail.html' style="color: #333;">标题文字...</a></p>
+                            <p><a href='/html/detail.html' style="color: #333;"><?= $model->study->name ?></a></p>
                             <p class='invite-cell-light'>
                                 <span style='display: inline-block;width: 50%'>发布：2018-04-12</span>
                                 <span style='display: inline-block;margin-left: 24px;' >累计：28</span>    
@@ -56,7 +57,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="weui-cells__title">一周前的</div>
+                <?php endforeach; ?>
+                <!--<div class="weui-cells__title">一周前的</div>-->
                 <div class="weui-cells">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
@@ -72,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="weui-cells__title">一个月前的</div>
+                <!--<div class="weui-cells__title">一个月前的</div>-->
                 <div class="weui-cells">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
