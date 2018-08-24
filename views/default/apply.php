@@ -103,17 +103,8 @@ use yii\widgets\ActiveForm;
             $('[data-actions]').on('click', '[data-action]', function(){
                 var action = $(this).data('action');
                 var max = $(this).parent().siblings().find('[data-max]').data('max');
-                var price = $(this).parent().parent().siblings().find('[data-price]').data('price'); 
-                //var id = $(this).siblings().find('[data-id]').data('id');
-                //var id = $('[data-id]').each(function(){ var id = $(this).data('id'); alert(id) });
-                var id = $('[data-id]').data("id");
-                //var id = $('#id').data("id");
-                //var id = document.getElementById("nn").value;
-                
-//                $('[data-id]').each(function(){
-//                    var id = $(this).data('id');
-//                    alert(id);
-//                })
+                var price = $(this).parent().parent().siblings().find('[data-price]').data('price');
+				var id = $(this).siblings('[data-id]').data('id');
                 var totalprice = $('[data-price-val]').text();
                 var val = $(this).siblings('input').val();
                 
