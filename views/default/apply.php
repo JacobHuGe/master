@@ -1,4 +1,5 @@
 <?php
+
 use yii\widgets\ActiveForm;
 ?>
 <!DOCTYPE html>
@@ -41,6 +42,7 @@ use yii\widgets\ActiveForm;
                     <span><?= $model->name ?></span>
                     <span style='color: #ff2500;' data-price="<?= $model->price ?>">￥<?= number_format($model->price,2) ?></span>
                 </p>
+                <?= $form->field($apply, 'title_id')->hiddenInput(["value" => $title->id])->label(false) ?>
                 <div style="display: flex;justify-content: space-between;width: 100%;margin-top: 8px;align-items: center;"  >
                     
                     <div style='font-size: 14px;color: #1b99e8;' >已报 <?= $title->enrollNum($title->id, $model->id) ?> / 剩余<span data-max="<?= $title->surplusNum($title->id, $model->id) ?>"><?= $title->surplusNum($title->id, $model->id) ?></span></div>
@@ -48,8 +50,8 @@ use yii\widgets\ActiveForm;
                         <a data-action='delete' style='display: inline-block;font-size: 24px;width: 32px;color: #ff2500;text-align: center;' >-</a>
                         <span data-val>0</span>
                         <a data-action='add' style='display: inline-block;font-size: 24px;width: 32px;color: #1b99e8;text-align: center;' >+</a>
-                        <?= $form->field($apply, 'study_id[]')->hiddenInput(['value'=> $model->id,  "id" => "nn"])->label(false) ?>
-                        <?= $form->field($apply, 'num[]')->hiddenInput(['value'=> 0, "id" => "num"])->label(false) ?>
+                        <?= $form->field($apply, 'study_id[]')->hiddenInput(['value'=> $model->id])->label(false) ?>
+                        <?= $form->field($apply, 'num[]')->hiddenInput(['value'=> 0, "id" => $model->id])->label(false) ?>
                         <input value='0' type='hidden' />
                         <span data-id="<?= $model->id ?>"></span>
                     </div>
@@ -104,7 +106,7 @@ use yii\widgets\ActiveForm;
                 var action = $(this).data('action');
                 var max = $(this).parent().siblings().find('[data-max]').data('max');
                 var price = $(this).parent().parent().siblings().find('[data-price]').data('price');
-				var id = $(this).siblings('[data-id]').data('id');
+		var id = $(this).siblings('[data-id]').data('id');
                 var totalprice = $('[data-price-val]').text();
                 var val = $(this).siblings('input').val();
                 

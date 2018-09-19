@@ -7,7 +7,9 @@
  */
 namespace app\models;
 
+use Yii;
 use yii\base\Model;
+use yii\web\BadRequestHttpException;
 
 /**
  * LoginForm is the model behind the login form.
@@ -21,12 +23,13 @@ class ApplyForm extends Model{
     public $remarks;
     public $study_id;
     public $num;
+    public $title_id;
     
     public function rules()
     {
         return [
             // username and password are both required
-            [['name', 'mobile', 'remarks', "study_id", "num"], 'safe'],
+            [['title_id', 'name', 'mobile', 'remarks', "study_id", "num"], 'safe'],
         ];
     }
     
@@ -35,32 +38,53 @@ class ApplyForm extends Model{
             return false;
         }
         
-        $model = new Enroll();
-        $model->name = $this->name;
-        $model->mobile = $this->mobile;
-        $model->remarks = $this->remarks;
-        $model->user_id = Yii::$app->user->id;
-        if($model->save() === false){
-            throw new \yii\web\BadRequestHttpException("报名失败");
+        $enroll = Enroll::findOne(["title_id" => $this->title_id, "user_id" => Yii::$app->user->id]);
+        if(empty($enroll)){
+            $model = new Enroll();
+            $model->name = $this->name;
+            $model->mobile = $this->mobile;
+            $model->remarks = $this->remarks;
+            $model->user_id = Yii::$app->user->id;
+            $model->title_id = $this->title_id;
+            if($model->save() === false){
+                throw new BadRequestHttpException("报名失败");
+            }
+            $enroll = $model;
         }
-        //var_Dump($this->id);die;
 
         $nums = $this->num;
         
+        //TODO s数量限制
         foreach($this->study_id as $key => $val){
             if($nums[$key] == 0){
                 continue;
             }
-            $studyEnroll = new StudyEnroll();
-            $studyEnroll->title_id = $_REQUEST["id"];
-            $studyEnroll->study_id = $val;
-            $studyEnroll->enroll_id = $model->id;
-            $studyEnroll->num = $nums[$key];
-            $studyEnroll->user_id = Yii::$app->user->id;
-            if($studyEnroll->save() === false){
-                throw new \yii\web\BadRequestHttpException("添加报名失败");
+            
+            $studyEnroll = StudyEnroll::findOne(["title_id" => $_REQUEST["id"], "study_id" => $val, "user_id" => Yii::$app->user->id]);
+            if(empty($studyEnroll)){
+                
+                $studyEnrollModel = new StudyEnroll();
+                $studyEnrollModel->title_id = $_REQUEST["id"];
+                $studyEnrollModel->study_id = $val;
+                $studyEnrollModel->enroll_id = $model->id;
+                $studyEnrollModel->num = $nums[$key];
+                $studyEnrollModel->user_id = Yii::$app->user->id;
+                if($studyEnrollModel->save() === false){
+                    throw new BadRequestHttpException("添加报名失败");
+                }
+                
+                $studyEnroll = $studyEnrollModel;
+            } else {
+                if($nums[$key] == $studyEnroll->num){
+                   continue;
+                }
+                
+                $studyEnroll->$nums[$key];
+                if($studyEnroll->save() === false){
+                    throw new BadRequestHttpException("添加报名修改失败");
+                }
             }
         }
-        return $model;
+        return $enroll;
     }
 }

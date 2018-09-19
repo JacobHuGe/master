@@ -45,21 +45,32 @@
                 <div class="weui-cells">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
-                            <p><a href='/html/detail.html' style="color: #333;"><?= $model->study->name ?></a></p>
+                            <p><a href='/html/detail.html' style="color: #333;"><?= $model->title->name ?></a></p>
                             <p class='invite-cell-light'>
                                 <span style='display: inline-block;width: 50%'>发布：2018-04-12</span>
-                                <span style='display: inline-block;margin-left: 24px;' >累计：28</span>    
+                                <span style='display: inline-block;margin-left: 24px;' >累计：28</span>
                             </p>
                             <p style='font-size: 14px;' >
-                                <span style='display: inline-block;width: 50%;color: #6CE26C;' >[ 报名进行中 ]</span>
+                                
+                                <?php if($model->title->enroll_state == app\models\Title::ENROLL_STATE_COMDUCT): ?>
+                                    <span style='display: inline-block;width: 50%;color: #6CE26C;' >[  报名进行中 ]</span>
+                                <?php elseif ($model->title->enroll_state == app\models\Title::ENROLL_STATE_STOP) : ?>
+                                    <span style='display: inline-block;width: 50%;color: #ff2500;' >[ 报名已中止 ]</span>
+                                <?php else :?>
+                                    <span style='display: inline-block;width: 50%;color: #ff2500;' >[ 报名已删除 ]</span>
+                                <?php endif; ?>
+                                
+                                <!--<span style='display: inline-block;width: 50%;color: #6CE26C;' >[ 报名进行中 ]</span>-->
                                 <a data-action style='display: inline-block;margin-left: 24px;color: #1b99e8;'>[ 更多操作 ]</a>
+                                <span data-id="<?= $model->id ?>"></span>
+                                <span data-href="<?= Yii::$app->request->hostInfo. \yii\helpers\Url::toRoute(["site/enrolldelete","id" => $model->id ]) ?>"></span>
                             </p>
                         </div>
                     </div>
                 </div>
                 <?php endforeach; ?>
                 <!--<div class="weui-cells__title">一周前的</div>-->
-                <div class="weui-cells">
+<!--                <div class="weui-cells">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
                             <p>标题文字...</p>
@@ -74,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="weui-cells__title">一个月前的</div>-->
+                <div class="weui-cells__title">一个月前的</div>
                 <div class="weui-cells">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
@@ -89,12 +100,14 @@
                             </p>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
         <script>
             $(function () {
                 $(document).on('click', '[data-action]', function () {
+                    var id = $(this).siblings('[data-id]').data('id');
+                    var hrefs = $(this).siblings('[data-href]').data('href');
                     weui.actionSheet([
                         {
                             label: '修改',
@@ -114,7 +127,8 @@
                         }, {
                             label: '删除',
                             onClick: function () {
-                                console.log('删除');
+                                location.href= hrefs;
+                                //console.log('删除');
                             }
                         }
                     ])

@@ -2,6 +2,7 @@
 namespace app\controllers;
 
 use app\components\WebBaseController;
+use app\models\ApplyForm;
 use app\models\ContactForm;
 use app\models\LoginForm;
 use app\models\RegisterForm;
@@ -107,7 +108,7 @@ class DefaultController extends WebBaseController
         
         $query = Study::find()->andWhere(["title_id" => $titleData->id]);
         $dataProvider = new ActiveDataProvider(["query" => $query]);
-        $apply = new \app\models\ApplyForm();
+        $apply = new ApplyForm();
         if(Yii::$app->request->post()){
             $apply->load($_REQUEST);
             $transaction = Yii::$app->db->beginTransaction();

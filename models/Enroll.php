@@ -33,6 +33,10 @@ class Enroll extends ActiveRecord {
         return parent::beforeSave($insert);
     }
     
+    public function getTitle(){
+        return $this->hasOne(Title::className(), ["id" => "title_id"]);
+    }
+    
     /**
      * @inheritdoc
      */
