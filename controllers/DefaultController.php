@@ -71,18 +71,27 @@ class DefaultController extends WebBaseController
     public function actionIndex()
     {
         $title = @$_REQUEST["title"];
-//        if(empty($title)){
-//            return $this->render("index",["title" => "24"]);
-//        }
         if(empty($title)){
             //throw new BadRequestHttpException("参数错误");
             $title = '24';
         }
-        $titleData = Title::findOne(["id" => $title]);
-        if(empty($titleData) || $titleData->state == Title::STATE_FAIL){
+        
+        $titleData = Title::find()->andWhere(["id" => $title])->one();
+        if(empty($titleData) || $titleData["state"] == Title::STATE_FAIL){
             throw new BadRequestHttpException("找不到次记录");
         }
-        return $this->render('index', ["model" => $titleData]);
+
+        $imgUrl = \app\models\Attachment::find()->andWhere(["model_id" => $titleData->id])->select("img_url")->column();
+        
+        $enrollInfos = \app\models\Enroll::find()->andWhere(["title_id" => $titleData->id])->groupBy("user_id")->select(["count(user_id)", "user_id"])->asArray()->all();
+        
+//        $userArray = [];
+//        foreach($enrollInfos as $enrollInfo){
+//            $userArray[] = $enrollInfo["user_id"];
+//        }
+        
+        
+        return $this->render('index', ["model" => $titleData, "imgUrl" => $imgUrl, "enrollCount" => count($enrollInfos), "enrollInfos" => $enrollInfos ]);
     }
     
     /**

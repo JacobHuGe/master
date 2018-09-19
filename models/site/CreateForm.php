@@ -76,7 +76,6 @@ class CreateForm extends Model {
         $model->is_show_name = $is_show_name;
         $model->is_show_phone = $is_show_phone;
         $model->is_show_leave = $is_show_leave;
-        //$model->image_file = $imgMd5Name;
         $model->enroll_state = Title::ENROLL_STATE_COMDUCT;
         $model->state = Title::STATE_ADOPT;
         $model->created_by = Yii::$app->user->id;
@@ -100,7 +99,6 @@ class CreateForm extends Model {
         
 //        $attachment = new Attachment();
 //        $attachment->owner_id = $model->id;
-//        $attachment->model_id = $imgMd5Name;
 //        $attachment->img_url = $imgUrl;
 //        if($attachment->save() === false){
 //            throw new BadRequestHttpException(Yii::t("app", $attachment));

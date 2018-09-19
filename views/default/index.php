@@ -29,16 +29,19 @@
     <div style="padding-bottom: 48px;" >
         <div class="invite-detail-title"> <?= $model->name?></div>
         <div class='invite-banner-content'>
-            <img src='../images/pic_article.jpg' />
+            <img src='<?= Yii::$app->request->getHostInfo()?>/<?= $imgUrl[0]?>' />
         </div>
         <div class="invite-detail-content">
             <p><?= $model->content?></p>
             <ul>
+                <?php foreach($imgUrl as $url):?>
+                <li><img height="40px" src='<?= Yii::$app->request->getHostInfo()?>/<?= $imgUrl[0]?>' /></li>
+<!--                <li><img src='../images/ban2.jpg' /></li>
                 <li><img src='../images/ban2.jpg' /></li>
-                <li><img src='../images/ban2.jpg' /></li>
-                <li><img src='../images/ban2.jpg' /></li>
-                <li><img src='../images/ban2.jpg' /></li>
+                <li><img src='../images/ban2.jpg' /></li>-->
+                <?php endforeach; ?>
             </ul>
+            
         </div>
         <div class="weui-cells__title">信息更新</div>
         <div class="weui-cells">
@@ -55,17 +58,24 @@
                 </div>
             </div>
         </div>
-        <div class="weui-cells__title">报名动态：目前累计<span style='color: #ff2500;font-weight: 500;margin-left: 8px;' >42</span></div>
+        <div class="weui-cells__title">报名动态：目前累计<span style='color: #ff2500;font-weight: 500;margin-left: 8px;' ><?= $enrollCount ?></span></div>
         <div class="weui-cells">
-            <div class="weui-cell" style="align-items: flex-start;" >
-                <div class="weui-cell__hd"><img src="/images/avatar.jpg" alt="" style="width:48px;margin-right:12px;display:block"></div>
-                <div class="weui-cell__bd">
-                    <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 20px;">&times;1</span></p>
-                    <p style='font-size: 13px;color: #666;margin: 4px 0;' >张三/…1234/——</p>
-                    <p style='font-size: 13px;color: #666;' >2018/04/20/</p>
+            <?php foreach($enrollInfos as $info):?>
+                <div class="weui-cell" style="align-items: flex-start;" >
+                    <div class="weui-cell__hd"><img src="/images/avatar.jpg" alt="" style="width:48px;margin-right:12px;display:block"></div>
+                    <div class="weui-cell__bd">
+                        <?php foreach(\app\models\Enroll::enrollStudyInfo($info["user_id"], $model->id) as $userInfo):?>
+                            <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px"><?= $userInfo->study->name ?></span> <span style="margin-left: 20px;">&times;1</span></p>
+                        <?php endforeach;?>
+                        
+                        <p style='font-size: 13px;color: #666;margin: 4px 0;' ><?= $userInfo->name?>/…1234/——</p>
+                        <p style='font-size: 13px;color: #666;' >2018/04/20/</p>
+                    </div>
                 </div>
-            </div>
-            <div class="weui-cell" style="align-items: flex-start;" >
+            <?php endforeach;?>
+            
+            
+<!--            <div class="weui-cell" style="align-items: flex-start;" >
                 <div class="weui-cell__hd"><img src="/images/avatar.jpg" alt="" style="width:48px;margin-right:12px;display:block"></div>
                 <div class="weui-cell__bd">
                     <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 20px;">&times;1</span></p>
@@ -81,7 +91,7 @@
                     <p style='font-size: 13px;color: #666;margin: 4px 0;' >张三/…1234/——</p>
                     <p style='font-size: 13px;color: #666;' >2018/04/20/</p>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
     <div class='invite-footer'>

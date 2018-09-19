@@ -51,7 +51,7 @@ use yii\widgets\LinkPager;
                     <div class="weui-cells">
                         <div class="weui-cell">
                             <div class="weui-cell__bd">
-                                <p><a href="<?= Url::to(["default/index", ["title_id" => $model->id]]) ?>"><?= mb_substr(Yii::t("app", $model->name), 0, 15, "utf-8") . "..." ?></a> </p>
+                                <p><a href="<?= Url::to(["default/index"]) ?>?title=<?= $model->id ?>"><?= mb_substr(Yii::t("app", $model->name), 0, 15, "utf-8") . "..." ?></a> </p>
                                 <p class='invite-cell-light'>
                                     <span style='display: inline-block;width: 50%'>发布：<?= Date("Y-m-d", $model->created_at) ?></span>
                                     <span style='display: inline-block;margin-left: 24px;' >累计：28</span>
