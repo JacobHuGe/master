@@ -3,11 +3,13 @@
 namespace app\controllers;
 
 use app\components\WebBaseController;
+use app\models\Enroll;
 use app\models\site\CreateForm;
-use app\models\StudyEnroll;
 use app\models\Title;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\data\Pagination;
+use yii\web\BadRequestHttpException;
 use yii\web\UploadedFile;
 
 class SiteController extends WebBaseController {
@@ -49,10 +51,17 @@ class SiteController extends WebBaseController {
      */
     public function actionSponsor()
     {
-        $query = Title::find()->andWhere(["created_by" => Yii::$app->user->id, "state" => Title::STATE_ADOPT, "deleted_at" => 0]);
-        $dataProvider = new ActiveDataProvider(["query" => $query]);
         
-        return $this->render('sponsor',["dataProvider" => $dataProvider]);
+        $query = Title::find()->andWhere(["created_by" => Yii::$app->user->id, "state" => Title::STATE_ADOPT, "deleted_at" => 0]);
+        $countQuery = clone $query;
+        
+        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>5]);
+        $models = $query->offset($pages->offset)
+        ->limit($pages->limit)
+        ->all();
+        //$dataProvider = new ActiveDataProvider(["query" => $query]);
+        
+        return $this->render('sponsor',["dataProvider" => $models, 'pages' => $pages,]);
     }
     
     /**
@@ -62,7 +71,7 @@ class SiteController extends WebBaseController {
     public function actionJoin()
     {
         
-        $query = \app\models\Enroll::find()->andWhere([\app\models\Enroll::tableName().".user_id" => Yii::$app->user->id, "deleted_at" => 0]);
+        $query = Enroll::find()->andWhere([Enroll::tableName().".user_id" => Yii::$app->user->id, "deleted_at" => 0]);
         
         //$query = StudyEnroll::find()->andWhere(["user_id" => Yii::$app->user->id]);
         $dataProvider = new ActiveDataProvider(["query" => $query]);
@@ -78,16 +87,16 @@ class SiteController extends WebBaseController {
     public function actionEnrolldelete(){
         
         if(!isset($_GET["id"])){
-            throw new \yii\web\BadRequestHttpException("参数有误");
+            throw new BadRequestHttpException("参数有误");
         }
         
-        $enroll = \app\models\Enroll::findOne(["id" => $_GET["id"], "deleted_at" => 0]);
+        $enroll = Enroll::findOne(["id" => $_GET["id"], "deleted_at" => 0]);
         if(empty($enroll)){
-            throw new \yii\web\BadRequestHttpException("数据已被删除或不存在");
+            throw new BadRequestHttpException("数据已被删除或不存在");
         }
         $enroll->deleted_at = time();
         if($enroll->save() === false){
-            throw new \yii\web\BadRequestHttpException("删除失败");
+            throw new BadRequestHttpException("删除失败");
         }
         return $this->redirect(["site/join"]);
     }
