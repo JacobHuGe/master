@@ -83,14 +83,14 @@ class DefaultController extends WebBaseController
 
         $imgUrl = \app\models\Attachment::find()->andWhere(["model_id" => $titleData->id])->select("img_url")->column();
         
-        $enrollInfos = \app\models\Enroll::find()->andWhere(["title_id" => $titleData->id])->groupBy("user_id")->select(["count(user_id)", "user_id"])->asArray()->all();
+        //$enrollInfos = \app\models\Enroll::find()->andWhere(["title_id" => $titleData->id])->groupBy("user_id")->select(["count(user_id)", "user_id"])->asArray()->all();
         
 //        $userArray = [];
 //        foreach($enrollInfos as $enrollInfo){
 //            $userArray[] = $enrollInfo["user_id"];
 //        }
         
-        
+        $enrollInfos = \app\models\StudyEnroll::find()->andWhere(["title_id" => $titleData->id])->select(["count(user_id)", "user_id"])->groupBy("user_id")->asArray()->all();
         return $this->render('index', ["model" => $titleData, "imgUrl" => $imgUrl, "enrollCount" => count($enrollInfos), "enrollInfos" => $enrollInfos ]);
     }
     

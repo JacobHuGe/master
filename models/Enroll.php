@@ -41,8 +41,12 @@ class Enroll extends ActiveRecord {
         return $this->hasOne(Study::className(), ["id" => "study_id"]);
     }
     
-    public static function enrollStudyInfo($userId, $titleId){
-        return Enroll::find()->andWhere(["user_id" => $userId, "title_id" => $titleId])->all();
+    public function getStudyEnroll(){
+        return $this->hasMany(StudyEnroll::className(), ["enroll_id" => "id"]);
+    }
+    
+    public static function enrollStudyEnrollInfo($userId, $titleId){
+        return StudyEnroll::find()->andWhere(["user_id" => $userId, "title_id" => $titleId])->all();
     }
     
     /**

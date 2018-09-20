@@ -1,3 +1,7 @@
+<?php
+use app\models\StudyEnroll;
+use yii\helpers\Url;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,18 +64,21 @@
         </div>
         <div class="weui-cells__title">报名动态：目前累计<span style='color: #ff2500;font-weight: 500;margin-left: 8px;' ><?= $enrollCount ?></span></div>
         <div class="weui-cells">
-            <?php foreach($enrollInfos as $info):?>
+            <?php foreach($enrollInfos as $info): ?>
+            <?php $enrollInfo = \app\models\Enroll::findOne(["title_id" => $model->id, "user_id" => $info["user_id"]])?>
+            <?php if(!empty($enrollInfo)):?>
                 <div class="weui-cell" style="align-items: flex-start;" >
-                    <div class="weui-cell__hd"><img src="/images/avatar.jpg" alt="" style="width:48px;margin-right:12px;display:block"></div>
-                    <div class="weui-cell__bd">
-                        <?php foreach(\app\models\Enroll::enrollStudyInfo($info["user_id"], $model->id) as $userInfo):?>
-                            <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px"><?= $userInfo->study->name ?></span> <span style="margin-left: 20px;">&times;1</span></p>
+                    <!--<div class="weui-cell__hd"><img src="/images/avatar.jpg" alt="" style="width:48px;margin-right:12px;display:block"></div>-->
+                    <div class="weui-cell__bd" style="margin: 0 0 0 20px">
+                        <?php foreach(StudyEnroll::find()->andWhere(["user_id" => $info["user_id"], "title_id" =>  $model->id])->all() as $userInfo):  ?>
+                            <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px"><?= $userInfo->study->name ?></span> <span style="margin-left: 20px;">&times;<?= $userInfo->num ?></span></p>
                         <?php endforeach;?>
                         
-                        <p style='font-size: 13px;color: #666;margin: 4px 0;' ><?= $userInfo->name?>/…1234/——</p>
-                        <p style='font-size: 13px;color: #666;' >2018/04/20/</p>
+                        <p style='font-size: 13px;color: #666;margin: 4px 0;' ><?= $enrollInfo->name ?>/<?= $enrollInfo->mobile ?></p>
+                        <p style='font-size: 13px;color: #666;' ><?= date("Y-m-d", $enrollInfo->created_at)?></p>
                     </div>
                 </div>
+            <?php endif; ?>
             <?php endforeach;?>
             
             
@@ -96,7 +103,7 @@
     </div>
     <div class='invite-footer'>
         <a  style="width: 80px;background-color: #269f42;color: #fff;" data-action >更多操作</a>
-        <a style='flex: 1;' href="<?= yii\helpers\Url::to(["default/apply"])."?id=".$model["id"] ?>" style="width: 94px;background-color: #269f42;color: #fff;" >我要报名</a>
+        <a style='flex: 1;' href="<?= Url::to(["default/apply"])."?id=".$model["id"] ?>" style="width: 94px;background-color: #269f42;color: #fff;" >我要报名</a>
         <a style="width: 80px;background-color: #38b8ff;color: #fff;">分享</a>
     </div>
     <script>
@@ -116,7 +123,7 @@
                     },{
                         label: '数据统计',
                         onClick: function () {
-                            window.location.href='<?= yii\helpers\Url::to(["default/count"])?>'
+                            window.location.href='<?= Url::to(["default/count"])?>'
                         }
                     },{
                         label: '发起者说',
