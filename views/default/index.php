@@ -33,13 +33,17 @@ use yii\helpers\Url;
     <div style="padding-bottom: 48px;" >
         <div class="invite-detail-title"> <?= $model->name?></div>
         <div class='invite-banner-content'>
+            <?php if(!empty($imgUrl)):?>
             <img src='<?= Yii::$app->request->getHostInfo()?>/<?= $imgUrl[0]?>' />
+            <?php else: ?>
+                <img src='../images/ban2.jpg' />
+            <?php endif;?>
         </div>
         <div class="invite-detail-content">
             <p><?= $model->content?></p>
             <ul>
                 <?php foreach($imgUrl as $url):?>
-                <li><img height="40px" src='<?= Yii::$app->request->getHostInfo()?>/<?= $imgUrl[0]?>' /></li>
+                <li><img height="40px" src='<?= Yii::$app->request->getHostInfo()?>/<?= $url ?>' /></li>
 <!--                <li><img src='../images/ban2.jpg' /></li>
                 <li><img src='../images/ban2.jpg' /></li>
                 <li><img src='../images/ban2.jpg' /></li>-->
