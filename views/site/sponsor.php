@@ -132,6 +132,9 @@ use yii\widgets\LinkPager;
         <script>
             $(function () {
                 $(document).on('click', '[data-action]', function () {
+                    
+                    
+                    
                     weui.actionSheet([
                         {
                             label: '修改',

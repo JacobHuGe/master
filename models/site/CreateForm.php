@@ -36,11 +36,24 @@ class CreateForm extends Model {
     public function rules() {
         return [
             //[['imageFile'], 'file', 'skipOnEmpty' => false],
-            [['name', "study_name", "content", 'price'], 'required'],
-            [['currency', 'end_at', 'number', 'is_show_name', 'is_show_phone', 'is_show_leave'], "safe"],
+            [['name', "study_name", "content", 'price', 'number',], 'required'],
+            [['currency', 'end_at', 'is_show_name', 'is_show_phone', 'is_show_leave'], "safe"],
         ];
     }
-    
+    /**
+     * 映射方法
+     * @return type
+     */
+    public function attributeLabels()
+    {
+        return [
+            "name" => Yii::t('app',"标题"),
+            "content" => Yii::t('app', "描述"),
+            "study_name" => Yii::t('app',"项目名称"),
+            "price" => Yii::t('app', "项目单价"),
+            "number" => Yii::t('app', "数量限制"),
+        ];
+    }
 
     public function save() {
         if (!$this->validate()) {

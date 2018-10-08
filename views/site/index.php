@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 ?>
@@ -15,19 +16,6 @@ use yii\widgets\ActiveForm;
         <link rel="stylesheet" href="/css/app.css">
         <script type="text/javascript" src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js" ></script>
         <script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.1.3/weui.min.js"></script>
-        <!-- <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
-        <link rel="stylesheet" href="/css/app.css">
-        <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
-        <script>
-            if ('addEventListener' in document) {
-                document.addEventListener('DOMContentLoaded', function() {
-                    FastClick.attach(document.body);
-                }, false);
-            }
-            if(!window.Promise) {
-                document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
-            }
-        </script> -->
         <title>index</title>
     </head>
     <body>
@@ -48,7 +36,7 @@ use yii\widgets\ActiveForm;
                 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
                     <div class="weui-cells__title">基础设置</div>
                     <div class="weui-cells weui-cells_form">
-                        <div class="weui-cell">
+                        <div class="weui-cell">s
                             <!--<div class="weui-cell__hd"><label class="weui-label">主题</label></div>-->
                             <div class="weui-cell__bd">
                                  <?= $form->field($model, 'name', ['inputOptions' => ['placeholder' => '请再次输入标题', 'class' => 'weui-input']])->textInput(['autofocus' => true])->label(false) ?>
@@ -61,19 +49,88 @@ use yii\widgets\ActiveForm;
                                 <!--<textarea class="weui-textarea" placeholder="请在此简要描述" rows="3"></textarea>-->
                             </div>
                         </div>
-                        <div class="weui-cell">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">图片上传</label>
+                            <div class="col-lg-5">
+                                <?php
+                                $uploadNo = uniqid() . mt_rand(1, 100);
+                                echo Html::hiddenInput('uploadNo', $uploadNo);
+
+                                ?>
+                            
+                                <?= $form->field($model, 'imageFile[]')->label(false)->widget(FileInput::className, [
+                                    'options' => [
+                                        'multiple' => true
+                                    ],
+                                    'pluginOptions' => [
+                                        // 异步上传的接口地址设置
+                                        'uploadUrl' => Url::to(['asyncphoto']),
+                                        'uploadAsync' => true,
+                                        // 异步上传需要携带的其他参数，比如商品id等,可选
+                                        'uploadExtraData' => [
+                                            'upload_no' => $uploadNo,
+                                        ],
+                                        // 需要预览的文件格式
+                                        'previewFileType' => 'image',
+                                        //是否显示文件名
+                                        'showCaption' => true,
+                                        // 预览的文件
+                                        'initialPreview' => isset($p1) ? $p1 : '',
+                                        // 需要展示的图片设置，比如图片的宽度等
+                                        'initialPreviewConfig' => isset($p2) ? $p2 : '',
+                                        // 是否展示预览图
+                                        'initialPreviewAsData' => true,
+                                        // 最少上传的文件个数限制
+                                        'minFileCount' => 1,
+                                        // 最多上传的文件个数限制,需要配置`'multiple'=>true`才生效
+                                        'maxFileCount' => 10,
+                                        // 是否显示移除按钮，指input上面的移除按钮，非具体图片上的移除按钮
+                                        'showRemove' => false,
+                                        // 是否显示上传按钮，指input上面的上传按钮，非具体图片上的上传按钮
+                                        'showUpload' => true,
+                                        //是否显示[选择]按钮,指input上面的[选择]按钮,非具体图片上的上传按钮
+                                        'showBrowse' => true,
+                                        // 展示图片区域是否可点击选择多文件
+                                        'browseOnZoneClick' => true,
+                                        // 如果要设置具体图片上的移除、上传和展示按钮，需要设置该选项
+                                        'fileActionSettings' => [
+                                            // 设置具体图片的查看属性为false,默认为true
+                                            'showZoom' => true,
+                                            // 设置具体图片的上传属性为true,默认为true
+                                            'showUpload' => false,
+                                            // 设置具体图片的移除属性为true,默认为true
+                                            'showRemove' => true,
+                                        ],
+                                    ],
+                                    //网上很多地方都没详细说明回调触发事件，其实fileupload为上传成功后触发的，三个参数，主要是第二个，有formData，jqXHR以及response参数，上传成功后返回的ajax数据可以在response获取
+                                    'pluginEvents' => [
+                                        'fileuploaded' => "function (object,data){ 
+                //                    console.log(data.response.imageUrl);
+                                    $('form #goods-img').val(data.response.imageUrl);
+                                    $('form #goods-isad').val(data.response.imageId);
+
+                            }",
+                                        //错误的冗余机制
+                                        'error' => "function (){
+                                alert('图片上传失败');
+                            }"
+                                    ]
+                                ]); ?>
+                            </div>
+                        </div>
+<!--                        <div class="weui-cell">
                             <div class="weui-uploader">
                                 <div class="weui-uploader__hd">
                                     <p class="weui-uploader__title">附加图片</p>
                                 </div>
                                 <div class="weui-uploader__bd">
                                     <div class="weui-uploader__input-box">
-                                        <?= $form->field($model, 'imageFile[]',['inputOptions' => ["class" => "weui-uploader__input", "id" => "uploaderInput", "accept" => "image/*"]])->fileInput()->label(false); ?>
-                                        <!--<input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple />-->
+                                        <?php // $form->field($model, 'imageFile[]',['inputOptions' => ["class" => "weui-uploader__input", "id" => "uploaderInput", "accept" => "image/*"]])->fileInput()->label(false); ?>
+                                        <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple />
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="weui-cells__title">报名设置</div>
                     <div class="weui-cells weui-cells_form">
