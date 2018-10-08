@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\components\WebBaseController;
 use app\models\Enroll;
 use app\models\site\CreateForm;
+use app\models\site\UploadForm;
 use app\models\Title;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -99,6 +100,21 @@ class SiteController extends WebBaseController {
             throw new BadRequestHttpException("删除失败");
         }
         return $this->redirect(["site/join"]);
+    }
+    
+    public function actionUpload()
+    {
+        $model = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($model->upload()) {
+                // 文件上传成功
+                return;
+            }
+        }
+
+        return $this->render('upload', ['model' => $model]);
     }
 
 }
