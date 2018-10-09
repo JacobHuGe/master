@@ -107,6 +107,7 @@ class SiteController extends WebBaseController {
         $model = new UploadForm();
 
         if (Yii::$app->request->isPost) {
+            die("xxx");
             $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
             if ($model->upload()) {
                 // 文件上传成功
