@@ -52,7 +52,6 @@ class SiteController extends WebBaseController {
      */
     public function actionSponsor()
     {
-        
         $query = Title::find()->andWhere(["created_by" => Yii::$app->user->id, "state" => Title::STATE_ADOPT, "deleted_at" => 0]);
         $countQuery = clone $query;
         
@@ -102,12 +101,11 @@ class SiteController extends WebBaseController {
         return $this->redirect(["site/join"]);
     }
     
-    public function actionUpload()
+    public function actionUpload1()
     {
         $model = new UploadForm();
 
         if (Yii::$app->request->isPost) {
-            die("xxx");
             $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
             if ($model->upload()) {
                 // 文件上传成功
@@ -116,6 +114,27 @@ class SiteController extends WebBaseController {
         }
 
         return $this->render('upload', ['model' => $model]);
+    }
+    
+     //webUploader上传    
+     public function actionUpload()    {        
+         try {            
+             Yii::$app->response->format = Response::FORMAT_JSON;            
+             $model = new Upload();            
+             $info = $model->upImage();
+             if ($info && is_array($info)) {                
+                 return $info;            
+                 
+             } else {
+                 return ['code' => 1, 'msg' => 'error'];            
+                 
+             }        
+             
+        } catch (\Exception $e) {            
+            return ['code' => 1, 'msg' => $e->getMessage()];        
+            
+        }    
+        
     }
 
 }
