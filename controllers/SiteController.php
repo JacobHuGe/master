@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\Upload;
 use app\components\WebBaseController;
 use app\models\Enroll;
 use app\models\site\CreateForm;
@@ -11,6 +12,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\web\BadRequestHttpException;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 class SiteController extends WebBaseController {
@@ -117,10 +119,10 @@ class SiteController extends WebBaseController {
     }
     
      //webUploader上传    
-     public function actionUpload()    {        
+     public function actionUpload()    {
          try {            
-             Yii::$app->response->format = Response::FORMAT_JSON;            
-             $model = new Upload();            
+             Yii::$app->response->format = Response::FORMAT_JSON; 
+             $model = new Upload();
              $info = $model->upImage();
              if ($info && is_array($info)) {                
                  return $info;            

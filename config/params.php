@@ -7,12 +7,12 @@ return [
     'imageUploadSuccessPath' => '/uploads/images/', // 图片上传成功后，路径前缀
     'webuploader' => [
       // 后端处理图片的地址，value 是相对的地址
-      'uploadUrl' => 'blog/upload',
+      'uploadUrl' => 'site/upload',
       // 多文件分隔符
       'delimiter' => ',',
       // 基本配置
       'baseConfig' => [
-        'defaultImage' => 'http://img1.imgtn.bdimg.com/it/u=2056478505,162569476&fm=26&gp=0.jpg',
+        'defaultImage' => '',
         'disableGlobalDnd' => true,
         'accept' => [
           'title' => 'Images',

@@ -4,7 +4,8 @@ use yii\widgets\ActiveForm;
 
 ?>
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
-<?= $form->field($model, 'imageFiles')->widget('manks\FileInput', [
+<?= 
+$form->field($model, 'imageFiles')->widget('manks\FileInput', [
   'clientOptions' => [
     'pick' => [
       'multiple' => true,
@@ -14,5 +15,8 @@ use yii\widgets\ActiveForm;
     //   'extensions' => 'png',
     // ],
   ],
-]); ?>
+]); 
+//    $form->field($model, 'imageFiles')->widget('manks\FileInput', [
+//	]); 
+    ?>
 <?php ActiveForm::end() ?>

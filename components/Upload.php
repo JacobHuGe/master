@@ -1,5 +1,5 @@
 <?php
-namespace common\components;
+namespace app\components;
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
@@ -39,7 +39,10 @@ class Upload extends Model
         if ($model->validate()) {
             $relativePath = Yii::$app->params['imageUploadRelativePath'];
             $successPath = Yii::$app->params['imageUploadSuccessPath'];
-            $fileName = $model->file->baseName . '.' . $model->file->extension;
+            $md5 = md5($model->file->baseName.time());
+            //var_Dump($model->file->baseName);die;
+            //$fileName = $model->file->baseName . '.' . $model->file->extension;
+            $fileName = $md5 . '.' . $model->file->extension;
             if (!is_dir($relativePath)) {
                 FileHelper::createDirectory($relativePath);
             }
