@@ -1,7 +1,5 @@
 <?php
 
-use manks\FileInput;
-use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 ?>
@@ -53,13 +51,15 @@ use yii\widgets\ActiveForm;
                         <div class="form-group">
                             <label class="col-sm-3 control-label">图片上传</label>
                             <div class="col-lg-5">
-                                <?php
-                                $uploadNo = uniqid() . mt_rand(1, 100);
-                                echo Html::hiddenInput('uploadNo', $uploadNo);
-
-                                ?>
-                            
-                                
+                            <?= 
+                            $form->field($model, 'imageFile')->widget('manks\FileInput', [
+                              'clientOptions' => [
+                                'pick' => [
+                                  'multiple' => true,
+                                ],
+                              ],
+                            ])->label(false)
+                            ?>
                             </div>
                         </div>
 <!--                        <div class="weui-cell">

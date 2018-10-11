@@ -36,7 +36,7 @@ class CreateForm extends Model {
     public function rules() {
         return [
             //[['imageFile'], 'file', 'skipOnEmpty' => false],
-            [['name', "study_name", "content", 'price', 'number',], 'required'],
+            [['name', "study_name", "content", 'price', 'number', 'imageFile'], 'required'],
             [['currency', 'end_at', 'is_show_name', 'is_show_phone', 'is_show_leave'], "safe"],
         ];
     }
@@ -56,19 +56,14 @@ class CreateForm extends Model {
     }
 
     public function save() {
+        
         if (!$this->validate()) {
             throw new BadRequestHttpException($this);
         }
         
-        //$imgMd5Name = md5(time());
-        //$imgUrl = '/uploads/' . $imgMd5Name . '.' . $this->imageFile->extension;
-
-        //$this->imageFile->saveAs(dirname(dirname(__DIR__)).'/web'.$imgUrl); 
-        
         $is_show_name = 0;
         $is_show_phone = 0;
         $is_show_leave = 0;
-        
 
         if($this->is_show_name == 'is_show_name'){
             $is_show_name = 1;
@@ -109,13 +104,18 @@ class CreateForm extends Model {
                 throw new BadRequestHttpException(Yii::t("app", $study));
             }
         }
+        if(!empty($this->imageFile)){
+            foreach($this->imageFile as $imageFileUrl){
+                $attachment = new Attachment();
+                $attachment->owner_id = Yii::$app->user->id;
+                $attachment->img_url = $imageFileUrl;
+                $attachment->model_id = $model->id;
+                if($attachment->save() === false){
+                    throw new BadRequestHttpException(Yii::t("app", $attachment));
+                }
+            }
+        }
         
-//        $attachment = new Attachment();
-//        $attachment->owner_id = $model->id;
-//        $attachment->img_url = $imgUrl;
-//        if($attachment->save() === false){
-//            throw new BadRequestHttpException(Yii::t("app", $attachment));
-//        }
         
         return "ok";
         

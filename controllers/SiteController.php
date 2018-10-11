@@ -11,11 +11,35 @@ use app\models\Title;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
 
 class SiteController extends WebBaseController {
+    
+    public function behaviors() 
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                //'only' => ['logout', 'index',"launch"],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                // 'logout' => ['post'],
+                ],
+            ],
+        ];
+    }
 
     public $fileTransportPath = '@runtime/uplode';
     /**
@@ -27,7 +51,6 @@ class SiteController extends WebBaseController {
         $model = new CreateForm();
         if( Yii::$app->request->post()){
             $model->load($_REQUEST);
-            $model->imageFile = UploadedFile::getInstance($model, "imageFile");
             $transaction = Yii::$app->db->beginTransaction();
             if ($model->save() === false) {
                 throw new BadRequestHtbeginTransactiontpException(Yii::t("app", "添加失败"));
