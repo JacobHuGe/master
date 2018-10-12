@@ -7,7 +7,7 @@ use app\components\WebBaseController;
 use app\models\Attachment;
 use app\models\Enroll;
 use app\models\site\CreateForm;
-use app\models\site\TitleCreateForm;
+use app\models\site\TitleUpdateForm;
 use app\models\site\UploadForm;
 use app\models\Title;
 use Yii;
@@ -101,7 +101,7 @@ class SiteController extends WebBaseController {
     {
         $title = $this->titleOne();
         
-        $model = new TitleCreateForm();
+        $model = new TitleUpdateForm();
         if(Yii::$app->request->post()){
             
         }
@@ -117,8 +117,16 @@ class SiteController extends WebBaseController {
             //$img[$attachment["id"]] = $attachment["img_url"];
         }
         $model["imageFile"] = $img;
-        //var_Dump($model);die;
-        return $this->render("title-update", ["model" => $model, "attachments" => $attachments]);
+        $model["name"] = $title->name;
+        $model["content"] = $title->content;
+        $model["end_at"] = $title->end_at;
+        $model["is_show_name"] = $title->is_show_name;
+        $model["is_show_phone"] = $title->is_show_phone;
+        $model["is_show_leave"] = $title->is_show_leave;
+        
+        $studys = \app\models\Study::find()->andWhere(["title_id" => $title->id, "deleted_at" => 0])->all();
+        
+        return $this->render("title-update", ["model" => $model, "studys" => $studys]);
     }
     
     public static function titleOne(){

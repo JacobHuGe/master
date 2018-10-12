@@ -38,13 +38,13 @@ use yii\widgets\ActiveForm;
                         <div class="weui-cell">
                             <!--<div class="weui-cell__hd"><label class="weui-label">主题</label></div>-->
                             <div class="weui-cell__bd">
-                                 <?= $form->field($model, 'name', ['inputOptions' => ['placeholder' => '请再次输入标题', 'class' => 'weui-input']])->textInput(['autofocus' => true])->label(false) ?>
+                                 <?= $form->field($model, 'name', ['inputOptions' => ['placeholder' => '请再次输入标题', 'class' => 'weui-input']])->textInput(['autofocus' => true, 'readonly'=>'true'])->label(false) ?>
                                 <!--<input class="weui-input" placeholder="请再次输入标题"/>-->
                             </div>
                         </div>
                         <div class="weui-cell">
                             <div class="weui-cell__bd">
-                                <?= $form->field($model, 'content', ['inputOptions' => ['placeholder' => '请在此简要描述',"rows" => 3,  'class' => 'weui-textarea']])->textarea(['autofocus' => true])->label(false) ?>
+                                <?= $form->field($model, 'content', ['inputOptions' => ['placeholder' => '请在此简要描述',"rows" => 3,  'class' => 'weui-textarea']])->textarea(['autofocus' => true, 'readonly'=>'true'])->label(false) ?>
                                 <!--<textarea class="weui-textarea" placeholder="请在此简要描述" rows="3"></textarea>-->
                             </div>
                         </div>
@@ -52,7 +52,7 @@ use yii\widgets\ActiveForm;
                             <label class="col-sm-3 control-label">图片上传</label>
                             <div class="col-lg-5">
                             <?=
-                            $form->field($attachments, 'img_url')->widget('manks\FileInput', [
+                            $form->field($model, 'imageFile')->widget('manks\FileInput', [
                               'clientOptions' => [
                                 'pick' => [
                                   'multiple' => true,
@@ -104,31 +104,31 @@ use yii\widgets\ActiveForm;
                         <div data-fundingitem >
                             <div class="weui-cells__title">
                                 报名项
-                                <a class='invite-fundings-btn' data-fundingaction='delete' onclick = "$(this).parent().remove();" style="color: #ff2500;" >[ 删除 ]</a> 
-                                <a class='invite-fundings-btn' data-fundingaction='add' >[ 添加 ]</a>
                             </div>
                             <div class="weui-cells weui-cells_form">
+                                <?php foreach ($studys as $study):?>
                                 <div class="weui-cell">
                                     <div class="weui-cell__hd"><label class="weui-label">项目名称：</label></div>
                                     <div class="weui-cell__bd">
-                                        <?= $form->field($model, 'study_name[]', ['inputOptions' => ['placeholder' => '请输入项目名称', 'class' => 'weui-input']])->textInput(['autofocus' => true])->label(false) ?>
-                                        <!--<input class="weui-input" placeholder="请输入项目名称"/>-->
+                                        <?php // $form->field($model, 'study_name[]', ['inputOptions' => ['placeholder' => '请输入项目名称', 'class' => 'weui-input']])->textInput(['autofocus' => true])->label(false) ?>
+                                        <input class="weui-input" placeholder="请输入项目名称" value="<?= $study->name ?>" readonly="readonly"/>
                                     </div>
                                 </div>
                                 <div class="weui-cell">
                                     <div class="weui-cell__hd"><label class="weui-label">项目单价：</label></div>
                                     <div class="weui-cell__bd">
-                                        <?= $form->field($model, 'price[]', ['inputOptions' => ['placeholder' => '请输入项目单价', 'class' => 'weui-input']])->textInput(['autofocus' => true])->label(false) ?>
-                                        <!--<input class="weui-input" placeholder="请输入项目单价"/>-->
+                                        <?php //$form->field($model, 'price[]', ['inputOptions' => ['placeholder' => '请输入项目单价', 'class' => 'weui-input']])->textInput(['autofocus' => true])->label(false) ?>
+                                        <input class="weui-input" placeholder="请输入项目单价" value="<?= $study->price ?>" readonly="readonly"/>
                                     </div>
                                 </div>
                                 <div class="weui-cell">
                                     <div class="weui-cell__hd"><label class="weui-label">数量限制：</label></div>
                                     <div class="weui-cell__bd">
-                                        <?= $form->field($model, 'number[]', ['inputOptions' => ['placeholder' => '请输入数量限制', 'class' => 'weui-input']])->textInput(['autofocus' => true])->label(false) ?>
-                                        <!--<input class="weui-input" placeholder="请输入数量限制"/>-->
+                                        <?php // $form->field($model, 'number[]', ['inputOptions' => ['placeholder' => '请输入数量限制', 'class' => 'weui-input']])->textInput(['autofocus' => true])->label(false) ?>
+                                        <input class="weui-input" placeholder="请输入数量限制" value="<?= $study->number ?>" readonly="readonly"/>
                                     </div>
                                 </div>
+                                <?php endforeach;?>
                             </div>
                         </div>
                     </div>

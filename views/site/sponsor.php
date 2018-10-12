@@ -142,6 +142,7 @@ use yii\widgets\LinkPager;
                         {
                             label: '修改',
                             onClick: function () {
+                                window.location.href='<?= Url::to(["site/title-update"]) ?>?id='+id;
                                 console.log('修改');
                             }
                         }, {
@@ -157,8 +158,8 @@ use yii\widgets\LinkPager;
                         }, {
                             
                             label: '删除',
-                            onClick: function (id) {
-                                alert(id)
+                            onClick: function (
+                                    ) {
                                 window.location.href='<?= Url::to(["site/title-delete"]) ?>?id='+id;
                                 //console.log('删除');
                             }
