@@ -31,10 +31,10 @@ use yii\helpers\Url;
 </head>
 <body>
     <div style="padding-bottom: 48px;" >
-        <div class="invite-detail-title"> <?= $model->name?></div>
+        <div class="invite-detail-title" style="font-weight:bold; font-size:16px"> <?= $model->name?></div>
         <div class='invite-banner-content'>
             <?php if(!empty($imgUrl)):?>
-            <img src='<?= Yii::$app->request->getHostInfo()?>/<?= $imgUrl[0]?>' />
+            <img height="240px" src='<?= Yii::$app->request->getHostInfo()?>/<?= $imgUrl[0]?>' />
             <?php else: ?>
                 <img src='../images/ban2.jpg' />
             <?php endif;?>
@@ -127,7 +127,7 @@ use yii\helpers\Url;
                     },{
                         label: '数据统计',
                         onClick: function () {
-                            window.location.href='<?= Url::to(["default/count"])?>'
+                            window.location.href='<?= Url::to(["default/count"])?>';
                         }
                     },{
                         label: '发起者说',

@@ -4,8 +4,10 @@ namespace app\controllers;
 
 use app\components\Upload;
 use app\components\WebBaseController;
+use app\models\Attachment;
 use app\models\Enroll;
 use app\models\site\CreateForm;
+use app\models\site\TitleCreateForm;
 use app\models\site\UploadForm;
 use app\models\Title;
 use Yii;
@@ -42,7 +44,9 @@ class SiteController extends WebBaseController {
     }
 
     public $fileTransportPath = '@runtime/uplode';
+    
     /**
+     * 添加标题
      * Displays homepage.
      *
      * @return string
@@ -63,6 +67,77 @@ class SiteController extends WebBaseController {
         return $this->render('index',["model" => $model]);
     }
     
+    /**
+     * 删除标题
+     * @return type
+     */
+    public function actionTitleDelete(){
+//        if(!isset($_GET["id"])){
+//            throw new BadRequestHttpException("参数有误");
+//        }
+//        
+//        $id = $_GET["id"];
+//        
+//        $title = Title::findOne(["id" => $id, "deleted_at" => 0]);
+//        if(empty($title)){
+//            throw new BadRequestHttpException("数据已被删除或不存在");
+//        }
+        $title = $this->titleOne();
+        
+        $title->deleted_at = time();
+        $title->enroll_state = Title::ENROLL_STATE_STOP;
+        if($title->save() === false){
+            throw new BadRequestHttpException("删除失败，请重试!");
+        }
+        
+        return $this->redirect(["site/sponsor"]);
+    }
+    
+    /**
+     * 修改标题
+     * @return type
+     */
+    public function actionTitleUpdate()
+    {
+        $title = $this->titleOne();
+        
+        $model = new TitleCreateForm();
+        if(Yii::$app->request->post()){
+            
+        }
+        
+        $attachments = Attachment::find()->andWhere(["model_id" => $title->id])->all();
+        $img = "";
+        foreach($attachments as $attachment){
+            $comma = "";
+            if(!empty($img)){
+                $comma = ",";
+            }
+            $img = $img.$comma.$attachment["img_url"];
+            //$img[$attachment["id"]] = $attachment["img_url"];
+        }
+        $model["imageFile"] = $img;
+        //var_Dump($model);die;
+        return $this->render("title-update", ["model" => $model, "attachments" => $attachments]);
+    }
+    
+    public static function titleOne(){
+        if(!isset($_GET["id"])){
+            throw new BadRequestHttpException("参数有误");
+        }
+        
+        $id = $_GET["id"];
+        
+        $title = Title::findOne(["id" => $id, "deleted_at" => 0]);
+        if(empty($title)){
+            throw new BadRequestHttpException("数据已被删除或不存在");
+        }
+        return $title;
+    }
+
+
+
+
     public function actionLaunch()
     {
         $query = Title::find()->andWhere(["created_by" => Yii::$app->user->id, "deleted_at" => 0]);
@@ -77,7 +152,7 @@ class SiteController extends WebBaseController {
      */
     public function actionSponsor()
     {
-        $query = Title::find()->andWhere(["created_by" => Yii::$app->user->id, "state" => Title::STATE_ADOPT, "deleted_at" => 0]);
+        $query = Title::find()->andWhere(["created_by" => Yii::$app->user->id]);
         $countQuery = clone $query;
         
         $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>5]);
@@ -109,6 +184,11 @@ class SiteController extends WebBaseController {
         return $this->render("partake");
     }
     
+    /**
+     * 删除入组数据 （ 暂定）
+     * @return type
+     * @throws BadRequestHttpException
+     */
     public function actionEnrolldelete(){
         
         if(!isset($_GET["id"])){
@@ -126,6 +206,10 @@ class SiteController extends WebBaseController {
         return $this->redirect(["site/join"]);
     }
     
+    /**
+     * 测试
+     * @return type
+     */
     public function actionUpload1()
     {
         $model = new UploadForm();

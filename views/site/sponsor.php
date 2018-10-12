@@ -57,19 +57,24 @@ use yii\widgets\LinkPager;
                                     <span style='display: inline-block;margin-left: 24px;' >累计：28</span>
                                 </p>
                                 <p style='font-size: 14px;' >
+                                    
                                     <?php if ($model->enroll_state == Title::ENROLL_STATE_COMDUCT): ?>
                                         <span style='display: inline-block;width: 50%;color: #6CE26C;' >[  报名进行中 ]</span>
                                     <?php elseif ($model->enroll_state == Title::ENROLL_STATE_STOP) : ?>
                                         <span style='display: inline-block;width: 50%;color: #ff2500;' >[ 报名已中止 ]</span>
                                     <?php else : ?>
+                                        
                                         <span style='display: inline-block;width: 50%;color: #ff2500;' >[ 报名已删除 ]</span>
                                     <?php endif; ?>
 
                                     <a data-action style='display: inline-block;margin-left: 24px;color: #1b99e8;'>[ 更多操作 ]</a>
+                                    <span data-id="<?= $model->id ?>"></span>
+                                    <!--<span class="data-id" value="" data-id=""></span>-->
                                 </p>
                             </div>
                         </div>
                     </div>
+                    
                 <?php endforeach; ?>
                 <?php
                 echo LinkPager::widget([
@@ -132,9 +137,7 @@ use yii\widgets\LinkPager;
         <script>
             $(function () {
                 $(document).on('click', '[data-action]', function () {
-                    
-                    
-                    
+                    var id = $(this).siblings('[data-id]').data('id');
                     weui.actionSheet([
                         {
                             label: '修改',
@@ -152,9 +155,12 @@ use yii\widgets\LinkPager;
                                 console.log('分享');
                             }
                         }, {
+                            
                             label: '删除',
-                            onClick: function () {
-                                console.log('删除');
+                            onClick: function (id) {
+                                alert(id)
+                                window.location.href='<?= Url::to(["site/title-delete"]) ?>?id='+id;
+                                //console.log('删除');
                             }
                         }
                     ])
