@@ -34,7 +34,7 @@ use yii\helpers\Url;
         <div class="invite-detail-title" style="font-weight:bold; font-size:16px"> <?= $model->name?></div>
         <div class='invite-banner-content'>
             <?php if(!empty($imgUrl)):?>
-            <img height="240px" src='<?= Yii::$app->request->getHostInfo()?>/<?= $imgUrl[0]?>' />
+            <img style="height: 240px " src='<?= Yii::$app->request->getHostInfo()?>/<?= $imgUrl[0]?>' />
             <?php else: ?>
                 <img src='../images/ban2.jpg' />
             <?php endif;?>
@@ -43,28 +43,23 @@ use yii\helpers\Url;
             <p><?= $model->content?></p>
             <ul>
                 <?php foreach($imgUrl as $url):?>
-                <li><img height="40px" src='<?= Yii::$app->request->getHostInfo()?>/<?= $url ?>' /></li>
+                <li><img height="60px" style="width: 160px" src='<?= Yii::$app->request->getHostInfo()?>/<?= $url ?>' /></li>
 <!--                <li><img src='../images/ban2.jpg' /></li>
                 <li><img src='../images/ban2.jpg' /></li>
                 <li><img src='../images/ban2.jpg' /></li>-->
                 <?php endforeach; ?>
-            </ul>
-            
+            </ul>   
         </div>
         <div class="weui-cells__title">信息更新</div>
         <div class="weui-cells">
+            <?php foreach($descriptions as $description):?>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <p>发布者的内容更新2……</p>
-                    <p style="font-size: 13px; color: #666;" >2018-04-21</p>
+                    <p><?= $description->content ?></p>
+                    <p style="font-size: 13px; color: #666;" ><?= date("Y-m-d", $description->created_at)?></p>
                 </div>
             </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>发布者的内容更新1……</p>
-                    <p style="font-size: 13px; color: #666;" >2018-04-21</p>
-                </div>
-            </div>
+            <?php endforeach;?>
         </div>
         <div class="weui-cells__title">报名动态：目前累计<span style='color: #ff2500;font-weight: 500;margin-left: 8px;' ><?= $enrollCount ?></span></div>
         <div class="weui-cells">
@@ -84,47 +79,33 @@ use yii\helpers\Url;
                 </div>
             <?php endif; ?>
             <?php endforeach;?>
-            
-            
-<!--            <div class="weui-cell" style="align-items: flex-start;" >
-                <div class="weui-cell__hd"><img src="/images/avatar.jpg" alt="" style="width:48px;margin-right:12px;display:block"></div>
-                <div class="weui-cell__bd">
-                    <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 20px;">&times;1</span></p>
-                    <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">嘉峪关-敦煌自驾</span> <span style="margin-left: 20px;">&times;2</span></p>
-                    <p style='font-size: 13px;color: #666;margin: 4px 0;' >张三/…1234/——</p>
-                    <p style='font-size: 13px;color: #666;' >2018/04/20/</p>
-                </div>
-            </div>
-            <div class="weui-cell" style="align-items: flex-start;" >
-                <div class="weui-cell__hd"><img src="/images/avatar.jpg" alt="" style="width:48px;margin-right:12px;display:block"></div>
-                <div class="weui-cell__bd">
-                    <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 20px;">&times;1</span></p>
-                    <p style='font-size: 13px;color: #666;margin: 4px 0;' >张三/…1234/——</p>
-                    <p style='font-size: 13px;color: #666;' >2018/04/20/</p>
-                </div>
-            </div>-->
         </div>
     </div>
     <div class='invite-footer'>
         <a  style="width: 80px;background-color: #269f42;color: #fff;" data-action >更多操作</a>
+        <span data-id="<?= $model->id ?>"></span>
         <a style='flex: 1;' href="<?= Url::to(["default/apply"])."?id=".$model["id"] ?>" style="width: 94px;background-color: #269f42;color: #fff;" >我要报名</a>
         <a style="width: 80px;background-color: #38b8ff;color: #fff;">分享</a>
     </div>
     <script>
         $(function(){
             $(document).on('click', '[data-action]', function(){
+                var id = $(this).siblings('[data-id]').data('id');
                 weui.actionSheet([
                     {
                         label: '修改设置',
                         onClick: function () {
+                            window.location.href='<?= Url::to(["site/title-update"])?>?id='+id;
                             console.log('修改设置');
                         }
-                    },{
-                        label: '报名启止',
-                        onClick: function () {
-                            console.log('报名启止');
-                        }
-                    },{
+                    },
+//                        {
+//                        label: '报名启止',
+//                        onClick: function () {
+//                            console.log('报名启止');
+//                        }
+//                    },
+                        {
                         label: '数据统计',
                         onClick: function () {
                             window.location.href='<?= Url::to(["default/count"])?>';
@@ -132,6 +113,7 @@ use yii\helpers\Url;
                     },{
                         label: '发起者说',
                         onClick: function () {
+                            window.location.href='<?= Url::to(["site/title-update"])?>?id='+id;
                             console.log('发起者说');
                         }
                     },{

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\components\Upload;
 use app\components\WebBaseController;
+use app\models\ApplyForm;
 use app\models\Attachment;
 use app\models\Enroll;
 use app\models\site\CopyTitleForm;
@@ -77,7 +78,7 @@ class SiteController extends WebBaseController {
         $title = $this->titleOne();
         
         $title->deleted_at = time();
-        $title->enroll_state = Title::ENROLL_STATE_STOP;
+        $title->enroll_state = Title::ENROLL_STATE_DELETED;
         if($title->save() === false){
             throw new BadRequestHttpException("删除失败，请重试!");
         }
@@ -178,7 +179,9 @@ class SiteController extends WebBaseController {
     public function actionTitleUpdate()
     {
         $title = $this->titleOne();
-        
+        if($title->created_by != Yii::$app->user->id){
+            throw new BadRequestHttpException("您不是创建人不能进行修改");
+        }
         $model = new TitleUpdateForm();
         if(Yii::$app->request->post()){
             $model->load($_REQUEST);
@@ -264,6 +267,76 @@ class SiteController extends WebBaseController {
         //$query = StudyEnroll::find()->andWhere(["user_id" => Yii::$app->user->id]);
         $dataProvider = new ActiveDataProvider(["query" => $query]);
         return $this->render("join",["dataProvider" => $dataProvider]);
+    }
+    
+    /**
+     * 删除我参与数据
+     * @return type
+     */
+    public function actionJoinDelete()
+    {
+        $id = $_REQUEST["id"];
+        $enroll =  Enroll::find()->andWhere(["id" => $id, Enroll::tableName().".user_id" => Yii::$app->user->id, "deleted_at" => 0]);
+        if(empty($enroll)){
+            throw new BadRequestHttpException("已被删除或不存在");
+        }
+        
+        $enroll->deleted_at = time();
+        if($enroll->save() === false){
+            throw new BadRequestHttpException("删除失败");
+        }
+        return $this->redirect(["site/join"]);
+    }
+    
+        /**
+     * 删除我参与数据
+     * @return type
+     */
+    public function actionApplyUpdate()
+    {
+        $id = @$_REQUEST["id"];
+        if(empty($id)){
+            throw new BadRequestHttpException("参数错误");
+        }
+        
+        $enroll =  Enroll::findOne(["id" => $id, Enroll::tableName().".user_id" => Yii::$app->user->id, "deleted_at" => 0]);
+        if(empty($enroll)){
+            throw new BadRequestHttpException("已被删除或不存在");
+        }
+
+        $titleData = Title::findOne(["id" => $enroll->title_id]);
+        if(empty($titleData) || $titleData->state != Title::STATE_ADOPT){
+            throw new BadRequestHttpException("找不到次记录");
+        }
+        
+        if($titleData->enroll_state == Title::ENROLL_STATE_STOP){
+            throw new BadRequestHttpException("报名已终止");
+        }
+        
+        $query = Study::find()->andWhere(["title_id" => $titleData->id]);
+        $dataProvider = new ActiveDataProvider(["query" => $query]);
+        $apply = new ApplyForm();
+        if(Yii::$app->request->post()){
+            $apply->load($_REQUEST);
+            $transaction = Yii::$app->db->beginTransaction();
+            if ($apply->save() === false) {
+                throw new BadRequestHtbeginTransactiontpException(Yii::t("app", "添加失败"));
+            }
+            $transaction->commit();
+            return $this->redirect(["site/join"]);
+        }
+        $apply->name = $enroll->name;
+        $apply->mobile = $enroll->mobile;
+        $apply->remarks = $enroll->remarks;
+        $studys = Study::find()->andWhere(["title_id" => $titleData->id])->all();
+        $price = 0;
+        foreach($studys as $study){
+            if(!empty($study->studyEnroll)){
+                $price = $price + $study->price * $study->studyEnroll->num;
+            }
+        }
+        
+        return $this->render("apply-update", ["dataProvider" => $dataProvider, "title" => $titleData, "apply" => $apply, "price" => $price]);
     }
     
     

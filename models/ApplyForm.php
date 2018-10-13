@@ -21,15 +21,14 @@ class ApplyForm extends Model{
     public $name;
     public $mobile;
     public $remarks;
-    public $study_id;
-    public $num;
     public $title_id;
+    public $hiddenInput;
     
     public function rules()
     {
         return [
             // username and password are both required
-            [['title_id', 'name', 'mobile', 'remarks', "study_id", "num"], 'safe'],
+            [['title_id', 'name', 'mobile', 'remarks', "hiddenInput"], 'safe'],
         ];
     }
     
@@ -37,8 +36,9 @@ class ApplyForm extends Model{
         if(!$this->validate()){
             return false;
         }
-        
+
         $enroll = Enroll::findOne(["title_id" => $this->title_id, "user_id" => Yii::$app->user->id]);
+        
         if(empty($enroll)){
             $model = new Enroll();
             $model->name = $this->name;
@@ -51,23 +51,21 @@ class ApplyForm extends Model{
             }
             $enroll = $model;
         }
-
-        $nums = $this->num;
-        
-        //TODO s数量限制
-        foreach($this->study_id as $key => $val){
-            if($nums[$key] == 0){
-                continue;
-            }
+        if(empty($this->hiddenInput)){
+            throw new BadRequestHttpException("请选择报名项");
+        }
+        $hiddenInput = substr($this->hiddenInput, 0, -1);
+        $enrollInfos = explode(',',$hiddenInput);
+        foreach($enrollInfos as $enrollInfo){
+            $enrollStudyInfo = explode('=',$enrollInfo);
             
-            $studyEnroll = StudyEnroll::findOne(["title_id" => $_REQUEST["id"], "study_id" => $val, "user_id" => Yii::$app->user->id]);
+            $studyEnroll = StudyEnroll::findOne(["title_id" => $enroll->title_id, "study_id" => $enrollStudyInfo[0], "enroll_id" => $enroll->id, "user_id" => Yii::$app->user->id]);
             if(empty($studyEnroll)){
-                
                 $studyEnrollModel = new StudyEnroll();
-                $studyEnrollModel->title_id = $_REQUEST["id"];
-                $studyEnrollModel->study_id = $val;
-                $studyEnrollModel->enroll_id = $model->id;
-                $studyEnrollModel->num = $nums[$key];
+                $studyEnrollModel->title_id = $enroll->title_id;
+                $studyEnrollModel->study_id = $enrollStudyInfo[0];
+                $studyEnrollModel->enroll_id = $enroll->id;
+                $studyEnrollModel->num = $enrollStudyInfo[1];
                 $studyEnrollModel->user_id = Yii::$app->user->id;
                 if($studyEnrollModel->save() === false){
                     throw new BadRequestHttpException("添加报名失败");
@@ -75,11 +73,11 @@ class ApplyForm extends Model{
                 
                 $studyEnroll = $studyEnrollModel;
             } else {
-                if($nums[$key] == $studyEnroll->num){
+                if($enrollStudyInfo[1] == $studyEnroll->num){
                    continue;
                 }
                 
-                $studyEnroll->$nums[$key];
+                $studyEnroll->num = $enrollStudyInfo[1];
                 if($studyEnroll->save() === false){
                     throw new BadRequestHttpException("添加报名修改失败");
                 }

@@ -1,6 +1,8 @@
 <?php
 namespace app\models;
 
+use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /* 
@@ -16,13 +18,16 @@ class StudyEnroll extends ActiveRecord
         return '{{%study_enroll}}';
     }
     
-//    public function rules()
-//    {
-//        return [
-//            // username and password are both required
-//            [['title_id', 'study_id', 'enroll_id', "num"], 'required'],
-//        ];
-//    }
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            [
+                "class" => TimestampBehavior::className()
+            ]
+        ];
+    }
 
     public function beforeSave($insert) {
         return parent::beforeSave($insert);
@@ -40,5 +45,13 @@ class StudyEnroll extends ActiveRecord
         return $this->hasOne(Enroll::className(), ["id" => "enroll_id"]);
     }
     
-    
+    public static function enrollNum($title_id, $study_id){
+        $enroll = StudyEnroll::findOne(["title_id" => $title_id,"study_id" => $study_id, "user_id" => Yii::$app->user->id]);
+        
+        if(!empty($enroll)){
+            return $enroll->num;
+        } else {
+            return 0;
+        }
+    }
 }

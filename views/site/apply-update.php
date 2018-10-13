@@ -48,9 +48,9 @@ use yii\widgets\ActiveForm;
                     <div style='font-size: 14px;color: #1b99e8;' >已报 <?= $title->enrollNum($title->id, $model->id) ?> / 剩余<span data-max="<?= $title->surplusNum($title->id, $model->id) ?>"><?= $title->surplusNum($title->id, $model->id) ?></span></div>
                     <div data-actions>
                         <a data-action='delete' style='display: inline-block;font-size: 24px;width: 32px;color: #ff2500;text-align: center;' >-</a>
-                        <span data-val>0</span>
+                        <span data-val><?= app\models\StudyEnroll::enrollNum($title->id, $model->id )?></span>
                         <a data-action='add' style='display: inline-block;font-size: 24px;width: 32px;color: #1b99e8;text-align: center;' >+</a>
-                        <input value='0' type='hidden' />
+                        <input value='<?= app\models\StudyEnroll::enrollNum($title->id, $model->id )?>' type='hidden' />
                         <span data-id="<?= $model->id ?>"></span>
                     </div>
                 </div>
@@ -60,7 +60,7 @@ use yii\widgets\ActiveForm;
             <div class='weui-cell'>
                 <p style="display: flex;justify-content: space-between;width: 100%;" >
                     <span>个人金额总计：</span>
-                    <span style='color: #ff2500;'>￥ <span data-price-val>0</span></span>
+                    <span style='color: #ff2500;'>￥ <span data-price-val><?= $price ?></span></span>
                 </p>
             </div>
         </div>

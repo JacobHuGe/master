@@ -33,6 +33,10 @@ class Study extends ActiveRecord {
             ]
         ];
     }
+    
+    public function getStudyEnroll(){
+        return $this->hasOne(StudyEnroll::className(), ["study_id" => "id"]);
+    }
 }
     
     

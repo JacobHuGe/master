@@ -70,7 +70,6 @@ class DefaultController extends WebBaseController
      */
     public function actionIndex()
     {
-        
         $title = @$_REQUEST["title"];
         if(empty($title)){
             //throw new BadRequestHttpException("参数错误");
@@ -84,8 +83,10 @@ class DefaultController extends WebBaseController
 
         $imgUrl = \app\models\Attachment::find()->andWhere(["model_id" => $titleData->id])->select("img_url")->column();
         
+        $descriptions = \app\models\Description::find()->andWhere(["title_id" => $titleData->id, "deleted_at" => 0])->all();
+        
         $enrollInfos = \app\models\StudyEnroll::find()->andWhere(["title_id" => $titleData->id])->select(["count(user_id)", "user_id"])->groupBy("user_id")->asArray()->all();
-        return $this->render('index', ["model" => $titleData, "imgUrl" => $imgUrl, "enrollCount" => count($enrollInfos), "enrollInfos" => $enrollInfos ]);
+        return $this->render('index', ["model" => $titleData, "imgUrl" => $imgUrl, "enrollCount" => count($enrollInfos), "enrollInfos" => $enrollInfos, "descriptions" => $descriptions ]);
     }
     
     /**
@@ -105,8 +106,12 @@ class DefaultController extends WebBaseController
         }
 
         $titleData = Title::findOne(["id" => $id]);
-        if(empty($titleData) || $titleData->state == Title::STATE_FAIL){
+        if(empty($titleData) || $titleData->state != Title::STATE_ADOPT){
             throw new BadRequestHttpException("找不到次记录");
+        }
+        
+        if($titleData->enroll_state == Title::ENROLL_STATE_STOP){
+            throw new BadRequestHttpException("报名已终止");
         }
         
         $query = Study::find()->andWhere(["title_id" => $titleData->id]);

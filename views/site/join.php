@@ -1,3 +1,9 @@
+<?php
+
+use app\models\Title;
+use yii\helpers\Url;
+
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,13 +35,13 @@
         <div class="weui-tab">
             <div class="weui-navbar">
                 <div class="weui-navbar__item">
-                    <a href='<?= yii\helpers\Url::to(["site/index"]) ?>' class='invite-nav-btn' >我新建</a>
+                    <a href='<?= Url::to(["site/index"]) ?>' class='invite-nav-btn' >我新建</a>
                 </div>
                 <div class="weui-navbar__item">
-                    <a href="<?= yii\helpers\Url::to(["site/sponsor"]) ?>" class='invite-nav-btn' >我发起</a>
+                    <a href="<?= Url::to(["site/sponsor"]) ?>" class='invite-nav-btn' >我发起</a>
                 </div>
                 <div class="weui-navbar__item weui-bar__item_on">
-                    <a href="<?= yii\helpers\Url::to(["site/join"]) ?>" class='invite-nav-btn' >我参与</a>
+                    <a href="<?= Url::to(["site/join"]) ?>" class='invite-nav-btn' >我参与</a>
                 </div>
             </div>
 
@@ -52,9 +58,9 @@
                             </p>
                             <p style='font-size: 14px;' >
                                 
-                                <?php if($model->title->enroll_state == app\models\Title::ENROLL_STATE_COMDUCT): ?>
+                                <?php if($model->title->enroll_state == Title::ENROLL_STATE_COMDUCT): ?>
                                     <span style='display: inline-block;width: 50%;color: #6CE26C;' >[  报名进行中 ]</span>
-                                <?php elseif ($model->title->enroll_state == app\models\Title::ENROLL_STATE_STOP) : ?>
+                                <?php elseif ($model->title->enroll_state == Title::ENROLL_STATE_STOP) : ?>
                                     <span style='display: inline-block;width: 50%;color: #ff2500;' >[ 报名已中止 ]</span>
                                 <?php else :?>
                                     <span style='display: inline-block;width: 50%;color: #ff2500;' >[ 报名已删除 ]</span>
@@ -63,7 +69,7 @@
                                 <!--<span style='display: inline-block;width: 50%;color: #6CE26C;' >[ 报名进行中 ]</span>-->
                                 <a data-action style='display: inline-block;margin-left: 24px;color: #1b99e8;'>[ 更多操作 ]</a>
                                 <span data-id="<?= $model->id ?>"></span>
-                                <span data-href="<?= Yii::$app->request->hostInfo. \yii\helpers\Url::toRoute(["site/enrolldelete","id" => $model->id ]) ?>"></span>
+                                <span data-href="<?= Yii::$app->request->hostInfo. Url::toRoute(["site/enrolldelete","id" => $model->id ]) ?>"></span>
                             </p>
                         </div>
                     </div>
@@ -112,14 +118,17 @@
                         {
                             label: '修改',
                             onClick: function () {
+                                window.location.href='<?= Url::to(["site/apply-update"]) ?>?id='+id;
                                 console.log('修改');
                             }
-                        }, {
-                            label: '复制',
-                            onClick: function () {
-                                console.log('复制');
-                            }
-                        }, {
+                        }, 
+//                        {
+//                            label: '复制',
+//                            onClick: function () {
+//                                console.log('复制');
+//                            }
+//                        }, 
+                        {
                             label: '分享',
                             onClick: function () {
                                 console.log('分享');

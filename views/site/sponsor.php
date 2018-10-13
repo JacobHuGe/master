@@ -63,7 +63,6 @@ use yii\widgets\LinkPager;
                                     <?php elseif ($model->enroll_state == Title::ENROLL_STATE_STOP) : ?>
                                         <span style='display: inline-block;width: 50%;color: #ff2500;' >[ 报名已中止 ]</span>
                                     <?php else : ?>
-                                        
                                         <span style='display: inline-block;width: 50%;color: #ff2500;' >[ 报名已删除 ]</span>
                                     <?php endif; ?>
 
