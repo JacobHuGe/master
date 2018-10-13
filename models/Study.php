@@ -37,8 +37,28 @@ class Study extends ActiveRecord {
     public function getStudyEnroll(){
         return $this->hasOne(StudyEnroll::className(), ["study_id" => "id"]);
     }
+    
+    public function getStudyEnrolls(){
+        return $this->hasMany(StudyEnroll::className(), ["study_id" => "id"]);
+    }
+    
+    public static function accumulativeNumber($id){
+        $study = Study::findOne(["id" => $id]);
+        $num = 0;
+        foreach($study->studyEnrolls as $studyEnroll){
+            $num = $num + $studyEnroll->num;
+        }
+        return $num;
+    }
+    
+        public static function accumulativePrice($id){
+        $study = Study::findOne(["id" => $id]);
+        $num = 0;
+        foreach($study->studyEnrolls as $studyEnroll){
+            $num = $num + $studyEnroll->num * $study->price;
+        }
+        return $num;
+    }
+    
 }
-    
-    
-    
     

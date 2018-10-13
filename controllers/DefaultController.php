@@ -131,6 +131,54 @@ class DefaultController extends WebBaseController
     }
     
     /**
+     * 综合统计
+     */
+     public function actionColligateCount(){
+        $title = @$_REQUEST["id"];
+        if(empty($title)){
+            throw new BadRequestHttpException("参数错误");
+        }
+        
+        $titleData = Title::find()->andWhere(["id" => $title])->one();
+        if(empty($titleData) || $titleData["state"] == Title::STATE_FAIL){
+            throw new BadRequestHttpException("找不到次记录");
+        }
+        
+        $enrollInfo = \app\models\Enroll::find()->andWhere(["title_id" => $titleData->id])->all();
+        
+        $num = count($enrollInfo);
+        
+        $price = 0;
+        foreach($enrollInfo as $info){
+            
+            foreach($info->studyEnroll as $study){
+                $price = $price + $study->num * $study->study->price;
+            }
+        }
+        
+        return $this->render("colligate-count", ["enrollInfo" => $enrollInfo, "titleData" => $titleData, "num" => $num, "price" => $price]);
+     }
+    /**
+     * 分项统计
+     */
+     public function actionSubitemCount(){
+        $title = @$_REQUEST["id"];
+        if(empty($title)){
+            throw new BadRequestHttpException("参数错误");
+        }
+        
+        $titleData = Title::find()->andWhere(["id" => $title])->one();
+        if(empty($titleData) || $titleData["state"] == Title::STATE_FAIL){
+            throw new BadRequestHttpException("找不到次记录");
+        }
+        
+        $studys = \app\models\Study::find()->andWhere(["title_id" => $titleData->id])->all();
+        
+        
+        return $this->render("subitem-count", ["studys" => $studys, "titleData" => $titleData]);
+     }
+    
+    /**
      * Login action.
      *
      * @return Response|string

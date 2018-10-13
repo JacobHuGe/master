@@ -51,7 +51,7 @@ use yii\helpers\Url;
                 <div class="weui-cells">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
-                            <p><a href='/html/detail.html' style="color: #333;"><?= $model->title->name ?></a></p>
+                            <p><a href="<?= Url::to(["default/index"]) ?>?title=<?= $model->title->id ?>"><?= mb_substr(Yii::t("app", $model->title->name), 0, 15, "utf-8") . "..." ?></a></p>
                             <p class='invite-cell-light'>
                                 <span style='display: inline-block;width: 50%'>发布：2018-04-12</span>
                                 <span style='display: inline-block;margin-left: 24px;' >累计：28</span>

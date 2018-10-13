@@ -29,48 +29,29 @@ use yii\helpers\Url;
     <title>index</title>
 </head>
 <body>
-    <div class="invite-detail-title" style="font-size: 16px;border-bottom: 1px solid #e5e5e5;line-height: 40px;">额济纳/四姑娘山/嘉峪关户外活动召集令</div>
+    <div class="invite-detail-title" style="font-size: 16px;border-bottom: 1px solid #e5e5e5;line-height: 40px;"><?= $titleData->name ?></div>
     <div class="weui-cells__title">
-        <a style="margin:0 8px" href='<?= Url::to(["site/index"]) ?>' class='invite-nav-btn' >综合统计</a><a style="margin:0 8px" href='<?= Url::to(["site/index"]) ?>' class='invite-nav-btn' >分项统计</a>
+        <a style="margin:0 8px" href='<?= Url::to(["default/colligate-count", "id" => $_REQUEST["id"]]) ?>' class='invite-nav-btn' >综合统计</a><a style="margin:0 8px" href='<?= Url::to(["default/subitem-count", "id" => $_REQUEST["id"]]) ?>' class='invite-nav-btn' >分项统计</a>
     </div>
     <div class="weui-cells">
-        <div class="weui-cell" style='justify-content: space-between;'>
-            <p>累计数量：<span style="color: #ff2500;font-weight: 600;">42</span></p>
-            <p>累计金额：<span style="color: #ff2500;font-weight: 600;">￥4,200.00</span></p>
-        </div>
-        <div class="weui-cell" style="align-items: flex-start;" >
-            <div class="weui-cell__hd"><img src="/images/avatar.jpg" alt="" style="width:48px;margin-right:12px;display:block"></div>
-            <div class="weui-cell__bd">
-                <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 14px;">&times;1</span><span style="margin-left: 8px">[ 标注 ]</span></p>
-                <p style='font-size: 13px;color: #666;margin: 4px 0;' >张三/…1234/——</p>
-            </div>
-        </div>
-        <div class="weui-cell" style="align-items: flex-start;" >
-            <div class="weui-cell__hd"><img src="/images/avatar.jpg" alt="" style="width:48px;margin-right:12px;display:block"></div>
-            <div class="weui-cell__bd">
-                <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 14px;">&times;1</span><span style="margin-left: 8px">[ 标注 ]</span></p>
-                <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">嘉峪关-敦煌自驾</span> <span style="margin-left: 14px;">&times;2</span></p>
-                <p style='font-size: 13px;color: #666;margin: 4px 0;' >张三/…1234/——</p>
-            </div>
-        </div>
-    </div>
-    <div class="weui-cells__title">分项统计</div>
-    <div class="weui-cells">
+        <?php foreach($studys as $study):?>
         <div class="weui-cell">
-            <p>额济纳旗自驾</p>
+            <p><?= $study->name?></p>
         </div>
         <div class="weui-cell" style='justify-content: space-between;'>
-            <p>累计数量：<span style="color: #ff2500;font-weight: 600;">42</span></p>
-            <p>累计金额：<span style="color: #ff2500;font-weight: 600;">￥4,200.00</span></p>
+            <p>累计数量：<span style="color: #ff2500;font-weight: 600;"><?= \app\models\Study::accumulativeNumber($study->id)?></span></p>
+            <p>累计金额：<span style="color: #ff2500;font-weight: 600;">￥<?= \app\models\Study::accumulativePrice($study->id)?></span></p>
         </div>
         <div class="weui-cell" style="align-items: flex-start;" >
             <div class="weui-cell__hd"><img src="../images/avatar.jpg" alt="" style="width:48px;margin-right:12px;display:block"></div>
             <div class="weui-cell__bd">
-                <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 14px;">&times;1</span><span style="margin-left: 8px">[ 标注 ]</span></p>
-                <p style='font-size: 13px;color: #666;margin: 4px 0;' >张三/…1234/——</p>
+                <?php foreach($study->studyEnrolls as $studyEnroll):?>
+                <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px"><?= $study->name?></span> <span style="margin-left: 14px;">&times;<?= $studyEnroll->num ?></span><span style="margin-left: 8px">[ 标注 ]</span></p>
+                <p style='font-size: 13px;color: #666;margin: 4px 0;' ><?= $studyEnroll->enroll->name?> - <?= $studyEnroll->enroll->mobile?></p>
+                <?php endforeach;?>
             </div>
         </div>
-        <div class="weui-cell">
+<!--        <div class="weui-cell">
             <p>四姑娘山远足</p>
         </div>
         <div class="weui-cell" style='justify-content: space-between;'>
@@ -83,7 +64,8 @@ use yii\helpers\Url;
                 <p style="font-size: 13px; color: #333;margin: 4px 0;" ><span style="display: inline-block;width: 160px">四姑娘山远足</span> <span style="margin-left: 16px;">&times;1</span><span style="margin-left: 8px">[ 标注 ]</span></p>
                 <p style='font-size: 13px;color: #666;margin: 4px 0;' >张三/…1234/——</p>
             </div>
-        </div>
+        </div>-->
+        <?php endforeach;?>
     </div>
 </body>
 </html>

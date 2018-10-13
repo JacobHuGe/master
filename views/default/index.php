@@ -108,7 +108,7 @@ use yii\helpers\Url;
                         {
                         label: '数据统计',
                         onClick: function () {
-                            window.location.href='<?= Url::to(["default/count"])?>';
+                            window.location.href='<?= Url::to(["default/colligate-count"])?>?id='+id;
                         }
                     },{
                         label: '发起者说',
