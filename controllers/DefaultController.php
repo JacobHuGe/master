@@ -114,9 +114,9 @@ class DefaultController extends WebBaseController
             throw new BadRequestHttpException("报名已终止");
         }
         
-        $count = \app\models\StudyEnroll::find()->andWhere(["title_id" => $titleData->id])->count();
-        if($count > 0){
-            return $this->redirect(["site/apply-update"]);
+        $enroll = \app\models\Enroll::findOne(["title_id" => $titleData->id, "user_id" => Yii::$app->user->id]);
+        if(!empty($enroll)){
+            return $this->redirect(["site/apply-update", "id" => $enroll->id]);
         }
         $query = Study::find()->andWhere(["title_id" => $titleData->id]);
         $dataProvider = new ActiveDataProvider(["query" => $query]);
