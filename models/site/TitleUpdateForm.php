@@ -26,16 +26,18 @@ class TitleUpdateForm extends Model {
     public $is_show_name;
     public $is_show_phone;
     public $is_show_leave;
+    public $describe;
     
-
+    
     /**
      * @inheritdoc
      */
     public function rules() {
         return [
             //[['imageFile'], 'file', 'skipOnEmpty' => false],
-            [['name', "study_name", "content", 'price', 'number', 'imageFile'], 'required'],
-            [['currency', 'end_at', 'is_show_name', 'is_show_phone', 'is_show_leave'], "safe"],
+            [['name', "content", 'imageFile'], 'required'],
+            [['currency', 'end_at', 'is_show_name', 'is_show_phone', 'is_show_leave', "describe"], "safe"],
+            //[['describe'],'match','pattern'=>'','message'=>'提示信息']
         ];
     }
     /**
@@ -47,8 +49,6 @@ class TitleUpdateForm extends Model {
         return [
             "name" => Yii::t('app',"标题"),
             "content" => Yii::t('app', "描述"),
-            "study_name" => Yii::t('app',"项目名称"),
-            "price" => Yii::t('app', "项目单价"),
             "number" => Yii::t('app', "数量限制"),
         ];
     }
@@ -59,63 +59,80 @@ class TitleUpdateForm extends Model {
             throw new BadRequestHttpException($this);
         }
         
-//        $is_show_name = 0;
-//        $is_show_phone = 0;
-//        $is_show_leave = 0;
-//
-//        if($this->is_show_name == 'is_show_name'){
-//            $is_show_name = 1;
-//        }
-//        if($this->is_show_phone == 'is_show_phone'){
-//            $is_show_phone = 1;
-//        }
-//        if($this->is_show_leave == 'is_show_leave'){
-//            $is_show_leave = 1;
-//        }
-//        
-//        
-//        $model = new Title();
-//        $model->name = $this->name;
-//        $model->currency = $this->currency;
-//        $model->content = $this->content;
-//        $model->end_at = $this->end_at;
-//        $model->is_show_name = $is_show_name;
-//        $model->is_show_phone = $is_show_phone;
-//        $model->is_show_leave = $is_show_leave;
-//        $model->enroll_state = Title::ENROLL_STATE_COMDUCT;
-//        $model->state = Title::STATE_ADOPT;
-//        $model->created_by = Yii::$app->user->id;
-//        if($model->save() === false){
-//            throw new BadRequestHttpException(Yii::t("app", $model));
-//        }
-//        
-//        $num = count($this->study_name);
-//        for($i=0; $i<=$num-1; $i++){
-//            $study = new Study();
-//            
-//            $study->name = $this->study_name[$i];
-//            $study->price = $this->price[$i];
-//            $study->number = $this->number[$i];
-//            
-//            $study->title_id = $model->id;
-//            if($study->save() === false){
-//                throw new BadRequestHttpException(Yii::t("app", $study));
-//            }
-//        }
-//        if(!empty($this->imageFile)){
-//            foreach($this->imageFile as $imageFileUrl){
-//                $attachment = new Attachment();
-//                $attachment->owner_id = Yii::$app->user->id;
-//                $attachment->img_url = $imageFileUrl;
-//                $attachment->model_id = $model->id;
-//                if($attachment->save() === false){
-//                    throw new BadRequestHttpException(Yii::t("app", $attachment));
-//                }
-//            }
-//        }
-//        
-//        
-//        return "ok";
+        $id = $_REQUEST["id"];
+        
+        $model = Title::findOne(["id" => $id, "deleted_at" => 0]);
+        if(empty($model)){
+            throw new BadRequestHttpException(Yii::t("app", "标题已被删除或不存在"));
+        }
+        
+        $is_show_name = 0;
+        $is_show_phone = 0;
+        $is_show_leave = 0;
+
+        if(!empty($this->is_show_name)){
+            $is_show_name = 1;
+        }
+        if(!empty($this->is_show_phone)){
+            $is_show_phone = 1;
+        }
+        if(!empty($this->is_show_leave)){
+            $is_show_leave = 1;
+        }
+        
+        $end_at = 0;
+        
+        if(!empty($this->end_at)){
+            $endAt = $this->end_at;
+            $match = "/^(\d{4})(-)(\d{2})(-)(\d{2})$/";
+            if(!preg_match($match, $endAt)){
+                throw new BadRequestHttpException(Yii::t("app", " 结束时间不符合规则"));
+            }
+            
+            $end_at = strtotime($endAt);
+            
+            if($end_at < time()){
+                throw new BadRequestHttpException(Yii::t("app", " 结束时间不能小于当前时间"));
+            }
+        }
+
+        $model->currency = $this->currency;
+        $model->end_at = $end_at;
+        $model->is_show_name = $is_show_name;
+        $model->is_show_phone = $is_show_phone;
+        $model->is_show_leave = $is_show_leave;
+        
+        if($model->save() === false){
+            throw new BadRequestHttpException(Yii::t("app", $model));
+        }
+        
+        if(!empty($this->describe)){
+            $description = new \app\models\Description();
+            $description->content = $this->describe;
+            $description->created_by = Yii::$app->user->id;
+            $description->title_id = $id;
+            if($description->save() === false){
+                throw new BadRequestHttpException(Yii::t("app", " 添加描述信息失败"));
+            }
+        }
+
+        if(!empty($this->imageFile)){
+            foreach($this->imageFile as $imageFileUrl){
+                $attachmentIn = Attachment::findOne(["model_id" => $model, "img_url" => $imageFileUrl, "deleted_at" => 0]);
+                if(empty($attachmentIn)){
+                    $attachment = new Attachment();
+                    $attachment->owner_id = Yii::$app->user->id;
+                    $attachment->img_url = $imageFileUrl;
+                    $attachment->model_id = $model->id;
+                    if($attachment->save() === false){
+                        throw new BadRequestHttpException(Yii::t("app", $attachment));
+                    }
+                }
+            }
+        }
+        
+        
+        return "ok";
         
     }
 

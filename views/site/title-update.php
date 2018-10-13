@@ -48,6 +48,12 @@ use yii\widgets\ActiveForm;
                                 <!--<textarea class="weui-textarea" placeholder="请在此简要描述" rows="3"></textarea>-->
                             </div>
                         </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <?= $form->field($model, 'describe', ['inputOptions' => ['placeholder' => '对不能更新的在进行简要描述',"rows" => 3,  'class' => 'weui-textarea']])->textarea(['autofocus' => true])->label(false) ?>
+                                <!--<textarea class="weui-textarea" placeholder="请在此简要描述" rows="3"></textarea>-->
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">图片上传</label>
                             <div class="col-lg-5">
@@ -89,8 +95,7 @@ use yii\widgets\ActiveForm;
                                 <label for="" class="weui-label">币种</label>
                             </div>
                             <div class="weui-cell__bd">
-                                <?php echo $form->field($model, 'currency', ["inputOptions" => ["class" => "weui-select" ]])->dropDownList(['1' => 'RMB ¥', '2' => 'USD ＄', '3' => 'EUR €', '4' => 'GBP ￡'])->label(false); ?>
-                                
+                                <?php echo $form->field($model, 'currency', ["inputOptions" => ["class" => "weui-select" ]])->dropDownList(['1' => 'RMB ¥', '2' => 'USD ＄', '3' => 'EUR €', '4' => 'GBP ￡'], ["class" => 'weui-select'])->label(false); ?>
 <!--                                <select class="weui-select" name="select1">
                                     <option selected="" value="1">RMB ¥</option>
                                     <option value="2">USD ＄</option>
@@ -102,11 +107,12 @@ use yii\widgets\ActiveForm;
                     </div>
                     <div data-fundings >
                         <div data-fundingitem >
+                            <?php foreach ($studys as $study):?>
                             <div class="weui-cells__title">
                                 报名项
                             </div>
                             <div class="weui-cells weui-cells_form">
-                                <?php foreach ($studys as $study):?>
+                                
                                 <div class="weui-cell">
                                     <div class="weui-cell__hd"><label class="weui-label">项目名称：</label></div>
                                     <div class="weui-cell__bd">
@@ -128,8 +134,8 @@ use yii\widgets\ActiveForm;
                                         <input class="weui-input" placeholder="请输入数量限制" value="<?= $study->number ?>" readonly="readonly"/>
                                     </div>
                                 </div>
-                                <?php endforeach;?>
                             </div>
+                            <?php endforeach;?>
                         </div>
                     </div>
                     <div class="weui-cells__title">报名信息的登记规则</div>
@@ -137,7 +143,7 @@ use yii\widgets\ActiveForm;
                         <div class="weui-cell weui-cell_switch">
                             <div class="weui-cell__bd">姓名昵称全显：</div>
                             <div class="weui-cell__ft">
-                                <?= $form->field($model, 'is_show_name')->checkboxList(['is_show_name' => '姓名昵称'],['value'=> "is_show_name",'itemOptions'=>['class'=>'weui-switch']]); ?>
+                                <?= $form->field($model, 'is_show_name')->checkboxList(['1' => '姓名昵称'],['itemOptions'=>['class'=>'weui-switch']]); ?>
                                 
                                 <!--<input class="weui-switch" data-pickfunding1 type="checkbox"/>-->
                             </div>
@@ -145,14 +151,14 @@ use yii\widgets\ActiveForm;
                         <div class="weui-cell weui-cell_switch">
                             <div class="weui-cell__bd">联系方式半显：</div>
                             <div class="weui-cell__ft">
-                                <?= $form->field($model, 'is_show_phone')->checkboxList([ 'is_show_phone' => '联系方式'],['value'=> "is_show_phone",'itemOptions'=>['class'=>'weui-switch']]) ?>
+                                <?= $form->field($model, 'is_show_phone')->checkboxList([ '1' => '联系方式'],['itemOptions'=>['class'=>'weui-switch']]) ?>
                                 <!--<input class="weui-switch" data-pickfunding1 type="checkbox"/>-->
                             </div>
                         </div>
                         <div class="weui-cell weui-cell_switch">
                             <div class="weui-cell__bd">备注留言半显：</div>
                             <div class="weui-cell__ft">
-                                <?= $form->field($model, 'is_show_leave')->checkboxList([ 'is_show_leave' => '备注留言'],['itemOptions'=>['class'=>'weui-switch']]) ?>
+                                <?= $form->field($model, 'is_show_leave')->checkboxList([ '1' => '备注留言'],['itemOptions'=>['class'=>'weui-switch']]) ?>
                                 <!--<input class="weui-switch" data-pickfunding1 type="checkbox"/>-->
                             </div>
                         </div>
@@ -160,7 +166,7 @@ use yii\widgets\ActiveForm;
                             <div class="weui-cell__hd"><label for="" class="weui-label">截 止 时 间：</label></div>
                             <div class="weui-cell__bd">
                                 
-                                <?= $form->field($model, 'end_at', ['inputOptions' => ['placeholder' => '不设则无自动截止', 'class' => 'weui-input']])->textInput(['autofocus' => true])->label(false) ?>
+                                <?= $form->field($model, 'end_at', ['inputOptions' => ['placeholder' => '不设则无自动截止（注:2018-01-01）', 'class' => 'weui-input']])->textInput(['autofocus' => true])->label(false) ?>
 
                                 <!--<input class="weui-input" type="date" value=""/>-->
                             </div>
@@ -178,31 +184,6 @@ use yii\widgets\ActiveForm;
                     $('[data-type]').css('display', e.target.checked ? 'flex' : 'none');
                 })
 
-                function _template() {
-                    var template = "<div data-fundingitem >" + "\n";
-                    template += '<div class="weui-cells__title">' + '\n';
-                    template += '报名项' + '\n';
-                    template += '<a class="invite-fundings-btn" data-fundingaction="delete" style="color: #ff2500;" >[ 删除 ]</a>' + '\n';
-                    template += '<a class="invite-fundings-btn" data-fundingaction="add" >[ 添加 ]</a>' + '\n';
-                    template += '</div>' + '\n';
-                    template += '<div class="weui-cells weui-cells_form">' + '\n';
-                    template += '<div class="weui-cell">' + '\n';
-                    template += '<div class="weui-cell__hd"><label class="weui-label">项目名称</label></div>' + '\n';
-                    template += '<input class="weui-input" placeholder="请输入项目名称"/>' + '\n';
-                    template += '</div> \n </div> \n';
-                    template += '<div class="weui-cell">' + '\n';
-                    template += '<div class="weui-cell__hd"><label class="weui-label">项目单价</label></div>' + '\n';
-                    template += '<div class="weui-cell__bd">' + '\n';
-                    template += '<input class="weui-input" placeholder="请输入项目单价"/>' + '\n';
-                    template += '</div> \n </div> \n';
-                    template += '<div class="weui-cell">' + '\n';
-                    template += '<div class="weui-cell__hd"><label class="weui-label">数量限制</label></div>' + '\n';
-                    template += '<div class="weui-cell__bd">' + '\n';
-                    template += '<input class="weui-input" placeholder="请输入数量限制"/>' + '\n';
-                    template += '</div> \n </div> \n </div> \n </div> \n';
-                    
-                    return $(template);
-                }
                 var blockNum = 10;
                 $(document).on('click', '[data-fundingaction]', function () {
                     var action = $(this).data('fundingaction');

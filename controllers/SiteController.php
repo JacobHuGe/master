@@ -72,16 +72,6 @@ class SiteController extends WebBaseController {
      * @return type
      */
     public function actionTitleDelete(){
-//        if(!isset($_GET["id"])){
-//            throw new BadRequestHttpException("参数有误");
-//        }
-//        
-//        $id = $_GET["id"];
-//        
-//        $title = Title::findOne(["id" => $id, "deleted_at" => 0]);
-//        if(empty($title)){
-//            throw new BadRequestHttpException("数据已被删除或不存在");
-//        }
         $title = $this->titleOne();
         
         $title->deleted_at = time();
@@ -103,7 +93,13 @@ class SiteController extends WebBaseController {
         
         $model = new TitleUpdateForm();
         if(Yii::$app->request->post()){
-            
+            $model->load($_REQUEST);
+            $transaction = Yii::$app->db->beginTransaction();
+            if($model->save() === false){
+                throw new BadRequestHttpException("数据更改失败");
+            }
+            $transaction->commit();
+            return $this->redirect(["site/sponsor"]);
         }
         
         $attachments = Attachment::find()->andWhere(["model_id" => $title->id])->all();
@@ -114,12 +110,11 @@ class SiteController extends WebBaseController {
                 $comma = ",";
             }
             $img = $img.$comma.$attachment["img_url"];
-            //$img[$attachment["id"]] = $attachment["img_url"];
         }
         $model["imageFile"] = $img;
         $model["name"] = $title->name;
         $model["content"] = $title->content;
-        $model["end_at"] = $title->end_at;
+        $model["end_at"] = empty($title->end_at) || $title->end_at == 0 ? "" : date("Y-m-d", $title->end_at);
         $model["is_show_name"] = $title->is_show_name;
         $model["is_show_phone"] = $title->is_show_phone;
         $model["is_show_leave"] = $title->is_show_leave;
@@ -142,9 +137,6 @@ class SiteController extends WebBaseController {
         }
         return $title;
     }
-
-
-
 
     public function actionLaunch()
     {
