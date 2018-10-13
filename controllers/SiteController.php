@@ -243,7 +243,7 @@ class SiteController extends WebBaseController {
      */
     public function actionSponsor()
     {
-        $query = Title::find()->andWhere(["created_by" => Yii::$app->user->id]);
+        $query = Title::find()->andWhere(["created_by" => Yii::$app->user->id])->orderBy(["updated_at" => SORT_DESC]);
         $countQuery = clone $query;
         
         $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize'=>5]);

@@ -2,7 +2,7 @@
 //Yii::$app->params['webuploader']['uploadUrl'];
 return [
     // 图片服务器的域名设置，拼接保存在数据库中的相对地址，可通过web进行展示
-    'domain' => "www.hxsit1.com",
+    'domain' => "teaching.hxsit.com",
     'imageUploadRelativePath' => './uploads/images1/', // 图片默认上传的目录
     'imageUploadSuccessPath' => '/uploads/images2/', // 图片上传成功后，路径前缀
     'webuploader' => [
