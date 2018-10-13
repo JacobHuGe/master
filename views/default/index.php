@@ -12,7 +12,7 @@ use yii\helpers\Url;
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.3/weui.min.css">
     <link rel="stylesheet" href="/css/app.css">
-    <script type="text/javascript" src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js" ></script>
+    <script type="text/javascript" src="../js/zepto.min.js" ></script>
     <script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.1.3/weui.min.js"></script>
     <!-- <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <link rel="stylesheet" href="/css/app.css">
