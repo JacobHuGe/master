@@ -6,9 +6,11 @@ use app\components\Upload;
 use app\components\WebBaseController;
 use app\models\Attachment;
 use app\models\Enroll;
+use app\models\site\CopyTitleForm;
 use app\models\site\CreateForm;
 use app\models\site\TitleUpdateForm;
 use app\models\site\UploadForm;
+use app\models\Study;
 use app\models\Title;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -84,6 +86,92 @@ class SiteController extends WebBaseController {
     }
     
     /**
+     * 复制标题信息
+     */
+    public function actionCopyTitle(){
+        $title = $this->titleOne();
+        
+        $model = new CopyTitleForm();
+        if(Yii::$app->request->post()){
+            $model->load($_REQUEST);
+            $transaction = Yii::$app->db->beginTransaction();
+            if($model->save() === false){
+                throw new BadRequestHttpException("数据更改失败");
+            }
+            $transaction->commit();
+            return $this->redirect(["site/sponsor"]);
+        }
+        
+        $attachments = Attachment::find()->andWhere(["model_id" => $title->id])->all();
+        $img = "";
+        foreach($attachments as $attachment){
+            $comma = "";
+            if(!empty($img)){
+                $comma = ",";
+            }
+            $img = $img.$comma.$attachment["img_url"];
+        }
+        
+        $model["imageFile"] = $img;
+        $model["name"] = $title->name;
+        $model["content"] = $title->content;
+        $model["end_at"] = empty($title->end_at) || $title->end_at == 0 ? "" : date("Y-m-d", $title->end_at);
+        $model["is_show_name"] = $title->is_show_name;
+        $model["is_show_phone"] = $title->is_show_phone;
+        $model["is_show_leave"] = $title->is_show_leave;
+        
+        $studys = Study::find()->andWhere(["title_id" => $title->id, "deleted_at" => 0])->all();
+        
+        return $this->render("copy-title", ["model" => $model, "studys" => $studys]);
+        
+//        $transaction = Yii::$app->db->beginTransaction();
+//        $model = new Title();
+//        $model->name = $title->name;
+//        $model->currency = $title->currency;
+//        $model->content = $title->content;
+//        $model->end_at = $title->end_at;
+//        $model->is_show_name = $title->is_show_name;
+//        $model->is_show_phone = $title->is_show_phone;
+//        $model->is_show_leave = $title->is_show_leave;
+//        $model->enroll_state = Title::ENROLL_STATE_COMDUCT;
+//        $model->state = Title::STATE_ADOPT;
+//        $model->created_by = Yii::$app->user->id;
+//        if($model->save() === false){
+//            throw new BadRequestHttpException(Yii::t("app", $model));
+//        }
+//
+//        if(!empty($title->studys)){ 
+//            foreach($title->studys as $studyOne){
+//                $study = new Study();
+//            
+//                $study->name = $studyOne->name;
+//                $study->price = $studyOne->price;
+//                $study->number = $studyOne->number;
+//
+//                $study->title_id = $model->id;
+//                if($study->save() === false){
+//                    throw new BadRequestHttpException(Yii::t("app", $study));
+//                }
+//            }
+//        }
+//        
+//        if(!empty($title->images)){
+//            foreach($title->images as $image){
+//                $attachment = new Attachment();
+//                $attachment->owner_id = Yii::$app->user->id;
+//                $attachment->img_url = $image->img_url;
+//                $attachment->model_id = $model->id;
+//                if($attachment->save() === false){
+//                    throw new BadRequestHttpException(Yii::t("app", $attachment));
+//                }
+//            }
+//        }
+//        $transaction->commit();
+//        
+//        return $this->redirect(["site/title-update",["id" => $model->id]]);
+    }
+    
+    /**
      * 修改标题
      * @return type
      */
@@ -119,7 +207,7 @@ class SiteController extends WebBaseController {
         $model["is_show_phone"] = $title->is_show_phone;
         $model["is_show_leave"] = $title->is_show_leave;
         
-        $studys = \app\models\Study::find()->andWhere(["title_id" => $title->id, "deleted_at" => 0])->all();
+        $studys = Study::find()->andWhere(["title_id" => $title->id, "deleted_at" => 0])->all();
         
         return $this->render("title-update", ["model" => $model, "studys" => $studys]);
     }

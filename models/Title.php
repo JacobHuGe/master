@@ -74,6 +74,11 @@ class Title extends ActiveRecord {
         return $this->hasMany(Study::className(), ["title_id" => "id"]);
     }
     
+    public function getImages()
+    {
+        return $this->hasMany(Attachment::className(), ["model_id" => "id"]);
+    }
+    
     /**
      * 报名数量
      * @param type $titleId

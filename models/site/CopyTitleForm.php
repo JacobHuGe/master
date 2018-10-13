@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models\site;
 
 use app\models\Attachment;
@@ -9,35 +8,33 @@ use Yii;
 use yii\base\Model;
 use yii\web\BadRequestHttpException;
 
-/*
+/* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-class CreateForm extends Model {
-
+class CopyTitleForm extends Model {
     public $name;
     public $content;
     public $currency;
     public $imageFile;
-    public $study_name;
+    public $study;
     public $end_at;
-    public $price;
-    public $number;
     public $is_show_name;
     public $is_show_phone;
     public $is_show_leave;
+    public $describe;
     
-
+    
     /**
      * @inheritdoc
      */
     public function rules() {
         return [
             //[['imageFile'], 'file', 'skipOnEmpty' => false],
-            [['name', "study_name", "content", 'price', 'number', 'imageFile'], 'required'],
-            [['currency', 'end_at', 'is_show_name', 'is_show_phone', 'is_show_leave'], "safe"],
+            [['name', "content", 'imageFile'], 'required'],
+            [['currency', 'end_at', 'is_show_name', 'is_show_phone', 'is_show_leave', "describe"], "safe"],
+            //[['describe'],'match','pattern'=>'','message'=>'提示信息']
         ];
     }
     /**
@@ -49,16 +46,19 @@ class CreateForm extends Model {
         return [
             "name" => Yii::t('app',"标题"),
             "content" => Yii::t('app', "描述"),
-            "study_name" => Yii::t('app',"项目名称"),
-            "price" => Yii::t('app', "项目单价"),
             "number" => Yii::t('app', "数量限制"),
         ];
     }
-
+    
     public function save() {
-        
+
         if (!$this->validate()) {
             throw new BadRequestHttpException($this);
+        }
+        
+        $isTitleName = Title::findOne(["name" => $this->name, "deleted_at" => 0]);
+        if(!empty($isTitleName)){
+            throw new BadRequestHttpException(Yii::t("app", "名称已存在"));
         }
         
         $is_show_name = 0;
@@ -73,11 +73,6 @@ class CreateForm extends Model {
         }
         if(!empty($this->is_show_leave)){
             $is_show_leave = 1;
-        }
-        
-        $isTitleName = Title::findOne(["name" => $this->name, "deleted_at" => 0]);
-        if(!empty($isTitleName)){
-            throw new BadRequestHttpException(Yii::t("app", "名称已存在"));
         }
         
         $end_at = 0;
@@ -111,21 +106,20 @@ class CreateForm extends Model {
             throw new BadRequestHttpException(Yii::t("app", $model));
         }
         
-        $num = count($this->study_name);
-        if($num == 0){
-            throw new BadRequestHttpException(Yii::t("app", "请添加项目"));
-        }
-        for($i=0; $i<=$num-1; $i++){
+        if(!empty($_REQUEST["Study"])){
             $study = new Study();
-            $study->name = $this->study_name[$i];
-            $study->price = $this->price[$i];
-            $study->number = $this->number[$i];
-            
+            $study->name = $_REQUEST["Study"]["name"];
+            $study->price = $_REQUEST["Study"]["price"];
+            $study->number = $_REQUEST["Study"]["number"];
             $study->title_id = $model->id;
             if($study->save() === false){
                 throw new BadRequestHttpException(Yii::t("app", $study));
             }
+        } else{
+            throw new BadRequestHttpException(Yii::t("app", "请添加项目"));
         }
+        
+        
         if(!empty($this->imageFile)){
             foreach($this->imageFile as $imageFileUrl){
                 $attachment = new Attachment();
@@ -138,9 +132,6 @@ class CreateForm extends Model {
             }
         }
         
-        
-        return "ok";
-        
+       return $model;
     }
-
 }

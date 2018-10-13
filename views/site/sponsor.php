@@ -148,6 +148,7 @@ use yii\widgets\LinkPager;
                         }, {
                             label: '复制',
                             onClick: function () {
+                                window.location.href='<?= Url::to(["site/copy-title"]) ?>?id='+id;
                                 console.log('复制');
                             }
                         }, {
